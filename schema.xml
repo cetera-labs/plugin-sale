@@ -159,7 +159,7 @@
     <field name="id" type="int(11)" null="0" auto_increment="1" />
     <field name="order_id" type="int(11)" null="0"  />
 	<field name="gateway" type="varchar(32)" null="0" />
-	<field name="transaction_id" type="varchar(32)" null="0" />
+	<field name="transaction_id" type="varchar(64)" null="0" />
     <field name="date" type="datetime" null="0" />
 	<field name="data" type="text" null="0" />
     <key name="PRIMARY" unique="1">
