@@ -1,0 +1,29 @@
+{
+    "name": "cetera-labs/plugin-sale",
+    "description": "Cetera CMS E-commerce Plugin",
+    "type": "cetera-cms-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roman Romanov",
+            "email": "nicodim@mail.ru",
+            "role": "Lead Developer"
+        }
+    ],
+    "require": {
+    },
+    
+    "minimum-stability": "dev",
+    
+    "autoload": {
+        "psr-0": { 
+			"Sale\\": "classes/"
+		}
+    },
+
+    "extra": {
+        "name": "sale",
+        "title": "E-commerce",
+        "description": ""
+    }
+}
