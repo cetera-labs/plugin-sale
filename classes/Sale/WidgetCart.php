@@ -15,7 +15,7 @@ class WidgetCart extends \Cetera\Widget\Templateable
 
 	protected function init()
 	{
-		$this->application->addScript('/plugins/sale/js/common.js');
+		$this->application->addScript('/cms/plugins/sale/js/common.js');
 		
 		if (!$this->widgetTitle) $this->widgetTitle = '<div class="row column"><h1>'.$this->t->_('Корзина').'</h1></div>';
 		

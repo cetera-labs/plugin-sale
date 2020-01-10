@@ -30,8 +30,8 @@ class WidgetGoodsItem extends \Cetera\Widget\Material
 	{
 		parent::init();
 		
-	        $this->application->addScript('/plugins/sale/js/locale.php?locale='.$this->application->getLocale());
-		$this->application->addScript('/plugins/sale/js/common.js');		
+	        $this->application->addScript('/cms/plugins/sale/js/locale.php?locale='.$this->application->getLocale());
+		$this->application->addScript('/cms/plugins/sale/js/common.js');		
 	
 		// формируем массив недавно просмотренных товаров
 		$m = $this->getMaterial();

@@ -18,9 +18,9 @@ class WidgetFilter extends \Cetera\Widget\Templateable
 
 	protected function init()
 	{
-	        $this->application->addScript('/plugins/sale/js/locale.php?locale='.$this->application->getLocale());
-		$this->application->addScript('/plugins/sale/js/common.js');
-		$this->application->addScript('/plugins/sale/js/jquery-ui.min.js');
+	        $this->application->addScript('/cms/plugins/sale/js/locale.php?locale='.$this->application->getLocale());
+		$this->application->addScript('/cms/plugins/sale/js/common.js');
+		$this->application->addScript('/cms/plugins/sale/js/jquery-ui.min.js');
 		if ( $this->getParam('filter') ) {
 			$this->filter = $this->getParam('filter');
 		}

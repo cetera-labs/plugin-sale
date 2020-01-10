@@ -19,8 +19,8 @@ class WidgetWishList extends \Cetera\Widget\Templateable
 	
 	protected function init()
 	{
-	    $this->application->addScript('/plugins/sale/js/locale.php?locale='.$this->application->getLocale());
-		$this->application->addScript('/plugins/sale/js/common.js');
+	    $this->application->addScript('/cms/plugins/sale/js/locale.php?locale='.$this->application->getLocale());
+		$this->application->addScript('/cms/plugins/sale/js/common.js');
 
 		$wid = $this->getUniqueId();
 		if (isset($_REQUEST[$wid]) && $_REQUEST[$wid] == 'clear') {

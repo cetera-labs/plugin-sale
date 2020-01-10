@@ -26,10 +26,10 @@ class WidgetOrder extends \Cetera\Widget\Templateable
 	
 	protected function init()
 	{	
-	    $this->application->addScript('/plugins/sale/js/locale.php?locale='.$this->application->getLocale());
-		$this->application->addScript('/plugins/sale/js/common.js');
-		$this->application->addScript('/plugins/sale/js/jquery-ui.min.js');
-		$this->application->addCSS('/plugins/sale/js/jquery-ui.min.css');
+	    $this->application->addScript('/cms/plugins/sale/js/locale.php?locale='.$this->application->getLocale());
+		$this->application->addScript('/cms/plugins/sale/js/common.js');
+		$this->application->addScript('/cms/plugins/sale/js/jquery-ui.min.js');
+		$this->application->addCSS('/cms/plugins/sale/js/jquery-ui.min.css');
 					
 		if (isset($this->application->getSession()->saleOrderCreated)) {
 			$this->order = \Sale\Order::getById( $this->application->getSession()->saleOrderCreated );
