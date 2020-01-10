@@ -1,0 +1,252 @@
+<div id="{{ widget.uniqueId }}" class="x-product x-cetera-widget" data-id="{{ widget.material.id }}" data-class="Cetera.fo.Material" data-type="{{ widget.material.objectDefinition.alias }}">
+	{% block html %}
+	<div class="row">
+		<div class="small-12 medium-6 column">
+
+			  {% if widget.material[widget.getParam('field_pictures')] is defined and  widget.material[widget.getParam('field_pictures')]|length > 0 %}
+			  
+				<div class="row">
+				  <div class="small-12 large-10 large-push-2 column text-center">
+
+					<img id="x-product-image" class="product-image" data-zoom-image="{{ widget.material[widget.getParam('field_picture')] }}" style="margin-bottom: 1.5rem" src="/imagetransform/width_600_height_600{{ widget.material[widget.getParam('field_picture')] }}">
+					
+				  </div>
+				  <div class="small-12 large-2 large-pull-10 column">
+					<div class="row">
+					  <div class="small-12 medium-11 large-12 end column">
+						<div class="row">
+
+							<div class="product-thumbs" id="x-product-thumbs">
+
+							  <a href="#" class="active" data-image="/imagetransform/width_600_height_600{{ widget.material[widget.getParam('field_picture')] }}" data-zoom-image="{{ widget.material[widget.getParam('field_picture')] }}">
+								<div class="column"><img src="/imagetransform/width_100_height_100_fit_3{{ widget.material[widget.getParam('field_picture')] }}" alt="" style="width: 100%; background: #ccc;" class="thumbnail"></div>
+							  </a>
+							  {% for p in widget.material[widget.getParam('field_pictures')] %}
+							  <a href="#" data-image="/imagetransform/width_600_height_600{{ p.file }}" data-zoom-image="{{ p.file }}">
+								<div class="column"><img data-zoom-image="{{ p.file }}" src="/imagetransform/width_100_height_100_fit_3{{ p.file }}" alt="" style="width: 100%; background: #ccc;" class="thumbnail"></div>
+							  </a>
+							  {% endfor %}
+
+							</div>
+
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>			  
+			  
+			  {% else %}
+			  
+			  <p class="text-center">
+			  
+			      {% if widget.material[widget.getParam('field_picture')] %}
+				  <a id="x-product-image-single-link" href="{{ widget.material[widget.getParam('field_picture')] }}">
+					<img id="x-product-image-single" class="product-image" data-zoom-image="{{ widget.material[widget.getParam('field_picture')] }}" style="margin-bottom: 1.5rem" src="/imagetransform/width_600_height_600{{ widget.material[widget.getParam('field_picture')] }}">
+				  </a>
+				  {% endif %}
+				  
+			  </p>
+			  
+			  {% endif %}
+
+		</div>
+		  
+		  <div class="small-12 medium-6 column"><br class="hide-for-medium">
+		  
+		    {% block product_info %}
+			
+				<div class="product-top-line clearfix">
+				{% if widget.material.discount > 0 %}
+					<span class="label success">{{ _('Акция') }}</span>
+				{% endif %}
+				{% if widget.getParam('show_comments') and widget.isPluginComments() %}
+				    <div class="float-right">
+						<div class="product-rating fa-lg">
+						{% set avg = widget.material.getRatingAverage()|round %}
+						{% for i in range(1,5) %}<i class="fa {% if i <= avg %}fa-star{% else %}fa-star-o{% endif %}">&nbsp;</i>{% endfor %}
+						</div>
+						<a class="pseudo-link x-show-comments" title="" href="#product-tab-comments">{{ _('Отзывы') }} &nbsp;({{ widget.material.getCommentsCount() }})</a>
+				    </div>
+				{% endif %}
+				</div>		
+				<br>
+			
+				<h1 class="product-page-title">{{ widget.material.name|raw }}</h1><br>			
+				{{ widget.material.short|raw }}
+				
+				{% for p in widget.properties if p.value %}
+				
+					<div class="row">
+					  <div class="small-12 large-3 column">
+						<div class="product-param-title"><strong>{{ p.name }}:</strong></div>
+					  </div>
+					  <div class="small-12 large-9 column">{{ p.value|raw }}</div>
+					</div>				
+
+				{% endfor %}
+				
+			{% endblock %}
+			
+			{% set buy_button %}
+								
+				{% if widget.getParam('show_options') %}
+				{% block options %}
+				<div class="row">
+					<div class="small-12 large-9 end column">
+						<label>{{ _('Дополнительная информация') }}</label>
+						<textarea class="x-options" name="{{ _('Дополнительная информация') }}"></textarea>
+					</div>
+				</div>
+				{% endblock %}
+				{% endif %}
+				
+				<div class="row">				
+				  <div class="small-6 large-3 column">
+					<div class="input-group">
+					  <div class="input-group-button">
+						<button class="button x-less">&ndash;</button>
+					  </div>
+					  <input type="text" class="x-quantity input-group-field" value="1">
+					  <div class="input-group-button">
+						<button class="button x-more">+</button>
+					  </div>
+					</div>
+				  </div>
+				  <div class="small-6 end column">
+					<a class="top button expanded x-add-to-cart" data-id="{{ widget.material.id }}"><i class="fa fa-shopping-cart fa-lg">&nbsp;</i>{{ _('Добавить в корзину') }}</a>
+				  </div>
+				</div>				
+			{% endset %}
+
+			{% if widget.material.hasOffers() %}
+				
+				<p><hr></p>
+				{% for o in widget.material.offers %}
+				<div class="row column">
+					<input type="radio" name="offer" class="x-offer" value="{{ o.id }}" id="offer{{ o.id }}" {% if loop.first %}checked{% endif %}> 
+					<label for="offer{{ o.id }}">
+						{{ o.name }} <strong>{{ o.displayPrice|raw }}</strong>{% if o.discount > 0 %}<del class="text-dark-gray">{{ o.displayFullPrice|raw }}</del>{% endif %}					
+					</label>
+				</div>
+				{% endfor %}
+				
+				{{ buy_button }}
+				
+			{% else %}
+				<p>
+					<span class="stat">{{ widget.material.displayPrice|raw }}</span>
+					{% if widget.material.discount > 0 %}<del class="text-dark-gray">{{ widget.material.displayFullPrice|raw }}</del>{% endif %}
+				</p>
+				
+				{% if widget.material.canBuy() %}
+				  
+				    {{ buy_button }}
+				  
+				{% else %}
+				
+				  <div class="row column">
+					<div class="text-alert">{{ _('Нет в наличии') }}</div>
+				  </div>
+				  
+				{% endif %}			
+			{% endif %}
+			
+			<div class="row column"><br>
+				<p>
+				<a class="x-add-to-compare" data-id="{{ widget.material.id }}" title=""><i class="fa fa-lg fa-signal">&nbsp;</i>К сравнению</a>
+				&nbsp; &nbsp; &nbsp;
+				<a class="x-add-to-wishlist" data-id="{{ widget.material.id }}"><i class="fa fa-lg fa-heart-o">&nbsp;</i>{{ _('Запомнить') }}</a>
+				</p>			
+				<hr><br>
+			</div>			
+
+			{% if widget.getParam('share_buttons') %}
+			<div class="row column">
+			
+				<span class="show-for-large text-medium-gray">{{ _('Рассказать') }}:  </span>
+				<noindex>
+				<a rel="nofollow" class="fa-stack fa-lg text-vk" href="http://vkontakte.ru/share.php?url=http://{{ s.SERVER_NAME }}{{ widget.material.url }}{% if widget.material.pic %}&image=http://{{ s.SERVER_NAME }}{{ widget.material.pic }}{% endif %}" title=""><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-vk fa-stack-1x fa-inverse"></i></a>
+				<a rel="nofollow" class="fa-stack fa-lg text-twi" href="http://twitter.com/intent/tweet?text={{ widget.material.name }}&url=http://{{ s.SERVER_NAME }}{{ widget.material.url }}" title=""><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x fa-inverse"></i></a>
+				<a rel="nofollow" class="fa-stack fa-lg text-fb" href="http://www.facebook.com/sharer.php?u=http://{{ s.SERVER_NAME }}{{ widget.material.url }}" title=""><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x fa-inverse"></i></a>
+				<a rel="nofollow" class="fa-stack fa-lg text-gp" href="https://plus.google.com/share?url=http://{{ s.SERVER_NAME }}{{ widget.material.url }}" title=""><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-google-plus fa-stack-1x fa-inverse"></i></a>
+				</noindex>			
+
+				<br><br>
+			</div>
+			{% endif %}	
+			
+		  </div>
+	</div> 
+
+	<div class="row column"  id="x-product-tabs">
+		<ul class="tabs" data-tabs="ll3p5i-tabs" id="product-tabs-1">
+		{% block tabs %}
+		
+			{% for t in widget.tabs if t.value %}
+				<li class="tabs-title" role="presentation"><a href="#product-tab-{{ t.id }}" role="tab" aria-controls="product-tab-{{ t.id }}" id="product-tab-{{ t.id }}-label">{{ t.name }}</a></li>
+			{% endfor %}
+							
+			{% if widget.getParam('show_comments') and widget.isPluginComments() %}
+			<li class="tabs-title" role="presentation">
+				<a href="#product-tab-comments" role="tab" aria-controls="product-tab-comments" aria-selected="false" id="product-tab-comments-label">{{ _('Отзывы') }} ({{ widget.material.getCommentsCount() }})</a>
+			</li>
+			{% endif %}
+			
+		{% endblock %}	
+		</ul>
+		<div id="x-product-tabs-content" class="tabs-content" data-tabs-content="product-tabs-1">
+		{% block tabs_content %}
+		 
+			{% for t in widget.tabs if t.value %}
+			<div class="tabs-panel" id="product-tab-{{ t.id }}" role="tabpanel" aria-hidden="false" aria-labelledby="product-tab-{{ t.id }}-label">
+				{% if t.value is iterable %}
+					<table>
+					{% for prop in t.value %}
+						<tr><td>{{ prop.name }}</td><td>{{ prop.value }}</td></tr>
+					{% endfor %}
+					</table>
+				{% else %}
+			        {{ t.value|raw }}
+				{% endif %}
+			</div>
+			{% endfor %}		 
+		 
+			{% if widget.getParam('show_comments') and widget.isPluginComments() %}
+			<div class="tabs-panel" id="product-tab-comments" role="tabpanel" aria-hidden="true" aria-labelledby="product-tab-comments-label">
+			  
+				<h3>{{ _('Отзывы покупателей') }} ({{ widget.material.getCommentsCount() }})</h3>
+				{% widget 'Comments.List' with { material: widget.material, form_rating_text: "#{_('Ваша оценка товара')}", form_reload_after_post: 1 } %}
+			  
+			</div>
+			{% endif %}
+			
+		{% endblock %}		
+		</div>
+	</div>
+	<br>
+	{% endblock %}
+</div>
+
+{% set script %}
+	{% block script %}	
+	document.addEventListener('DOMContentLoaded', function () {
+	
+		jQuery('.x-show-comments').click(function(){
+			
+			jQuery('#product-tabs-1').foundation('selectTab', jQuery('#product-tab-comments'));
+			
+		});
+	
+		if ( jQuery('#product-tabs-1 li').length > 0 )
+		{
+			jQuery('#product-tabs-1').foundation('selectTab', jQuery('#x-product-tabs-content .tabs-panel:first'));
+		}
+		else
+		{
+			jQuery('#x-product-tabs').hide();
+		}
+
+	});
+ 	{% endblock %}
+{% endset %}
+{% do widget.application.addHeadString( "<script>#{script}</script>" ) %}

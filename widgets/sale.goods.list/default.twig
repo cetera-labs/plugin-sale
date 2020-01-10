@@ -1,0 +1,48 @@
+<div id="{{ widget.uniqueId }}">
+{% block html %}
+	{% if widget.children|length %}
+
+		{{ widget.widgetTitle|raw }}
+		
+		{% block items %}
+		<div class="row {{ widget.getParam('css_row') }}">
+			{% for m in widget.children %}
+			<div class="column">
+				<div class="product-tile">
+					<div class="clearfix">
+						{% if m.discount > 0 %}
+						<div class="label success" style="position:absolute;">{{ _('Акция') }}</div>
+						{% endif %}
+						{% if m.pic %}
+						<a href="{{ m.url }}" class="product-tile_name">
+							<img src="/imagetransform/width_300_height_300_fit_3{{ m.pic }}" alt="" class="thumbnail product-tile-thumbnail">
+						</a>
+						{% endif %}
+						<p class="text-center">
+							<a href="{{ m.url }}" class="product-tile_name">{{ m.name }}</a>
+							<br>
+							<span class="product-tile_price">{{ m.displayDiscountPrice|raw }}</span>
+							{% if m.discount > 0 %}
+							<del class="text-alert">{{ m.displayFullPrice|raw }}</del>
+							{% endif %}
+						</p>
+						<div class="product-tile-buttons">
+							<a class="button secondary x-add-to-wishlist" data-id="{{ m.id }}"><i class="fa fa-lg fa-heart-o"></i></a>
+							<a title="{{ _('Добавить к сравнению') }}" class="button secondary x-add-to-compare" data-id="{{ m.id }}"><i class="fa fa-lg fa-signal"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		{% endblock %}
+
+		{% if widget.getParam('paginator') %}
+		<div class="row column x-pages">
+			{{ widget.getPaginator()|raw }}
+		</div>
+		{% endif %}
+		
+	{% endif %}
+{% endblock %}
+</div>

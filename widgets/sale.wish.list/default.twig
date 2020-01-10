@@ -1,0 +1,42 @@
+{% block html %} 
+	{{ widget.widgetTitle|raw }}
+	
+	{% for c in widget.children %}
+    <div class="row x-product" data-id="{{ c.id }}">
+      <div class="small-8 medium-2 column">
+        <p><img  src="/imagetransform/width_200_height_200_fit_2{{ c.pic }}" alt="{{ c.name }}" class="product-tile-thumbnail"></p>
+      </div>
+      <div class="small-3 small-offset-1 medium-offset-0 medium-2 medium-push-8 column">
+        <div class="row">
+          <div class="small-12 medium-6 medium-push-6 column text-center">
+            <p><a href="#" class="x-remove-from-wishlist" title="Удалить"><img src="/plugins/sale/images/delete-circle.svg" style="width: 28px;"></a></p>
+            <p class="hide-for-medium">&#160;</p>
+          </div>
+          <div class="small-12 medium-6 medium-pull-6 column text-center">
+            <p><a class="x-add-to-cart" data-quantity="1" data-tooltip aria-haspopup="true" data-click-open="false" data-disable-hover="true" title="Товар добавлен в корзину"><i class="fa fa-2x fa-shopping-cart"></i></a></p>
+          </div>
+        </div>
+      </div>
+      <div class="small-12 medium-5 large-4 medium-pull-2 column">
+        <p><a href="{{ c.url }}">{{ c.name }}</a></p>
+      </div>
+      <div class="small-12 medium-3 large-4 medium-pull-2 column">
+        <p>
+			<span class="lead no-wrap">{{ c.displayDiscountPrice|raw }}</span>
+			{% if c.discount > 0 %}
+			<del class="text-alert">{{ c.displayFullPrice|raw }}</del>
+			{% endif %}				
+		</p>
+      </div>
+    </div> 
+	{% else %}
+	<p>{{ _('Список пуст') }}</p>
+	{% endfor %}
+	
+		{% if widget.getParam('paginator') %}
+		<div class="row column x-pages">
+			{{ widget.getPaginator()|raw }}
+		</div>
+		{% endif %}	
+	
+{% endblock %}

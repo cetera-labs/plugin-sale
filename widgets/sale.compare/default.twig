@@ -1,0 +1,109 @@
+{% block html %}
+<div class="row column">
+	
+	{% if widget.getParam('catalog_link') %}
+		<div><a href="{{ widget.getParam('catalog_link') }}">← {{ _('Вернуться в каталог') }}</a></div>
+	{% endif %}
+	
+	<div class="content">
+	
+		{% if widget.compare.getProductsCount() > 0 %}
+		<a href="#" title="" class="pseudo-link float-right x-clear-compare">Очистить список сравнения</a>
+		{% endif %}
+		
+		{% if widget.widgetTitle %}
+			{{ widget.widgetTitle|raw }}
+		{% else %}
+			<h1>{{ _('Сравнить товары') }}</h1>
+		{% endif %}
+		
+	</div>
+	
+</div> 
+
+<div class="content">
+	<div class="row column">
+	
+	{% if widget.compare.getProductsCount() <= 0 %}
+		<p>{{ _('Список сравнения пуст') }}</p>
+	{% else %}
+	
+        <p>
+			<span class="text-dark-gray">{{ _('Показать') }}: &#160;</span>
+			{% if widget.isDiffOnly() %}
+				<span class="no-wrap">{{ _('Только отличия') }}&#160;&#160;</span>
+				<a href="?all" title="" class="pseudo-link no-wrap">{{ _('Все параметры') }}</a>
+			{% else %}
+				<a href="?diff" title="" class="pseudo-link no-wrap">{{ _('Только отличия') }}</a>&#160;&#160;
+				<span class="no-wrap">{{ _('Все параметры') }}</span>			
+			{% endif %}
+		</p>
+        <div class="table-scroll">	
+		
+          <table>
+            <tr style="vertical-align:top;">
+              <td></td>
+			  {% for p in widget.children %}
+              <td>
+                        <p><a data-id="{{ p.id }}" href="#" title="Убрать из сравнения" class="text-dark-gray no-wrap x-remove-from-compare"><img style="width: 30px; padding-right: 5px" alt="&amp;times;" src="/plugins/sale/images/delete-circle.svg">Убрать</a></p>
+                        {% if p.pic %}
+						<div><img src="/imagetransform/width_200{{ p.pic }}" style="height: 80px"></div>
+						{% endif %}	
+                        <p><a href="{{ p.url }}">{{ p.name }}</a></p>
+                        <p class="no-wrap"><b>{{ p.displayDiscountPrice|raw }}</b></p>
+						
+						<p>
+							{% if p.canBuy() %}
+							<span class="text-success">{{ _('В наличии') }}</span>
+							{% else %}
+							<span class="text-alert">{{ _('Нет в наличии') }}</span>
+							{% endif %}	
+						</p>						
+						
+						{% if p.canBuy() %}
+						<p>	
+							<a data-id="{{ p.id }}" data-tooltip aria-haspopup="true" data-click-open="false" data-disable-hover="true" title="{{ _('Товар добавлен в корзину') }}" class="x-add-to-cart button small"><i class="fa fa-lg fa-shopping-cart"></i>&#160;{{ _('В корзину') }}</a>
+						</p>
+						{% endif %}						
+              </td>
+			  {% endfor %}
+            </tr>
+			{% for f in widget.getFields() %}
+            <tr>
+              <th class="text-user-small">{{ f.describ }}</th>
+			  {% for p in widget.compare.getProducts() %}
+              <td>
+				{{ widget.fieldValue(p,f) }}
+			</td>
+			  {% endfor %}
+            </tr>			
+			{% endfor %}
+		  </table>
+		
+		</div>
+	
+	{% endif %}
+	
+	</div>
+</div>
+{% endblock %} 
+
+{% set script %}
+	{% block script %}
+	document.addEventListener('DOMContentLoaded', function () {
+	
+		jQuery(document).on("cetera.sale.compare.clear", function() {	
+			document.location.reload();
+			return false;		
+		});
+		
+		jQuery(document).on("cetera.sale.compare.remove", function() {	
+			document.location.reload();
+			return false;		
+		});
+		
+	
+	});
+	{% endblock %}
+{% endset %}
+{% do widget.application.addHeadString( "<script>#{script}</script>" ) %}

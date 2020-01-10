@@ -1,0 +1,1 @@
+INSERT IGNORE INTO sale_currency SET id=1, code="RUB", name="Рубль", prime=1, sort=100, rate=1, rate_cnt=1, template="# руб.";

@@ -1,0 +1,280 @@
+{% block html %}
+{% if widget.param('cart_is_empty') %}
+
+	<div class="row column">
+		<div class="callout secondary">
+			<p>{{ _('Ваша корзина пуста') }}</p>
+		</div>
+		{% if widget.param('catalog_url') %}		
+        <p><a href="{{ widget.param('catalog_url') }}" title="В каталог">{{ _('Вернуться в каталог') }}</a></p>
+		{% endif %}		
+	</div>
+
+{% elseif widget.order.id > 0 %}
+{# заказ сформирован #}
+
+    <div class="row">
+      <div class="column small-12 medium-9 large-8 medium-centered"><br><br>
+        <div class="callout">
+          <h1>Спасибо за заказ!</h1><br>
+          <p class="lead">{{ _('Ваш заказ принят. В ближайшее время с Вами свяжется менеджер для уточнения деталей.') }}</p>
+		  {% if widget.order.canBePaid() %}<p><a href="{{ widget.order.payUrl }}">Оплатить</a><p>{% endif %}
+        </div>
+        <section data-accordion data-allow-all-closed="true" class="accordion">
+          <div data-accordion-item class="accordion-item"><a href="#" title="" class="accordion-title">{{ _('Показать подробности заказа') }}</a>
+            <div data-tab-content class="accordion-content">
+			  <a href="#" title="" class="medium-float-right">Распечатать заказ</a>
+              <h2>{{ _('Заказ №') }}{{ widget.order.id }} {{ _('от') }} {{ widget.order.date|date('d.m.Y') }}<br>{{ _('на сумму') }} {{ widget.order.getTotal(1)|raw }}</h2>
+
+              <h3><small>{{ _('Способ доставки') }}</small></h3>
+              <p>{{ widget.order.deliveryData.name }}</p>
+              <h3><small>{{ _('Способ оплаты') }}</small></h3>
+              <p>{{ widget.order.paymentData.name }}</p>
+              <h3><small>{{ _('Cостав заказа') }}</small></h3>
+              <!-- Data-->
+			  {% for c in widget.order.getProducts() %}
+			  <div class="row">
+				  <div class="small-10 small-offset-1 medium-offset-0 medium-2 large-2 column">
+				    {% if c.product.pic %}
+					<p><img src="/imagetransform/width_200_height_200_fit_2{{ c.product.pic }}" alt="{{ c.product.name }}" class="product-tile-thumbnail"></p>
+					{% endif %}
+				  </div>
+				  <div class="medium-10 large-10 column">
+					<div class="row">
+					  <div class="small-12 large-5 column">
+						<p>
+							<a href="{{ c.product.url }}">{{ c.product.name }}{% if c.offer %}, {{ c.offer.name }}{% endif %}</a>
+						</p>
+						{% if c.options %}
+							{% for o in c.options %}
+							<p>
+								{{ o.name }}: {{ o.value }}
+							</p>
+							{% endfor %}
+						{% endif %}							
+					  </div>
+					  <div class="small-12 large-2 column">
+							{{ c.displayPrice|raw }}							
+					  </div>
+					  <div class="small-6 large-2 column">{{ c.quantity }}&nbsp;шт</div>
+					  <div class="small-6 large-3 column">
+						<p class="lead">=&nbsp;{{ c.displaySum|raw }}</p>
+					  </div>
+					</div>
+				  </div>
+			  </div>
+			  {% endfor %}
+              <div class="row column text-right">
+                <p class="lead">{{ _('ИТОГО') }}: &#160;<b>{{ widget.order.getProductsCost(1)|raw }}</b></p>
+              </div>
+            </div>
+          </div>
+        </section>
+		{% if widget.param('catalog_url') %}
+        <p>&#160;</p>		
+        <p class="text-center"><a href="{{ widget.param('catalog_url') }}" title="В каталог">{{ _('Вернуться в каталог') }}</a></p>
+		{% endif %}
+      </div>
+	</div>
+
+
+{% else %}
+{# формирование заказа #}
+	<div id="{{ widget.uniqueId }}">
+
+		{{ widget.widgetTitle|raw }}
+		
+		<div class="row">
+		  <div class="small-12 medium-11 large-8 column content-form">	
+			<form class="x-order-form" method="post" data-abide novalidate>
+                {{ widget.hiddenFields|raw }}
+		
+			  {% if widget.order.getPersonTypes()|length > 0 %}
+			  <fieldset class="fieldset">
+				<legend>{{ _('Информация о покупателе') }}</legend>
+				
+				{% if widget.order.getPersonTypes()|length > 1 %}
+				<fieldset>
+					<div class="row small-up-1 medium-up-2 large-up-3">
+					{% for p in widget.order.getPersonTypes() %}
+						<div class="column">
+							<input id="user-{{ p.id }}" type="radio" name="person_type" class="x-person-type" value="{{ p.id }}"{% if loop.first %} checked{% endif %}>
+							<label for="user-{{ p.id }}">{{ p.name }}</label>
+						</div>
+				    {% endfor %}
+					</div>
+				</fieldset><br>	
+				{% else %}
+					<input name="person_type" type="hidden" value="{{ widget.order.personTypes[0].id }}">
+				{% endif %}
+				
+				{% for p in widget.order.getPersonTypes() %}
+				<div id="props-{{ p.id }}" class="x-order-props{% if not loop.first %} hide{% endif %}">
+					{% set group %}{% endset %}
+					{% for f in widget.getProps(p.id) %}
+						{% if group != f.group_name %}
+							<h5><b>{{ f.group_name }}</b></h5>
+						{% endif %}
+						
+						{% if f.type == 1 or f.type == 'TEXT' %}
+							<label for="x-prop-{{ f.id }}">{{ f.name }}{% if f.required %} *{% endif %}</label>
+							<input id="x-prop-{{ f.id }}" name="props[{{ f.id }}]" type="text" {% if f.required %} class="required" required{% endif %} value="{{ f.default_value }}" {% if f.is_email %} pattern="email"{% endif %} />
+						{% endif %}
+						
+						{% if f.type == 2 or f.type == 'CHECKBOX' %}
+							<label for="x-prop-{{ f.id }}">{{ f.name }}{% if f.required %} *{% endif %}</label>
+							<input id="x-prop-{{ f.id }}" name="props[{{ f.id }}]" type="checkbox" {% if f.required %} class="required" required{% endif %} value="1" />
+						{% endif %}	
+						
+						{% if f.type == 'CITY' %}
+							<label for="x-prop-{{ f.id }}">{{ f.name }}{% if f.required %} *{% endif %}</label>
+							<input id="x-prop-{{ f.id }}" name="props[{{ f.id }}]" type="text" class="x-sale-city{% if f.required %} required{% endif %}"{% if f.required %} required{% endif %} value="{{ f.default_value }}" />
+						{% endif %}						
+
+						{% if f.note %}
+						<p class="help-text">{{ f.note }}</p>
+						{% endif %}	
+						
+						{% set group %}{{ f.group_name }}{% endset %}
+					{% endfor %}
+				</div>
+				{% endfor %}
+				
+			  </fieldset>	
+			  {% endif %}
+			  
+			  {% block payment %}
+			  <fieldset class="fieldset">
+				<legend>{{ _('Способ оплаты') }}</legend>
+				{% for p in widget.getOrder().getPaymentMethods(1) %}
+					<div class="hide x-payment-method x-payment-{{ p.id }}">
+						<label>
+						  <input type="radio" name="payment_method" {% if loop.first %} checked{% endif %} value="{{ p.id }}" {% if widget.order.paymentData and widget.order.paymentData.id == p.id %}checked{% endif %} >&#160; {{ p.name }}
+						</label>
+						{% if p.note %}<p class="help-text"> {{ p.note }}</p>{% endif %}
+					</div>
+				{% endfor %}			
+			  </fieldset>	
+			  {% endblock %}			  
+
+			  {% block delivery %}
+			  <fieldset class="fieldset">
+				<legend>{{ _('Способ доставки') }}</legend>
+				{% for d in widget.getOrder().getDeliveryMethods(1) %}
+					{% set html %}{{ d.getHtml()|raw }}{% endset %}
+					<div class="hide x-delivery-method x-delivery-{{ d.id }}">
+						<label>
+						  <input type="radio" name="delivery_method" {% if loop.first %} checked{% endif %} value="{{ d.id }}">
+						  &#160; {{ d.name }} — 
+						  {% if not html and d.getCost(false,false)>=0 %}
+							{{ d.getCost(true,false)|raw }}
+						  {% else %}
+							<a data-id="{{ d.id }}" class="x-delivery-method-calculate button small" id="x-delivery-method-calculate-{{ d.id }}">{{ _('Рассчитать') }}</a>
+							<span class="x-delivery-method-cost"></span>
+						  {% endif %}
+						</label>
+						{% if html %}
+							<div class="row">
+								<div class="small-11 small-offset-1 columns x-delivery-method-html" id="x-delivery-method-html-{{ d.id }}">
+									{{ html }}
+								</div>
+							</div>
+						{% endif %}
+					</div>
+				{% endfor %}
+			  </fieldset>
+			  {% endblock %}			  
+		
+			  {% block products %}
+			  <div class="content">
+				<h3>{{ _('Проверьте состав заказа') }}</h3>
+				
+				{% for c in widget.order.getProducts() %}
+				<div class="row">
+				  <div class="small-10 small-offset-1 medium-offset-0 medium-2 large-2 column">
+					<p><img src="/imagetransform/width_200_height_200_fit_2{{ c.product.pic }}" alt="{{ c.product.name }}" class="product-tile-thumbnail"></p>
+				  </div>
+				  <div class="medium-10 large-10 column">
+					<div class="row">
+					  <div class="small-12 large-5 column">
+						<p><a href="{{ c.product.url }}">{{ c.product.name }}{% if c.offer %}, {{ c.offer.name }}{% endif %}</a></p>
+						{% if c.options %}
+							{% for o in c.options %}
+							<p>
+								{{ o.name }}: {{ o.value }}
+							</p>
+							{% endfor %}
+						{% endif %}						
+					  </div>
+					  <div class="small-12 large-2 column">
+							{{ c.displayPrice|raw }}
+							{% if c.product.discount > 0 %}
+							<span class="text-dark-gray"><del style="white-space: nowrap">{{ c.product.displayFullPrice|raw }}</del></span>
+							{% endif %}							
+					  </div>
+					  <div class="small-6 large-2 column">{{ c.quantity }}&nbsp;{{ _('шт.') }}</div>
+					  <div class="small-6 large-3 column">
+						<p class="lead">=&nbsp;{{ c.displaySum|raw }}</p>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				{% endfor %}
+				
+				<p><a href="{{ widget.param('cart_url') }}" title="">← {{ _('Изменить состав заказа в корзине') }}</a></p>
+			  </div>
+			  {% endblock %}
+			  
+			  <div class="callout">Сумма: &#160;<b class="lead">{{ widget.order.getProductsCost(1)|raw }}</b><br>
+				Доставка: &#160;<b class="lead"><span class="x-delivery-cost"></span></b>
+				<div class="stat no-wrap">Итого: <span class="x-total"></span></div>
+			  </div>
+			  <p class="x-order-error"></p>
+			  <p>
+				<button class="button small-expanded x-order-confirm" disabled>{{ _('Подтвердить заказ') }}</button>
+			  </p>		  
+			  
+			</form>
+		  </div>
+		</div>
+			
+	</div>	
+	
+{% endif %}			
+	
+{% endblock %}	
+		
+	{% set script %}
+		
+		document.addEventListener('DOMContentLoaded', function () {
+		
+			jQuery('#{{ widget.uniqueId }} input[name="person_type"]').on('change', function(){
+				
+				jQuery('.x-order-props').addClass('hide');
+				jQuery('.x-order-props .required').removeAttr('required');
+				
+				jQuery('#props-'+jQuery(this).val()).removeClass('hide');
+				jQuery('#props-'+jQuery(this).val()+' .required').attr('required','required');
+				
+				sale_order_get_available_payments( jQuery('#{{ widget.uniqueId }} .x-order-form') );
+				
+			});
+			jQuery('.x-order-props.hide .required').removeAttr('required');
+			
+			jQuery('#{{ widget.uniqueId }} input[name="delivery_method"]').on('change', function(){				
+				sale_order_get_available_payments( jQuery('#{{ widget.uniqueId }} .x-order-form') );				
+			});		
+
+			jQuery('#{{ widget.uniqueId }} input[name="payment_method"]').on('change', function(){				
+				sale_order_get_available_payments( jQuery('#{{ widget.uniqueId }} .x-order-form') );				
+			});			
+				
+			jQuery('#{{ widget.uniqueId }} input').on('change', function(){	
+				sale_order_check_form( jQuery('#{{ widget.uniqueId }} .x-order-form') );	
+			});
+		
+			sale_order_get_available_payments( jQuery('#{{ widget.uniqueId }} .x-order-form') );	
+
+		});
+	{% endset %}
+	{% do widget.application.addHeadString( "<script>#{script}</script>" ) %}

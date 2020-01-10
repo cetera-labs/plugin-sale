@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+<schema>
+
+<object name="sale_products" description="Goods[ru=Товары]" fixed="1" handler="" plugin="">
+    <field name="tag" type="3" pseudo_type="0" description="Sort[ru=Сортировка]" length="1" show="1" required="0" fixed="1" editor="0" editor_user="" default_value="" />
+    <field name="alias" type="1" pseudo_type="0" description="Alias" length="255" show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+    <field name="dat" type="5" pseudo_type="0" description="Date create[ru=Дата создания]" length="1" show="0" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+    <field name="dat_update" type="5" pseudo_type="0" description="Edit date[ru=Дата изменения]" length="1" show="0" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+	<field name="autor" type="6" pseudo_type="1003" description="Author[ru=Автор]" length="1" show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+    <field name="type" type="3" pseudo_type="0" description="Properties[ru=Свойства]" length="1" show="0" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+    <field name="idcat" type="3" pseudo_type="0" description="Section[ru=Раздел]" length="1" show="0" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+
+	<field name="name"  type="1" pseudo_type="0"    description="Title[ru=Наименование]"     length="300"  show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+	<field name="pic"   type="4" pseudo_type="0"    description="Picture[ru=Картинка]"       length="4"    show="1" required="0" fixed="1" editor="32" editor_user="" default_value="" />
+	<field name="short" type="1" pseudo_type="0"    description="Short[ru=Краткое описание]" length="1000" show="1" required="0" fixed="1" editor="33" editor_user="" default_value="" />
+	<field name="price" type="15" pseudo_type="0"   description="Price[ru=Цена]"             length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+	<field name="currency" type="1" pseudo_type="1200" description="Currency[ru=Валюта]"        length="3"    show="1" required="1" fixed="1" editor="200" editor_user="" default_value="RUB" />
+	<field name="quantity" type="3" pseudo_type="0" description="Quantity[ru=Количество]"    length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="1" />
+	<field name="code"  type="1" pseudo_type="0"    description="Code[ru=Артикул]"           length="100"  show="1" required="0" fixed="0" editor="0" editor_user="" default_value="" />
+	<field name="text"  type="14" pseudo_type="0"   description="Text[ru=Описание]"          length="1"    show="1" required="0" fixed="1" editor="0" editor_user="" default_value="" />
+	
+	<field name="meta_title" type="1"       pseudo_type="0"  description="Meta title"       length="1000" show="1" required="0" fixed="1" editor="1"  editor_user="" default_value="" page="SEO" />
+	<field name="meta_keywords" type="1"    pseudo_type="0"  description="Meta keywords"    length="1000" show="1" required="0" fixed="1" editor="16" editor_user="" default_value="" page="SEO" />
+	<field name="meta_description" type="1" pseudo_type="0"  description="Meta description" length="1000" show="1" required="0" fixed="1" editor="16" editor_user="" default_value="" page="SEO" />
+</object>
+
+<object name="sale_offers" description="Offers[ru=Торговые предложения]" fixed="1" handler="" plugin="">
+    <field name="tag" type="3" pseudo_type="0" description="Sort[ru=Сортировка]" length="1" show="1" required="0" fixed="1" editor="0" editor_user="" default_value="" />
+    <field name="alias" type="1" pseudo_type="0" description="Alias" length="255" show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+    <field name="dat" type="5" pseudo_type="0" description="Date create[ru=Дата создания]" length="1" show="0" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+    <field name="dat_update" type="5" pseudo_type="0" description="Edit date[ru=Дата изменения]" length="1" show="0" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+	<field name="autor" type="6" pseudo_type="1003" description="Author[ru=Автор]" length="1" show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+    <field name="type" type="3" pseudo_type="0" description="Properties[ru=Свойства]" length="1" show="0" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+
+	<field name="name"     type="1"  pseudo_type="0" description="Title[ru=Наименование]"   length="300"  show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+	<field name="product"  type="13" pseudo_type="0" description="Product[ru=Товар]"        length="sale_products"  show="1" required="1" fixed="1" editor="17" editor_user="" default_value="" />
+	<field name="price"    type="15" pseudo_type="0" description="Price[ru=Цена]"           length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
+	<field name="currency" type="1" pseudo_type="1200" description="Currency[ru=Валюта]"    length="3"    show="1" required="1" fixed="1" editor="200" editor_user="" default_value="RUB" />
+	<field name="quantity" type="3"  pseudo_type="0" description="Quantity[ru=Количество]"  length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="1" />
+	<field name="code"     type="1"  pseudo_type="0" description="Code[ru=Артикул]"         length="100"  show="1" required="0" fixed="0" editor="0" editor_user="" default_value="" />
+</object>
+
+<table name="sale_carts">
+    <field name="id" type="int(11)" null="0" auto_increment="1" />
+    <field name="user_id" type="int(11)" null="1"  />
+	<field name="uid" type="char(32)" null="1" />
+    <field name="date" type="datetime" null="1" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>
+    <key name="user_id" unique="0">
+        <column name="user_id" />
+    </key>	
+	<key name="uid" unique="0">
+        <column name="uid" />
+    </key>	
+</table>
+
+<table name="sale_cart_products">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />
+    <field name="cart_id" type="int(11)" null="0" />
+    <field name="product_id" type="int(11)" null="1"  />
+	<field name="offer_id" type="int(11)" null="0" default="0"  />
+	<field name="quantity" type="smallint(6)" null="0" default="1" />
+	<field name="options" type="text" null="0" />
+	<field name="name" type="text" null="1" />
+	<field name="price" type="float" null="1" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+    <key name="cart_id" unique="1">
+        <column name="cart_id" />
+		<column name="product_id" />
+		<column name="offer_id" />
+		<column name="options" length="100" />
+    </key>	
+</table>
+
+<table name="sale_wishlist">
+    <field name="user_id" type="int(11)" null="0" />
+    <field name="product_id" type="int(11)" null="0"  />
+    <key name="user_id" unique="0">
+        <column name="user_id" />
+    </key>	
+</table>
+
+<table name="sale_delivery">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />	
+	<field name="name" type="varchar(300)" null="0" />
+	<field name="active" type="tinyint(3)" null="0" default="1" />
+	<field name="tag" type="int(11)" null="0" default="100" />
+	<field name="calculator" type="varchar(300)" null="0" />
+	<field name="calculator_params" type="text" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+</table>
+
+<table name="sale_discount">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />	
+	<field name="name" type="varchar(300)" null="0" />
+	<field name="active" type="tinyint(3)" null="0" default="1" />
+	<field name="priority" type="int(11)" null="0" default="1" />
+	<field name="value" type="float" null="0" default="0" />
+	<field name="value_type" type="tinyint(3)" null="0" default="0" />
+	<field name="max_discount" type="float" null="0" default="0" />
+	<field name="last_discount" type="tinyint(3)" null="0" default="0" />
+	<field name="describ" type="varchar(500)" null="1" />
+	<field name="conditions" type="varchar(500)" null="1" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+</table>
+
+<table name="sale_coupon">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />	
+	<field name="code" type="varchar(100)" null="0" />
+	<field name="active" type="tinyint(3)" null="0" default="1" />
+	<field name="discount_id" type="int(11)" null="0" />
+	<field name="mode" type="tinyint(3)" null="0" default="0" />
+	<field name="describ" type="varchar(300)" null="1" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+    <key name="code" unique="1">
+        <column name="code" />
+    </key>		
+</table>
+
+<table name="sale_payment">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />
+	
+	<field name="name" type="varchar(300)" null="0" />
+	<field name="active" type="tinyint(3)" null="0" default="1" />
+	<field name="note" type="varchar(500)" null="1" />
+	<field name="picture" type="varchar(300)" null="1" />
+	<field name="tag" type="int(11)" null="0" default="100" />
+	<field name="gateway" type="varchar(300)" null="0" />
+	<field name="gateway_params" type="text" />
+	
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+</table>
+
+<table name="sale_delivery_payment">
+	<field name="delivery_id" type="int(11)" null="0" />
+	<field name="payment_id" type="int(11)" null="0" />
+		
+    <key name="delivery">
+        <column name="delivery_id" />
+    </key>	
+	<key name="payment">
+        <column name="payment_id" />
+    </key>	
+</table>
+
+<table name="sale_payment_transactions">
+    <field name="id" type="int(11)" null="0" auto_increment="1" />
+    <field name="order_id" type="int(11)" null="0"  />
+	<field name="gateway" type="varchar(32)" null="0" />
+	<field name="transaction_id" type="varchar(32)" null="0" />
+    <field name="date" type="datetime" null="0" />
+	<field name="data" type="text" null="0" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>
+    <key name="order_id" unique="0">
+        <column name="order_id" />
+    </key>	
+	<key name="transaction_id" unique="1">
+        <column name="transaction_id" />
+    </key>	
+</table>
+
+<table name="sale_orders">
+    <field name="id" type="int(11)" null="0" auto_increment="1" />
+    <field name="user_id" type="int(11)" null="1"  />
+	<field name="status" type="tinyint(3)" null="0" default="0" />
+	<field name="currency" type="char(3)" null="0" default="RUB" />
+	<field name="paid" type="tinyint(3)" null="0" default="0" />
+    <field name="date" type="datetime" null="1" />
+	<field name="date_update" type="datetime" null="1" />
+	<field name="delivery_id" type="int(11)" null="0" default="0" />
+	<field name="delivery_cost" type="float" null="0" default="0" />
+	<field name="delivery_note" type="text" null="1" />
+	<field name="payment_id" type="int(11)" null="0" default="0" />	
+	<field name="person_type_id" type="int(11)" null="0" default="0" />	
+	<field name="note" type="text" null="1"  />
+	
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>
+    <key name="user_id" unique="0">
+        <column name="user_id" />
+    </key>	
+</table>
+
+<table name="sale_order_products">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />
+    <field name="order_id" type="int(11)" null="0" />
+    <field name="product_id" type="int(11)" null="1"  />
+	<field name="offer_id" type="int(11)" null="0" default="0"  />
+	<field name="product_name" type="varchar(500)" null="0"  />
+	<field name="quantity" type="smallint(6)" null="0" default="1" />
+	<field name="price" type="float" null="0" />
+	<field name="options" type="text" null="0" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>			
+    <key name="order_id" unique="1">
+        <column name="order_id" />
+		<column name="product_id" />
+		<column name="offer_id" />
+		<column name="options" length="100" />
+    </key>	
+</table>
+
+<table name="sale_order_coupons">
+    <field name="order_id" type="int(11)" null="0" />
+    <field name="coupon_id" type="int(11)" null="0"  />	
+    <key name="order">
+        <column name="order_id" />
+    </key>
+	<key name="coupon">
+        <column name="coupon_id" />
+    </key>	
+</table>
+
+<table name="sale_cart_coupons">
+    <field name="cart_id" type="int(11)" null="0" />
+    <field name="coupon_id" type="int(11)" null="0"  />	
+    <key name="PRIMARY" unique="1">
+        <column name="cart_id" />
+		<column name="coupon_id" />
+    </key>		
+</table>
+
+<table name="sale_filter">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />
+    <field name="field_id" type="int(11)" null="0" />	
+	<field name="filter_type" type="tinyint(3)" null="0" />
+	<field name="catalog_id" type="int(11)" null="0" default="0" />
+	<field name="sort" type="int(11)" null="0" default="100" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+</table>
+
+<table name="sale_person_type">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />
+	<field name="name" type="varchar(100)" null="0" />
+	<field name="active" type="tinyint(3)" null="0" default="1" />
+	<field name="sort" type="int(11)" null="0" default="100" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+</table>
+
+<table name="sale_payment_person_type">
+	<field name="payment_id" type="int(11)" null="0" />
+	<field name="person_type_id" type="int(11)" null="0" />
+		
+    <key name="payment">
+        <column name="payment_id" />
+    </key>	
+	<key name="person_type">
+        <column name="person_type_id" />
+    </key>	
+</table>
+
+<table name="sale_order_props">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />
+	<field name="person_type_id" type="int(11)" null="0" />
+	<field name="group_id" type="int(11)" />
+	<field name="active" type="tinyint(3)" null="0" default="1" />
+	<field name="name" type="varchar(100)" null="0" />
+	<field name="alias" type="varchar(100)" null="0" />
+	<field name="note" type="varchar(200)" null="1" />
+	<field name="type" type="varchar(100)" null="0" default="TEXT" />
+	<field name="required" type="tinyint(3)" null="0" default="0" />
+	<field name="default_value" type="varchar(500)" />
+	<field name="is_email" type="tinyint(3)" null="0" default="0" />
+	<field name="is_phone" type="tinyint(3)" null="0" default="0" />
+	<field name="is_login" type="tinyint(3)" null="0" default="0" />
+	<field name="sort" type="int(11)" null="0" default="100" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+    <key name="person_type">
+        <column name="person_type_id" />
+    </key>		
+</table>
+
+<table name="sale_order_props_group">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />
+	<field name="person_type_id" type="int(11)" null="0" />
+	<field name="name" type="varchar(100)" null="0" />
+	<field name="sort" type="int(11)" null="0" default="100" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+    <key name="person_type">
+        <column name="person_type_id" />
+    </key>		
+</table>
+
+<table name="sale_order_props_value">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />
+	<field name="order_id" type="int(11)" null="0" />
+	<field name="order_props_id" type="int(11)" null="0" />
+	<field name="value" type="varchar(500)" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+    <key name="order_id">
+        <column name="order_id" />
+    </key>		
+</table>
+
+<table name="sale_places">
+	<field name="id" type="int(11)" null="0" default="0" />
+	<field name="name" type="varchar(250)" null="0" />
+    <field name="code" type="char(25)" null="0" />
+	<field name="searchString" type="varchar(250)" null="1" />
+	<field name="regname" type="varchar(250)" null="1" />
+	<field name="regcode" type="char(25)" null="1" />
+	<field name="zonname" type="varchar(250)" null="1" />
+	<field name="zoncode" type="char(25)" null="1" />	
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+    <key name="search">
+        <column name="searchString" />
+    </key>		
+</table>
+
+<table name="sale_currency">
+	<field name="id" type="int(11)" null="0" auto_increment="1" />
+	<field name="code" type="char(3)" null="0" />
+	<field name="name" type="varchar(100)" null="0" />
+	<field name="prime" type="tinyint(3)" null="0" default="0" />
+	<field name="sort" type="int(11)" null="0" default="100" />
+	<field name="rate" type="float" null="0" default="1" />
+	<field name="rate_cnt" type="int(11)" null="0" default="1" />
+	<field name="template" type="varchar(100)" null="0" />
+    <key name="PRIMARY" unique="1">
+        <column name="id" />
+    </key>	
+    <key name="code" unique="1">
+        <column name="code" />
+    </key>		
+</table>
+
+</schema>

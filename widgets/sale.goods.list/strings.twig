@@ -1,0 +1,64 @@
+{% extends '@widget/sale.goods.list/default.twig' %}
+
+{% block items %}
+<div class="row column">
+	{% for m in widget.children %}
+    <div class="product-string x-product" data-id="{{ m.id }}">
+		<div class="row">
+			<div class="small-10 small-offset-1 medium-2 medium-offset-0 column">
+				{% if m.pic %}
+				<a href="{{ m.url }}"><img src="/imagetransform/width_200{{ m.pic }}" alt="" class="thumbnail product-tile-thumbnail"></a>
+				{% endif %}
+			</div>
+			<div class="small-12 medium-10 column">
+				<div class="row">
+				  <div class="column small-12 medium-4">
+					{% if m.discount > 0 %}
+					<div class="label alert">{{ _('Акция') }}</div>
+					{% endif %}				  
+				    <span class="text-dark-gray">{{ m.code }}</span>
+					<div><a href="{{ m.url }}">{{ m.name }}</a>
+					</div>
+					<p class="text-fat">{{ m.short|striptags|truncate(100)|raw }}</p>
+				  </div>
+				  <div class="column small-12 medium-3">
+					<p>
+						<b class="price text-med">{{ m.displayDiscountPrice|raw }}</b>
+						{% if m.discount > 0 %}
+						<del class="text-alert">{{ m.displayFullPrice|raw }}</del>
+						{% endif %}		
+					</p>
+					
+					{% if m.canBuy() %}
+					<div class="text-success">{{ _('В наличии') }}</div>
+					{% else %}
+					<div class="text-alert">{{ _('Нет в наличии') }}</div>
+					{% endif %}
+				  </div>
+				  <div class="small-12 medium-2 column">
+				  {% if m.canBuy() %}
+					<div class="input-group">
+					  <div class="input-group-button">
+						<button class="button x-less">–</button>
+					  </div>
+					  <input type="text" value="1" class="input-group-field x-quantity">
+					  <div class="input-group-button">
+						<button class="button x-more">+</button>
+					  </div>
+					</div>
+				  {% endif %}
+				  </div>
+				  <div class="small-12 medium-3 column">
+				    {% if m.canBuy() %}
+					<a data-tooltip aria-haspopup="true" data-click-open="false" data-disable-hover="true" title="{{ _('Товар добавлен в корзину') }}" class="x-add-to-cart top button"><i class="fa fa-lg fa-shopping-cart"></i></a>
+					{% endif %}
+					<a class="button secondary x-add-to-wishlist" data-id="{{ m.id }}"><i class="fa fa-lg fa-heart-o"></i></a>
+					<a title="{{ _('Добавить к сравнению') }}" class="button secondary x-add-to-compare" data-id="{{ m.id }}"><i class="fa fa-lg fa-signal"></i></a>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>	
+	{% endfor %}
+</div>
+{% endblock %}

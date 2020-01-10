@@ -1,0 +1,73 @@
+{% block html %} 
+
+	{% if not widget.order %}
+	<p>{{ _('Заказ не найден') }}</p>
+	{% else %}
+	{% set o = widget.order %}
+	<div class="x-order-{{ o.id }}">
+        <div class="callout medium-float-right">
+			{% if widget.order.isCancelable %}
+			<a href="#" title="" class="text-alert x-order-cancel" data-oid="{{ o.id }}">&times; {{ _('Отменить заказ') }}</a>
+			{% endif %}
+		</div>
+        <p><span class="x-order-status success label">{{ o.statusText }}</span></p>
+		
+		{% if o.paymentGateway %}
+		<p>
+			<span class="label">{{ o.payText }}</span>
+			{% if o.canBePaid() %} <a href="{{ o.payUrl }}">Оплатить</a>{% endif %}
+		</p>
+		{% endif %}		
+		
+        <h2>Заказ #{{ o.id }} от {{ o.date|date('d.m.Y') }}<br>на сумму {{ o.getTotal(1)|raw }}</h2>
+		
+		<h3><small>{{ _('Информация о покупателе') }}</small></h3>
+		<p>
+			{% for p in o.props %}
+			{{ p.name }}: {{ p.value }}<br>
+			{% endfor %}
+		</p>
+		
+		<h3><small>{{ _('Способ доставки') }}</small></h3>
+		<p>{{ widget.order.deliveryData.name }}</p>
+		
+		<h3><small>{{ _('Способ оплаты') }}</small></h3>
+		<p>{{ widget.order.paymentData.name }}</p>
+
+		<h3><small>{{ _('Cостав заказа') }}</small></h3>
+		{% for c in widget.order.getProducts() %}
+		<div class="row">
+		  <div class="small-10 small-offset-1 medium-offset-0 medium-2 large-2 column">
+		    {% if c.product and c.product.pic %}
+			<p><img src="/imagetransform/width_200_height_200_fit_2{{ c.product.pic }}" alt="{{ c.product.name }}" class="product-tile-thumbnail"></p>
+			{% endif %}
+		  </div>
+		  <div class="medium-10 large-10 column">
+			<div class="row">
+			  <div class="small-12 large-5 column">
+				<p>
+					{% if c.product %}
+					<a href="{{ c.product.url }}">{{ c.product.name }}</a>
+					{% else %}
+					{{ c.name }}
+					{% endif %}
+				</p>
+			  </div>
+			  <div class="small-12 large-2 column">{{ c.displayPrice|raw }}
+			  </div>
+			  <div class="small-6 large-2 column">{{ c.quantity }}&nbsp;{{ _('шт.') }}</div>
+			  <div class="small-6 large-3 column">
+				<p class="lead">=&nbsp;{{ c.displaySum|raw }}</p>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		{% endfor %}
+		<div class="row column text-right">
+		<p class="lead">{{ _('Сумма заказа') }}: &#160;<b>{{ widget.order.getProductsCost(1)|raw }}</b></p>
+		</div>		
+			
+	</div>
+	{% endif %}
+
+{% endblock %}

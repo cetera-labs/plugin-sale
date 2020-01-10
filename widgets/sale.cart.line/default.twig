@@ -1,0 +1,36 @@
+{% if not widget.getParam('ajaxCall') %}
+	<span id="{{ widget.uniqueId }}">
+{% endif %}
+
+	{% block html %}
+	<a href="{{ widget.param('cart_url') }}" title="{{ _('Корзина') }}">
+		<span class="show-for-large"><i class="fa fa-shopping-cart"></i><b>&#160; {{ _('Корзина') }}: <span class="x-cart-count">{{ widget.cart.getProductsCount() }}</span></b></span>
+		<span class="hide-for-large"><i class="fa fa-lg fa-shopping-cart"></i><b>&#160; <span class="x-cart-count">{{ widget.cart.getProductsCount() }}</span></b></span>
+	</a> 
+	{% endblock %}
+
+{% if not widget.getParam('ajaxCall') %}
+	</span> 
+{% endif %}
+
+{% if not widget.getParam('ajaxCall') %}
+	{% set script %}
+		{% block script %}
+		document.addEventListener('DOMContentLoaded', function () {
+		
+		jQuery(document).on("cetera.sale.basket.add", function(e,data){	
+		
+			if (!isNaN(parseInt(data.count)))
+			{
+				jQuery("#{{ widget.uniqueId }} .x-cart-count").html(data.count);
+				jQuery("#{{ widget.uniqueId }} .x-cart-total").html(data.total);
+				jQuery("#{{ widget.uniqueId }} .x-cart-total-display").html(data.total_display);
+			}
+			
+		});
+		
+		});
+		{% endblock %}
+	{% endset %}
+	{% do widget.application.addHeadString( "<script>#{script}</script>" ) %}
+{% endif %}

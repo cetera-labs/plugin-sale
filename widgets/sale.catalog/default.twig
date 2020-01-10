@@ -1,0 +1,141 @@
+<div id="{{ widget.uniqueId }}">
+{% block html %}
+
+	{% if widget.error404 %}
+	
+		{% if widget.getParam('page404_template') %}
+			{% include widget.getParam('page404_template') %}
+		{% else %}
+			{% include "@widget/_common/page404.twig" %}
+		{% endif %}		
+
+	{% elseif widget.material %}
+	
+		{% widget 'Sale.Goods.Item' with { 
+			material_id:     widget.material.id,
+			show_meta:       widget.getParam('show_meta'),
+			field_picture:   widget.getParam('item_field_picture'), 
+			field_pictures:  widget.getParam('item_field_pictures'),
+			show_tabs:       widget.getParam('item_show_tabs'),
+			show_properties: widget.getParam('item_show_properties'),
+			show_comments:   widget.getParam('item_show_comments'),
+			show_options:    widget.getParam('item_show_options'),
+			template:        widget.getParam('item_template'),
+		} %}
+	
+	{% else %}
+	
+
+		{{ widget.widgetTitle|raw }}	
+
+		<div class="{{ widget.getParam('css_class') }}">
+		  <div class="row">
+			<aside class="medium-4 large-3 column">
+			
+			  {% block left_column %}
+			
+			  {#
+			  <div class="row">
+			  
+				<div class="small-6 medium-12 column hide-for-medium">
+				  <div data-toggle="catalog-filter" class="button expanded secondary"><i class="fa fa-lg fa-sliders">&#160;</i>Фильтр</div>
+				</div>
+
+				
+			  </div>
+			  #}
+						  
+		      <div data-toggle="menu-catalog" class="hide-for-medium button expanded"><i class="fa fa-bars">&#160;</i>{{ _('Каталог') }}</div>	  
+			  
+			  <div id="menu-catalog" data-toggler="hide-for-small-only" class="nav-catalog__group callout hide-for-small-only">					
+				{% widget 'Menu' with { catalog: widget.getParam('product_catalog'), depth:0, expand_active: 1, css_class: 'vertical menu', css_class_submenu: 'vertical menu nested' } %}				
+			  </div>	
+			  
+			  {% if widget.getParam('compare') %}
+			       {% widget 'Sale.Compare.Line' with { compare_url: widget.getParam('compare_url') } %}
+			  {% endif %}				  
+
+			  {% if widget.getParam('filter') %}
+			       {% widget 'Sale.Filter' with { catalog: widget.catalog, filter_name: widget.getParam('filter_name'), css_class: widget.getParam('filter_css_class'), skip_disabled_items: widget.getParam('filter_skip_disabled_items') } %}			  
+			  {% endif %}			  
+			  
+			  {% endblock %}
+			  
+			</aside>
+			<main class="small-12 medium-8 large-9 column">
+					
+				{% if widget.iterator.count > 0 %}
+				
+					<div class="row">
+						<div class="column small-7">{{ _('Сортировать по') }} &#160;
+						  <select class="x-sort" style="display: inline; width: 15rem;">
+							<option value="name|asc" {% if "#{widget.getParam('list_order')}|#{widget.getParam('list_sort')}" == 'name|asc' %}selected{% endif %}>{{ _('Названию') }}</option>
+							<option value="price|asc" {% if "#{widget.getParam('list_order')}|#{widget.getParam('list_sort')}" == 'price|asc' %}selected{% endif %}>{{ _('Цене (возрастание)') }}</option>
+							<option value="price|desc" {% if "#{widget.getParam('list_order')}|#{widget.getParam('list_sort')}" == 'price|desc' %}selected{% endif %}>{{ _('Цене (убывание)') }}</option>
+						  </select>
+						</div>
+						<div class="column small-12 medium-5 text-right">
+							<span class="text-dark-gray">{{ _('Вид') }}: &#160;&#160;</span>
+							<a href="#" class="x-view" data-view="tiles" title="Плитка"><i class="fa fa-th fa-lg">&#160;&#160;</i></a>
+							<a href="#" class="x-view" data-view="strings" title="Список"><i class="fa fa-list fa-lg">&#160;&#160;</i></a>
+						</div>
+					</div><br>				
+				
+					{% widget 'Sale.Goods.List' with { iterator: widget.iterator, template: widget.getListTemplate(), limit: widget.getParam('list_limit'), paginator: true, paginator_url: widget.listPaginatorUrl } %}	
+				{% else %}
+					{% if widget.getParam('filter') and widget.filter.isActive() %}
+						<div class="callout alert">{{ _('Отсутствуют товары, удовлетворяющие заданным условиям.') }}</div>
+					{% else %}
+						<div class="callout">{{ _('Товары отсутствуют.') }}</div>
+					{% endif %}
+				{% endif %}
+			</main>
+		  </div>
+		</div>
+	
+	{% endif %}
+{% endblock %}	  
+</div> 
+
+{% set script %}
+	{% block script %}
+	document.addEventListener('DOMContentLoaded', function () {
+	
+		jQuery('#{{ widget.uniqueId }} .x-clear').click(function(){
+			saleClearFilter( jQuery(this).parents('.x-filter') );
+			return false;
+		});
+		
+		jQuery('#{{ widget.uniqueId }} .x-clear-all').click(function(){
+			saleClearFilter( jQuery('#{{ widget.uniqueId }}') );
+			jQuery('#{{ widget.uniqueId }} form').submit();
+			return false;
+		});	
+
+		jQuery('#{{ widget.uniqueId }}').find('.x-filter').each(function(){
+			saleCheckFilter( jQuery(this) );
+		});
+		
+		jQuery('#{{ widget.uniqueId }} input, #{{ widget.uniqueId }} select').on('change', function(){
+			saleCheckFilter( jQuery(this).parents('.x-filter') );
+		});
+		
+		jQuery('#{{ widget.uniqueId }} .x-sort').on('change', function(){		
+			var qd = sale_qd ();
+			qd['sort'] = jQuery(this).val();
+			location = '?' + jQuery.param(qd);
+			
+		});
+
+		jQuery('#{{ widget.uniqueId }} .x-view').on('click', function(e){		
+			e.preventDefault();
+			var qd = sale_qd ();
+			qd['view'] = jQuery(this).attr('data-view');
+			location = '?' + jQuery.param(qd);
+			
+		});
+			
+	});
+	{% endblock %}
+{% endset %}
+{% do widget.application.addHeadString( "<script>#{script}</script>" ) %}

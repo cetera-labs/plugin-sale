@@ -1,0 +1,36 @@
+{% block html %}
+
+	{{ widget.widgetTitle|raw }} 
+
+	{% for o in widget.orders %}
+        <div class="row x-order-{{ o.id }}">
+          <div class="small-10 large-11 column">
+            <div class="row">
+              <div class="small-12 large-6 large-push-2 column">
+				<a href="{{ widget.getParam('order_detail_url')|replace({'{id}':o.id}) }}" title="{{ _('Подробности заказа') }}">Заказ №{{ o.id }} от {{ o.date|date('d.m.Y') }} на сумму {{ o.getTotal(1)|raw }}</a>
+			  </div>
+              <div class="small-12 large-2 large-pull-6 column"><span class="x-order-status label success">{{ o.statusText }}</span></div>
+              <div class="small-12 large-4 column">
+			  {% if o.paymentGateway %}
+					<span class="label">{{ o.payText }}</span>
+					{% if o.canBePaid() %}<a href="{{ o.payUrl }}">Оплатить</a>{% endif %}
+			  {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="small-2 large-1 text-center large-text-left column">
+		  {% if o.isCancelable %}
+			<a href="#" title="{{ _('Отменить заказ') }}" class="lead x-order-cancel" data-oid="{{ o.id }}"><img src="/plugins/sale/images/delete-circle.svg" style="width: 28px; margin-top: -.5em;" alt="&amp;times;"></a>
+		  {% endif %}
+		  </div>
+          <div class="column"><br>
+            <hr class="hide-for-large"><br class="hide-for-large">
+          </div>
+        </div>
+	{% else %}
+		<div class="row column">
+			<p>{{ _('Нет заказов') }}.</p>
+		</div>
+	{% endfor %}	
+
+{% endblock %}

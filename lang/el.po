@@ -1,0 +1,694 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Модуль \"Торговля\"\n"
+"POT-Creation-Date: 2017-03-10 10:56+0300\n"
+"PO-Revision-Date: 2017-05-11 16:12+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _;translate\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Last-Translator: \n"
+"Language: el\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: ext/Delivery.js:8 ext/Discounts.js:8 ext/OrderProps.js:11 ext/Payment.js:10
+#: ext/PersonType.js:11
+msgid "Акт."
+msgstr "Πράξη."
+
+#: ext/Delivery.js:8 ext/Discounts.js:8 ext/OrderProps.js:11
+#: ext/OrderProps.js:12 ext/Payment.js:10 ext/PersonType.js:11
+msgid "Да"
+msgstr "Ναί"
+
+#: ext/Delivery.js:8 ext/Discounts.js:8 ext/OrderProps.js:11
+#: ext/OrderProps.js:12 ext/Payment.js:10 ext/PersonType.js:11
+msgid "Нет"
+msgstr "Όχι"
+
+#: ext/Delivery.js:9 ext/OrderProps.js:16 ext/OrderPropsGroups.js:11
+#: ext/Payment.js:11 ext/PersonType.js:12
+msgid "Сорт."
+msgstr "Διαλογή"
+
+#: ext/Delivery.js:10 ext/DeliveryEdit.js:27 ext/DiscountEdit.js:43
+#: ext/Discounts.js:10 ext/OrderProps.js:17 ext/OrderPropsEdit.js:27
+#: ext/OrderPropsGroupEdit.js:27 ext/OrderPropsGroups.js:13 ext/Payment.js:12
+#: ext/PaymentEdit.js:30 ext/PaymentEdit.js:114 ext/PersonType.js:13
+#: ext/PersonTypeEdit.js:26
+msgid "Название"
+msgstr "Όνομα"
+
+#: ext/DeliveryEdit.js:32 ext/DiscountEdit.js:48 ext/OrderPropsEdit.js:37
+#: ext/PaymentEdit.js:35 ext/PersonTypeEdit.js:31
+msgid "Активность"
+msgstr "Δραστηριότητα"
+
+#: ext/DeliveryEdit.js:38 ext/Filter.js:54 ext/FilterEdit.js:78
+#: ext/OrderPropsEdit.js:134 ext/OrderPropsGroupEdit.js:46
+#: ext/PaymentEdit.js:41 ext/PersonTypeEdit.js:37
+msgid "Сортировка"
+msgstr "Διαλογή"
+
+#: ext/DeliveryEdit.js:45 lang/messages.php:3
+msgid "Калькулятор стоимости"
+msgstr "Υπολογισμός του κόστους"
+
+#: ext/DeliveryEdit.js:68
+msgid "Настроить"
+msgstr "Αρμονία"
+
+#: ext/DeliveryEdit.js:115 lang/messages.php:4
+msgid "Новый способ доставки"
+msgstr "Νέα μέθοδος παράδοσης"
+
+#: ext/DiscountConditionBlock.js:51
+msgid "Добавить условие"
+msgstr "Προσθήκη κατάσταση"
+
+#: ext/DiscountConditionBlock.js:80
+msgid "все условия"
+msgstr "όλοι οι όροι"
+
+#: ext/DiscountConditionBlock.js:81
+msgid "любое из условий"
+msgstr "οποιαδήποτε από τις προϋποθέσεις"
+
+#: ext/DiscountConditionBlock.js:93
+msgid "выполнено(ы)"
+msgstr "ικανοποιείται"
+
+#: ext/DiscountConditionBlock.js:94
+msgid "не выполнено(ы)"
+msgstr "δεν είναι ικανοποιημένος"
+
+#: ext/DiscountConditionContainer.js:50
+msgid "равно"
+msgstr "είναι"
+
+#: ext/DiscountConditionContainer.js:51
+msgid "не равно"
+msgstr "δεν είναι ίσο"
+
+#: ext/DiscountConditionContainer.js:52
+msgid "содержит"
+msgstr "περιέχει"
+
+#: ext/DiscountConditionContainer.js:53
+msgid "не содержит"
+msgstr "δεν περιέχει"
+
+#: ext/DiscountConditionContainer.js:54
+msgid "больше или равно"
+msgstr "μεγαλύτερη ή ίση"
+
+#: ext/DiscountConditionContainer.js:55
+msgid "меньше"
+msgstr "μείον"
+
+#: ext/DiscountEdit.js:36
+msgid "Скидка"
+msgstr "Έκπτωση"
+
+#: ext/DiscountEdit.js:53
+msgid "Тип скидки"
+msgstr "Έκπτωση τύπου"
+
+#: ext/DiscountEdit.js:58
+msgid "в процентах"
+msgstr "σε ποσοστό"
+
+#: ext/DiscountEdit.js:59
+msgid "фиксированная сумма"
+msgstr "με ένα προκαθορισμένο ποσό"
+
+#: ext/DiscountEdit.js:60
+msgid "установить цену на товар"
+msgstr "καθορίσει την τιμή των αγαθών"
+
+#: ext/DiscountEdit.js:65
+msgid "Величина скидки"
+msgstr "Η αξία των εκπτώσεων"
+
+#: ext/DiscountEdit.js:71
+msgid "Максимальная скидка"
+msgstr "Μέγιστη έκπτωση"
+
+#: ext/DiscountEdit.js:78 ext/Discounts.js:11
+msgid "Приоритет"
+msgstr "Προτεραιότητα"
+
+#: ext/DiscountEdit.js:85
+msgid "прекратить дальнейшее применение скидок"
+msgstr "για να σταματήσει η συνεχιζόμενη έκπτωση εφαρμογή"
+
+#: ext/DiscountEdit.js:90 ext/OrderPropsEdit.js:142 ext/PaymentEdit.js:48
+msgid "Описание"
+msgstr "Περιγραφή"
+
+#: ext/DiscountEdit.js:98
+msgid "Условия"
+msgstr "Όλοι οι όροι"
+
+#: ext/DiscountEdit.js:112 ext/FilterEdit.js:103 ext/OrderPropsEdit.js:149
+#: ext/OrderPropsGroupEdit.js:56 ext/PaymentEdit.js:124
+#: ext/PersonTypeEdit.js:47
+msgid "OK"
+msgstr "OK"
+
+#: ext/DiscountEdit.js:124 ext/FilterEdit.js:118 ext/OrderPropsEdit.js:158
+#: ext/OrderPropsGroupEdit.js:65 ext/PaymentEdit.js:150
+#: ext/PersonTypeEdit.js:56
+msgid "Отмена"
+msgstr "Ακύρωση"
+
+#: ext/DiscountEdit.js:134
+msgid "Изменить скидку"
+msgstr "Αλλαγή έκπτωση"
+
+#: ext/DiscountEdit.js:134
+msgid "Новая скидка"
+msgstr "Η νέα έκπτωση"
+
+#: ext/Discounts.js:9
+msgid "Величина"
+msgstr "Αξία"
+
+#: ext/Filter.js:51 ext/FilterEdit.js:31
+msgid "Поле"
+msgstr "Πεδίο"
+
+#: ext/Filter.js:52 widgets/sale.catalog/default.twig:74
+msgid "Вид"
+msgstr "Θέα"
+
+#: ext/Filter.js:53
+msgid "Только для раздела"
+msgstr "Μόνο το τμήμα"
+
+#: ext/FilterEdit.js:60
+msgid "Вид фильтра"
+msgstr "Δείτε το φίλτρο"
+
+#: ext/FilterEdit.js:73
+msgid "Показывать только в разделе"
+msgstr "Εμφάνιση μόνο τμήμα"
+
+#: ext/FilterEdit.js:128
+msgid "Редактировать поле"
+msgstr "Επεξεργασία τομέα"
+
+#: ext/FilterEdit.js:128
+msgid "Добавить поле"
+msgstr "Προσθήκη πεδίου"
+
+#: ext/OrderEdit.js:13 widgets/sale.order/default.twig:26
+msgid "Заказ №"
+msgstr "Παραγγελία №"
+
+#: ext/OrderEdit.js:13 widgets/sale.order/default.twig:26
+msgid "от"
+msgstr "από"
+
+#: ext/OrderEdit.js:25
+msgid "Статус оплаты"
+msgstr "Κατάσταση πληρωμής"
+
+#: ext/OrderEdit.js:26 config.php:88
+msgid "Статус заказа"
+msgstr "Την κατάσταση της παραγγελίας"
+
+#: ext/OrderEdit.js:39 ext/Orders.js:10
+msgid "Покупатель"
+msgstr "Αγοραστής"
+
+#: ext/OrderEdit.js:40 widgets/sale.order.detail/default.twig:26
+#: widgets/sale.order/default.twig:30 widgets/sale.order/default.twig:140
+msgid "Способ оплаты"
+msgstr "Μέσα πληρωμής"
+
+#: ext/OrderEdit.js:41 widgets/sale.order.detail/default.twig:23
+#: widgets/sale.order/default.twig:28 widgets/sale.order/default.twig:154
+msgid "Способ доставки"
+msgstr "Μέθοδος ναυτιλίας"
+
+#: ext/OrderEdit.js:62 ext/OrderEdit.js:86 config.php:109
+msgid "Товары"
+msgstr "Εμπορεύματα"
+
+#: ext/OrderEdit.js:68 ext/Orders.js:34
+msgid "Товар"
+msgstr "Εμπορεύματα"
+
+#: ext/OrderEdit.js:68 ext/Orders.js:34 classes/Sale/Order.php:214
+msgid "Цена"
+msgstr "Τιμή"
+
+#: ext/OrderEdit.js:68 ext/Orders.js:34 classes/Sale/Order.php:214
+msgid "Кол-во"
+msgstr "Αριθμός"
+
+#: ext/OrderEdit.js:68 ext/Orders.js:34 classes/Sale/Order.php:214
+msgid "Стоимость"
+msgstr "Κόστος"
+
+#: ext/OrderEdit.js:76 ext/OrderEdit.js:88 ext/Orders.js:42
+msgid "Всего"
+msgstr "Μόνο"
+
+#: ext/OrderEdit.js:87
+msgid "Доставка"
+msgstr "Διανομή"
+
+#: ext/OrderProps.js:12
+msgid "Обяз."
+msgstr "Υποχρεωτική"
+
+#: ext/OrderProps.js:14 ext/OrderPropsEdit.js:47 ext/OrderPropsGroupEdit.js:32
+#: ext/OrderPropsGroups.js:12
+msgid "Тип плательщика"
+msgstr "Τύπο του πληρωτή"
+
+#: ext/OrderProps.js:15 ext/OrderPropsEdit.js:77
+msgid "Группа"
+msgstr "Ομάδα"
+
+#: ext/OrderPropsEdit.js:42
+msgid "Обязательное"
+msgstr "Υποχρεωτική"
+
+#: ext/OrderPropsEdit.js:95
+msgid "Тип"
+msgstr "Τύπος"
+
+#: ext/OrderPropsEdit.js:104
+msgid "Текстовое"
+msgstr "Κείμενο"
+
+#: ext/OrderPropsEdit.js:105
+msgid "Checkbox"
+msgstr "Checkbox"
+
+#: ext/OrderPropsEdit.js:106
+msgid "Город"
+msgstr "Πόλη"
+
+#: ext/OrderPropsEdit.js:114
+msgid "Значение по умолчанию"
+msgstr "Значение по умолчанию"
+
+#: ext/OrderPropsEdit.js:118
+msgid "использовать как e-mail"
+msgstr "που χρησιμοποιούνται ως e-mail"
+
+#: ext/OrderPropsEdit.js:123
+msgid "использовать как телефон"
+msgstr "για χρήση ως τηλέφωνο"
+
+#: ext/OrderPropsEdit.js:168 ext/OrderPropsGroupEdit.js:75
+#: ext/PersonTypeEdit.js:66
+msgid "Редактировать"
+msgstr "Επεξεργασία"
+
+#: ext/OrderPropsEdit.js:168
+msgid "Новое свойство"
+msgstr "Νέα ιδιοκτησία"
+
+#: ext/OrderPropsGroupEdit.js:75
+msgid "Новая группа"
+msgstr "Νέα ομάδα"
+
+#: ext/OrderPropsSetup.js:17 config.php:134
+msgid "Свойства заказов"
+msgstr "Ιδιότητες παραγγελίες"
+
+#: ext/OrderPropsSetup.js:23
+msgid "Группы свойств"
+msgstr "Ιδιότητες της ομάδας"
+
+#: ext/Orders.js:8
+msgid "Дата"
+msgstr "Ημερομηνία"
+
+#: ext/Orders.js:15
+msgid "Статус"
+msgstr "Κατάσταση"
+
+#: ext/Orders.js:19
+msgid "Оплачен"
+msgstr "Καταβάλλεται"
+
+#: ext/Orders.js:23
+msgid "Сумма"
+msgstr "Άθροισμα"
+
+#: ext/Orders.js:58
+msgid "Подробно"
+msgstr "Λεπτομέρεια"
+
+#: ext/PaymentEdit.js:81
+msgid "Службы доставки, связанные с платежной системой"
+msgstr "Οι υπηρεσίες παράδοσης που σχετίζονται με το σύστημα πληρωμών"
+
+#: ext/PaymentEdit.js:110
+msgid "Типы плательщиков, связанные с платежной системой"
+msgstr "Τύποι των φορολογουμένων που σχετίζονται με το σύστημα πληρωμών"
+
+#: ext/PaymentEdit.js:160
+msgid "Изменить"
+msgstr "Τροποποιήσει"
+
+#: ext/PaymentEdit.js:160
+msgid "Новая платежная система"
+msgstr "Νέο σύστημα πληρωμών"
+
+#: ext/PersonTypeEdit.js:66
+msgid "Новый плательщик"
+msgstr "Νέα πληρωτή"
+
+#: ext/Setup.js:18
+msgid "Настройки магазина"
+msgstr "Ρυθμίσεις κατάστημα"
+
+#: ext/Setup.js:32
+msgid "Email отдела продаж"
+msgstr "Email αντιπρόσωπος πωλήσεων"
+
+#: ext/Setup.js:36
+msgid "Точность цены (десятичных знаков)"
+msgstr "Η ακρίβεια των τιμών (δεκαδικό)"
+
+#: ext/Setup.js:46
+msgid "Сохранить"
+msgstr "Διατηρούν"
+
+#: ext/Setup.js:64
+msgid "Настройки фильтра"
+msgstr "Ρυθμίσεις φίλτρου"
+
+#: ext/Setup.js:70
+msgid "Типы плательщиков"
+msgstr "Τύπων πληρωτές"
+
+#: classes/Sale/DeliveryCalculator/Fixed.php:9
+msgid "Фиксированная стоимость"
+msgstr "Σταθερό κόστος"
+
+#: classes/Sale/DeliveryCalculator/Fixed.php:14
+msgid "Стоимость доставки"
+msgstr "Κόστος της παράδοσης"
+
+#: classes/Sale/Order.php:107
+msgid "Ваша корзина пуста!"
+msgstr "Το καλάθι αγορών σας είναι άδειο!"
+
+#: classes/Sale/Order.php:115
+#, php-format
+msgid "Заказ №%s не найден"
+msgstr "Παραγγείλετε №%s δεν βρέθηκε"
+
+#: classes/Sale/Order.php:139
+msgid "заказ сформирован"
+msgstr "η σειρά σχηματίζεται"
+
+#: classes/Sale/Order.php:140
+msgid "заказ проверен"
+msgstr "ελέγχου προκειμένου"
+
+#: classes/Sale/Order.php:141
+msgid "заказ в обработке"
+msgstr "για να επεξεργαστούμε"
+
+#: classes/Sale/Order.php:142
+msgid "заказ готов к отправке, выдаче"
+msgstr "η σειρά είναι έτοιμο για αποστολή, την έκδοση"
+
+#: classes/Sale/Order.php:143
+msgid "заказ отправлен"
+msgstr "για αποστέλλονται"
+
+#: classes/Sale/Order.php:144
+msgid "заказ доставлен"
+msgstr "για παραδοθεί"
+
+#: classes/Sale/Order.php:145
+msgid "заказ отменен"
+msgstr "για ακυρώσεις"
+
+#: classes/Sale/Order.php:170
+msgid "ожидает оплаты"
+msgstr "εν αναμονή πληρωμής"
+
+#: classes/Sale/Order.php:171
+msgid "оплачен"
+msgstr "καταβάλλεται"
+
+#: classes/Sale/Order.php:172
+msgid "отменен"
+msgstr "ακυρώθηκε"
+
+#: classes/Sale/Order.php:173
+msgid "деньги возвращены"
+msgstr "τα χρήματα επιστρέφονται"
+
+#: classes/Sale/Order.php:214
+msgid "Наименование"
+msgstr "Όνομα"
+
+#: classes/Sale/Order.php:530
+msgid "Не указан пользователь для заказа"
+msgstr "Άγνωστη Παραγγελία χρήστη"
+
+#: classes/Sale/WidgetCart.php:14 classes/Sale/WidgetCart.php:20
+msgid "Корзина"
+msgstr "Καλάθι"
+
+#: classes/Sale/WidgetCatalog.php:34
+msgid "Страница не найдена"
+msgstr "Η σελίδα δεν βρέθηκε"
+
+#: classes/Sale/WidgetOrder.php:21 widgets/sale.cart/default.twig:87
+msgid "Оформить заказ"
+msgstr "Ταμείο"
+
+#: classes/Sale/WishList.php:33
+msgid "Не указан продукт"
+msgstr "Άγνωστο προϊόν"
+
+#: config.php:9
+msgid "Управление магазином"
+msgstr "Διαχείριση κατάστημα"
+
+#: config.php:80
+msgid "E-mail отдела продаж"
+msgstr "Email αντιπρόσωπος πωλήσεων"
+
+#: config.php:82
+msgid "Номер заказа"
+msgstr "Τον αριθμό της παραγγελίας"
+
+#: config.php:83
+msgid "E-mail покупателя"
+msgstr "E-mail στον αγοραστή"
+
+#: config.php:84
+msgid "Имя покупателя"
+msgstr "Το όνομα του αγοραστή"
+
+#: config.php:85
+msgid "Дата заказа"
+msgstr "Ημερομηνία τάξης"
+
+#: config.php:86
+msgid "Стоимость заказа"
+msgstr "Κόστος, προκειμένου"
+
+#: config.php:87
+msgid "Список товаров (HTML)"
+msgstr "Κατάλογος των προϊόντων (HTML)"
+
+#: config.php:94
+msgid "Новый заказ в магазине"
+msgstr "Νέα παραγγελία στο κατάστημα"
+
+#: config.php:95
+msgid "Отмена заказа в магазине"
+msgstr "Ακύρωση της παραγγελίας στο κατάστημα"
+
+#: config.php:104
+msgid "Магазин"
+msgstr "Κατάστημα"
+
+#: config.php:114
+msgid "Скидки"
+msgstr "Εκπτώσεις"
+
+#: config.php:119
+msgid "Заказы"
+msgstr "Παραγγελίες"
+
+#: config.php:124
+msgid "Платежные системы"
+msgstr "Τα συστήματα πληρωμών"
+
+#: config.php:129
+msgid "Способы доставки"
+msgstr "Τρόποι Αποστολής"
+
+#: data_person_type.php:31
+msgid "Нельзя удалить плательщика с ID=1"
+msgstr "Δεν μπορείτε να καταργήσετε τον πληρωτή με ID = 1"
+
+#: widgets/_common/favorite.twig:4
+msgid "Чтобы сохранять список, вам нужно:"
+msgstr "Για να αποθηκεύσετε τη λίστα, θα πρέπει να:"
+
+#: widgets/_common/favorite.twig:4
+msgid "Войти"
+msgstr "Συνδεθείτε"
+
+#: widgets/_common/favorite.twig:5
+msgid "или"
+msgstr "ή"
+
+#: widgets/_common/favorite.twig:5
+msgid "Зарегистрироваться"
+msgstr "Εγγραφείτε"
+
+#: widgets/sale.cart/default.twig:6 widgets/sale.order/default.twig:6
+msgid "Ваша корзина пуста"
+msgstr "Το καλάθι αγορών σας είναι άδειο"
+
+#: widgets/sale.cart/default.twig:9 widgets/sale.order/default.twig:9
+#: widgets/sale.order/default.twig:68
+msgid "Вернуться в каталог"
+msgstr "Επιστροφή στον κατάλογο"
+
+#: widgets/sale.cart/default.twig:78
+msgid "Количество товаров"
+msgstr "Αριθμός προϊόντων"
+
+#: widgets/sale.catalog/default.twig:66
+msgid "Сортировать по"
+msgstr "Ταξινόμηση κατά"
+
+#: widgets/sale.catalog/default.twig:68
+msgid "Названию"
+msgstr "Όνομα"
+
+#: widgets/sale.catalog/default.twig:69
+msgid "Цене (возрастание)"
+msgstr "Τιμή (επάνω)"
+
+#: widgets/sale.catalog/default.twig:70
+msgid "Цене (убывание)"
+msgstr "Τιμή (μείωση)"
+
+#: widgets/sale.catalog/default.twig:83
+msgid "Отсутствуют товары, удовлетворяющие заданным условиям."
+msgstr "Δεν υπάρχουν προϊόντα που να πληρούν συγκεκριμένες προϋποθέσεις."
+
+#: widgets/sale.catalog/default.twig:85
+msgid "Товары отсутствуют."
+msgstr "Δεν αγαθά ή υπηρεσίες."
+
+#: widgets/sale.filter/default.twig:6
+msgid "Фильтр"
+msgstr "Φίλτρο"
+
+#: widgets/sale.filter/default.twig:100
+msgid "Подобрать"
+msgstr "Σηκώστε"
+
+#: widgets/sale.filter/default.twig:101
+msgid "Сбросить фильтр"
+msgstr "Απαλοιφή φίλτρου"
+
+#: widgets/sale.goods.item/default.twig:58
+#: widgets/sale.goods.list/default.twig:16
+#: widgets/sale.goods.list/strings.twig:15
+msgid "Акция"
+msgstr "Στοκ"
+
+#: widgets/sale.goods.item/default.twig:108
+msgid "Добавить в корзину"
+msgstr "Προσθήκη στο καλάθι"
+
+#: widgets/sale.goods.item/default.twig:126
+msgid "Рассказать"
+msgstr "Μερίδιο"
+
+#: widgets/sale.goods.item/default.twig:177
+msgid "Отзывы покупателей"
+msgstr "Κριτικές πελατών"
+
+#: widgets/sale.order.detail/default.twig:4
+msgid "Заказ не найден"
+msgstr "Παραγγείλετε δεν βρέθηκε"
+
+#: widgets/sale.order.detail/default.twig:10
+msgid "Отменить заказ"
+msgstr "Ακυρώσει την παραγγελία"
+
+#: widgets/sale.order.detail/default.twig:16 widgets/sale.order/default.twig:86
+msgid "Информация о покупателе"
+msgstr "Πληροφορίες για τον πελάτη"
+
+#: widgets/sale.order.detail/default.twig:29
+#: widgets/sale.order.detail/default.twig:53 widgets/sale.order/default.twig:32
+msgid "Cостав заказа"
+msgstr "Σύνθεση της τάξης"
+
+#: widgets/sale.order.detail/default.twig:44
+#: widgets/sale.order/default.twig:202
+msgid "шт."
+msgstr "τεμ"
+
+#: widgets/sale.order.list/default.twig:28
+msgid "Нет заказов"
+msgstr "Δεν παραγγελίες"
+
+#: widgets/sale.order/default.twig:20
+msgid ""
+"Ваш заказ принят. В ближайшее время с Вами свяжется менеджер для уточнения "
+"деталей."
+msgstr ""
+"Η παραγγελία σας έγινε δεκτή. Στο εγγύς μέλλον διευθυντής θα επικοινωνήσουμε "
+"μαζί σας για περισσότερες πληροφορίες."
+
+#: widgets/sale.order/default.twig:23
+msgid "Показать подробности заказа"
+msgstr "Δείτε τα στοιχεία της παραγγελίας"
+
+#: widgets/sale.order/default.twig:26
+msgid "на сумму"
+msgstr "με το ποσό των"
+
+#: widgets/sale.order/default.twig:61
+msgid "ИТОГО"
+msgstr "ΣΥΝΟΛΟ"
+
+#: widgets/sale.order/default.twig:163
+msgid "Рассчитать"
+msgstr "Υπολογισμό"
+
+#: widgets/sale.order/default.twig:182
+msgid "Проверьте состав заказа"
+msgstr "Ελέγξτε τη σύνθεση της τάξης"
+
+#: widgets/sale.order/default.twig:211
+msgid "Изменить состав заказа в корзине"
+msgstr "Αλλαγή της σύνθεσης του καλαθιού αγορών σας"
+
+#: widgets/sale.order/default.twig:221
+msgid "Подтвердить заказ"
+msgstr "Επιβεβαίωση της παραγγελίας"
+
+#: widgets/sale.wish.list/default.twig:33
+msgid "Список пуст"
+msgstr "Λίστα είναι κενή"

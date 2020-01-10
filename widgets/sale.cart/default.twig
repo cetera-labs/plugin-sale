@@ -1,0 +1,108 @@
+{% block html %}
+
+      <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+          <div class="cell">	
+
+<div id="{{ widget.uniqueId }}">
+
+	<div class="x-sale-cart-empty{% if not widget.param('cart_is_empty') %} hide{% endif %}">
+		<div class="callout secondary"><p>{{ _('Ваша корзина пуста') }}</p></div>
+		{% if widget.param('catalog_url') %}		
+		<p><a href="{{ widget.param('catalog_url') }}" title="{{ _('В каталог') }}">{{ _('Вернуться в каталог') }}</a></p>
+		{% endif %}	
+	</div>
+
+	{% if not widget.param('cart_is_empty') %}
+
+	<div class="x-sale-cart-content">
+
+	{% if widget.param('clear_button') %}
+	<div class="text-right"><a class="button hollow alert x-sale-cart-clear" href="#">{{ _('Очистить корзину') }}</a></div>
+	{% endif %}	
+
+	{% for c in widget.cart.getProducts() %}
+	
+            <div class="grid-x grid-padding-x x-sale-cart-item" id="x-cart-item-{{ c.id }}">
+              <div class="cell small-8 medium-4 large-4"><img class="margin-bottom-6" src="{% if c.product.pic %}{{ c.product.pic  }}{% else %}{{ basePath }}/i/photo.svg{% endif %}" alt="{{ c.product.name }}"></div>
+              <div class="cell small-16 medium-8 large-8">
+                <h5 class="margin-bottom-3"><a href="{{ c.product.url }}">{{ c.product.name }}</a></h5>
+				{% if c.options %}
+					{% for o in c.options %}
+					<p>
+						<label>{{ o.name }}</label>
+						<input class="x-sale-cart-option" data-id="{{ c.id }}" type="text" name="{{ o.name }}" value="{{ o.value }}">
+					</p>
+					{% endfor %}
+				{% endif %}                								
+              </div>
+              <div class="cell small-24 medium-8 large-10">
+                <div class="grid-x grid-padding-x">
+                  <div class="cell small-12 medium-12 large-6">
+				    <div class="margin-bottom-6">
+					{% if c.offer %}
+                      <strong class="x-price">{{ c.offer.displayDiscountPrice|raw }}</strong>
+					  {% if c.offer.discount > 0 %}<br><del class="text-dark-gray">{{ c.offer.displayFullPrice|raw }}</del>{% endif %}
+					{% else %}
+                      <strong class="x-price">{{ c.product.displayDiscountPrice|raw }}</strong>
+					  {% if c.product.discount > 0 %}<br><del class="text-dark-gray">{{ c.product.displayFullPrice|raw }}</del>{% endif %}	
+					{% endif %}				  
+                    </div>
+                  </div>
+                  <div class="cell small-12 medium-12 large-8">
+					<input type="number" min="1" value="{{ c.quantity }}" data-backup="{{ c.quantity }}" data-id="{{ c.id }}" class="x-quantity" data-product-id="{{ c.product.id }}" {% if c.offer %}data-offer-id="{{ c.offer.id }}"{% endif %}>
+                  </div>
+                  <div class="cell small-24 large-10">
+                    <div class="margin-bottom-6"><span class="text-size-xxlarge x-sum">{{ c.displaySum|raw }}</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cell small-24 medium-4 large-2">
+                <div class="margin-bottom-6"><a href="#" class="x-delete" data-id="{{ c.id }}"><small>{{ _('Удалить') }}</small></a>
+                </div>
+              </div>
+            </div>
+            <hr class="margin-bottom-6">	
+	{% endfor %}
+	
+            <div class="grid-x grid-padding-x">
+			
+			 
+              <div class="cell small-24 medium-12 large-8">
+			  {% if widget.param('show_coupon') %}
+				  {% for c in widget.cart.coupons %}
+					  {{ c.code }} <i class="far fa-check-square" aria-hidden="true"></i><br>
+				  {% endfor %}	
+
+				   {% if widget.coupon_error %}<p class="callout alert">{{ widget.coupon_error }}</p>{% endif %}	
+			  
+                <div class="input-group">
+				  <form method="post">
+                  <input class="input-group-field" type="text" name="coupon" placeholder="{{ _('№ купона на скидку') }}">
+                  <div class="input-group-button">
+                    <button class="button" type="submit"><i class="fas fa-calculator"></i> {{ _('Пересчитать') }}</button>
+                  </div>
+				  </form>
+                </div>
+				
+			  {% endif %}
+              </div>
+			  
+              <div class="cell small-24 medium-12 large-16 medium-text-right">
+                <div class="margin-bottom-6"><strong>{{ _('Итого') }}: <span class="x-total-sum">{{ widget.cart.getDisplayTotal()|raw }}</span></strong>
+                </div>
+              </div>
+            </div>
+            <hr class="margin-bottom-6">
+            <div class="margin-bottom-6 text-right"><a class="button" href="{{ widget.param('order_url') }}"><i class="fas fa-credit-card"></i> {{ _('Оформить заказ') }}</a></div>	
+			
+	</div>
+	{% endif %}	
+
+</div>
+
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
