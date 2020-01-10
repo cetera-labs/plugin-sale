@@ -29,7 +29,7 @@ $this->registerWidget(array(
     'name'     => 'Sale.Goods.List',
     'class'    => '\\Sale\\WidgetGoodsList',
 	'describ'  => $t->_('Список товаров'),
-	'icon'     => 'images/icon_list.png',
+	'icon'     => '/cms/plugins/sale/images/icon_list.png',
 	'ui'       => 'Plugin.sale.widget.GoodsList',	
 ));
 
@@ -150,37 +150,37 @@ if ($this->getBo()) {
 			'id'       => 'sale',
 			'position' => MENU_SITE,
 			'name' 	   => $t->_('Магазин'),
-			'icon'     => 'images/icon.png',
+			'icon'     => '/cms/plugins/sale/images/icon.png',
 			'class'    => 'Plugin.sale.Setup',
 			'submenu'  => array(
 				array(
 					'name'  => $t->_('Товары'),
-					'icon'  => 'images/icon_goods.png',
+					'icon'  => '/cms/plugins/sale/images/icon_goods.png',
 					'class' => 'Plugin.sale.Goods'
 				),
 				array(
 					'name'  => $t->_('Скидки'),
-					'icon'  => 'images/icon_discount.png',
+					'icon'  => '/cms/plugins/sale/images/icon_discount.png',
 					'class' => 'Plugin.sale.DiscountsAndCoupons'
 				),			
 				array(
 					'name'  => $t->_('Заказы'),
-					'icon'  => 'images/icon_orders.png',
+					'icon'  => '/cms/plugins/sale/images/icon_orders.png',
 					'class' => 'Plugin.sale.Orders'
 				),
 				array(
 					'name'  => $t->_('Платежные системы'),
-					'icon'  => 'images/money.png',
+					'icon'  => '/cms/plugins/sale/images/money.png',
 					'class' => 'Plugin.sale.Payment'
 				),	
 				array(
 					'name'  => $t->_('Способы доставки'),
-					'icon'  => 'images/delivery-icon.png',
+					'icon'  => '/cms/plugins/sale/images/delivery-icon.png',
 					'class' => 'Plugin.sale.Delivery'
 				),
 				array(
 					'name'  => $t->_('Свойства заказов'),
-					'icon'  => 'images/icon_orders_props.png',
+					'icon'  => '/cms/plugins/sale/images/icon_orders_props.png',
 					'class' => 'Plugin.sale.OrderPropsSetup'
 				),			
 			) 
