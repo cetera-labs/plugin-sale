@@ -29,7 +29,7 @@ class WidgetGoodsList extends \Cetera\Widget\Templateable
 
 	protected function init()
 	{
-	        $this->application->addScript('/cms/plugins/sale/js/locale.php?locale='.$this->application->getLocale());
+	        $this->application->addScript('/cms/plugins/sale/locale.php?locale='.$this->application->getLocale());
 		$this->application->addScript('/cms/plugins/sale/js/common.js');				
 	}		
 	
