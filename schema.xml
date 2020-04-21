@@ -13,11 +13,12 @@
 	<field name="name"  type="1" pseudo_type="0"    description="Title[ru=Наименование]"     length="300"  show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
 	<field name="pic"   type="4" pseudo_type="0"    description="Picture[ru=Картинка]"       length="4"    show="1" required="0" fixed="1" editor="32" editor_user="" default_value="" />
 	<field name="short" type="1" pseudo_type="0"    description="Short[ru=Краткое описание]" length="1000" show="1" required="0" fixed="1" editor="33" editor_user="" default_value="" />
-	<field name="price" type="15" pseudo_type="0"   description="Price[ru=Цена]"             length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
-	<field name="currency" type="1" pseudo_type="1200" description="Currency[ru=Валюта]"        length="3"    show="1" required="1" fixed="1" editor="200" editor_user="" default_value="RUB" />
-	<field name="quantity" type="3" pseudo_type="0" description="Quantity[ru=Количество]"    length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="1" />
-	<field name="code"  type="1" pseudo_type="0"    description="Code[ru=Артикул]"           length="100"  show="1" required="0" fixed="0" editor="0" editor_user="" default_value="" />
 	<field name="text"  type="14" pseudo_type="0"   description="Text[ru=Описание]"          length="1"    show="1" required="0" fixed="1" editor="0" editor_user="" default_value="" />
+	
+	<field name="code"  type="1" pseudo_type="0"    description="Code[ru=Артикул]"           length="100"  show="1" required="0" fixed="0" editor="0" editor_user="" default_value="" page="Price[ru=Цена]" />
+	<field name="price" type="15" pseudo_type="0"   description="Price[ru=Цена]"             length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" page="Price[ru=Цена]" />
+	<field name="currency" type="1" pseudo_type="1200" description="Currency[ru=Валюта]"        length="3"    show="1" required="1" fixed="1" editor="200" editor_user="" default_value="RUB" page="Price[ru=Цена]" />
+	<field name="quantity" type="3" pseudo_type="0" description="Quantity[ru=Количество]"    length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="1" page="Price[ru=Цена]" />	
 	
 	<field name="meta_title" type="1"       pseudo_type="0"  description="Meta title"       length="1000" show="1" required="0" fixed="1" editor="1"  editor_user="" default_value="" page="SEO" />
 	<field name="meta_keywords" type="1"    pseudo_type="0"  description="Meta keywords"    length="1000" show="1" required="0" fixed="1" editor="16" editor_user="" default_value="" page="SEO" />
@@ -34,10 +35,11 @@
 
 	<field name="name"     type="1"  pseudo_type="0" description="Title[ru=Наименование]"   length="300"  show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
 	<field name="product"  type="13" pseudo_type="0" description="Product[ru=Товар]"        length="sale_products"  show="1" required="1" fixed="1" editor="17" editor_user="" default_value="" />
-	<field name="price"    type="15" pseudo_type="0" description="Price[ru=Цена]"           length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" />
-	<field name="currency" type="1" pseudo_type="1200" description="Currency[ru=Валюта]"    length="3"    show="1" required="1" fixed="1" editor="200" editor_user="" default_value="RUB" />
-	<field name="quantity" type="3"  pseudo_type="0" description="Quantity[ru=Количество]"  length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="1" />
-	<field name="code"     type="1"  pseudo_type="0" description="Code[ru=Артикул]"         length="100"  show="1" required="0" fixed="0" editor="0" editor_user="" default_value="" />
+	
+	<field name="price"    type="15" pseudo_type="0" description="Price[ru=Цена]"           length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" page="Price[ru=Цена]" />
+	<field name="currency" type="1" pseudo_type="1200" description="Currency[ru=Валюта]"    length="3"    show="1" required="1" fixed="1" editor="200" editor_user="" default_value="RUB" page="Price[ru=Цена]" />
+	<field name="quantity" type="3"  pseudo_type="0" description="Quantity[ru=Количество]"  length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="1" page="Price[ru=Цена]" />
+	<field name="code"     type="1"  pseudo_type="0" description="Code[ru=Артикул]"         length="100"  show="1" required="0" fixed="0" editor="0" editor_user="" default_value="" page="Price[ru=Цена]" />
 </object>
 
 <table name="sale_carts">
