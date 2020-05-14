@@ -110,8 +110,8 @@ $params = array(
 	'order.total'  => $t->_('Стоимость заказа'),
 	'order.productsTable' => $t->_('Список товаров (HTML)'),
 	'order.statusText'    => $t->_('Статус заказа'),
-	'order.payment_data.name' => $t->_('Способ оплаты'),
-	'order.delivery_data.name' => $t->_('Способ доставки'),
+	'order.paymentData.name' => $t->_('Способ оплаты'),
+	'order.deliveryData.name' => $t->_('Способ доставки'),
 	'order.getProperty(\'property\')' => $t->_('Параметр заказа'),
 	
 	'server.fullUrl' => $t->_('Адрес сайта'),
