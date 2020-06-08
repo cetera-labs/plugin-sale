@@ -632,7 +632,7 @@ class Order {
 		return $this->date;
 	}
 
-	protected function getMailEventParamsgetMailEventParams()
+	protected function getMailEventParams()
 	{
 		return array(
 			'sale'   => array(
