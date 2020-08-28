@@ -333,7 +333,11 @@ class Cart extends \Cetera\Base {
                 }
 							
 				if ($value['offer_id']) {
-					$offer = Offer::getById( $value['offer_id'] );
+                    try {
+                        $offer = Offer::getById( $value['offer_id'] );
+                    catch (\Exception $e) {
+                        continue;
+                    }                        
 					$offer->isInCart = true;
 					$buyable = $offer;
 				}	
