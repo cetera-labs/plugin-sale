@@ -324,7 +324,13 @@ class Cart extends \Cetera\Base {
 			$q = $value['quantity'];
 			
 			if ($value['product_id']) {
-				$prod = Product::getById( $value['product_id'] );
+                
+                try {
+                    $prod = Product::getById( $value['product_id'] );
+                }
+                catch (\Exception $e) {
+                    continue;
+                }
 							
 				if ($value['offer_id']) {
 					$offer = Offer::getById( $value['offer_id'] );
