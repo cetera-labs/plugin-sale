@@ -1,5 +1,7 @@
 Ext.define('Plugin.sale.Orders', {
 
+    alias : 'widget.sale_orders',
+
     extend:'Ext.grid.Panel',
 	requires: 'Plugin.sale.model.Order',
 	
