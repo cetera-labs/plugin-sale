@@ -190,6 +190,10 @@ if ($this->getBo()) {
 }
 else {
 	$this->getTwig()->addGlobal('recently_viewed',  new \Sale\Iterator\RecentlyViewed() );
+    $u = $this->getUser();
+	if ($u && $u->isAdmin()) {
+        $this->addScript('/plugins/sale/js/admin-panel.js');
+    }    
 }
 
 \Cetera\Event::attach('CORE_MATERIAL_COPY', function($event, $data){
