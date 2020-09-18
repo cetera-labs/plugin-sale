@@ -28,7 +28,7 @@ catch (\Exception $e) {}
 $this->registerWidget(array(
     'name'     => 'Sale.Goods.List',
     'class'    => '\\Sale\\WidgetGoodsList',
-	'describ'  => $t->_('Список товаров'),
+	'describ'  => $t->_('Каталог товаров'),
 	'icon'     => '/cms/plugins/sale/images/icon_list.png',
 	'ui'       => 'Plugin.sale.widget.GoodsList',	
 ));
