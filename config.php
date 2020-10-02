@@ -28,9 +28,17 @@ catch (\Exception $e) {}
 $this->registerWidget(array(
     'name'     => 'Sale.Goods.List',
     'class'    => '\\Sale\\WidgetGoodsList',
-	'describ'  => $t->_('Каталог товаров'),
+	'describ'  => $t->_('Список товаров'),
 	'icon'     => '/cms/plugins/sale/images/icon_list.png',
 	'ui'       => 'Plugin.sale.widget.GoodsList',	
+));
+
+$this->registerWidget(array(
+    'name'          => 'Sale.Catalog',
+    'class'         => '\\Sale\\WidgetCatalog',
+    'icon'          => '/cms/plugins/sale/images/icon_goods.png',
+    'describ'       => $t->_('Каталог товаров'),
+    'ui'            => 'Plugin.sale.widget.Catalog',	
 ));
 
 $this->registerWidget(array(
@@ -72,12 +80,6 @@ $this->registerWidget(array(
 $this->registerWidget(array(
     'name'          => 'Sale.Filter',
     'class'         => '\\Sale\\WidgetFilter',
-    'not_placeable' => true
-));
-
-$this->registerWidget(array(
-    'name'          => 'Sale.Catalog',
-    'class'         => '\\Sale\\WidgetCatalog',
     'not_placeable' => true
 ));
 

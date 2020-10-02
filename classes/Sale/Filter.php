@@ -98,7 +98,7 @@ class Filter {
 				if (is_subclass_of($d['field'], '\\Cetera\\ObjectFieldLinkAbstract')) {	
 					try {
 						$f = $this->generateField($d['name']);
-						$d['iterator'] = $d['field']->getIterator()->where('id IN (SELECT '.$f.$sql.')');
+						$d['iterator'] = $d['field']->getIterator();//->where('id IN (SELECT '.$f.$sql.')');
 					} 
 					catch (\Exception $e) {
 						continue;
@@ -231,6 +231,7 @@ class Filter {
 
 	private function applyQuery($query, $exclude = false)
 	{
+        return;
 		if (!$this->isActive()) return;		
 		$r = $this->getWhere();
 		foreach ($r['join'] as $j) {
