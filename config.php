@@ -194,7 +194,7 @@ else {
 	$this->getTwig()->addGlobal('recently_viewed',  new \Sale\Iterator\RecentlyViewed() );
     $u = $this->getUser();
 	if ($u && $u->isAdmin()) {
-        $this->addScript('/plugins/sale/js/admin-panel.js');
+        $this->addScript('/cms/plugins/sale/js/admin-panel.js');
     }    
 }
 
