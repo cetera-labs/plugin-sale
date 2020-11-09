@@ -390,6 +390,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function sale_show_result_tooltip( elm, text ) {
+    if (!elm.foundation) return;
 	var tt = new Foundation.Tooltip(elm,{
 		 clickOpen: false,
 		 disableHover: true,
