@@ -34,6 +34,14 @@ $this->registerWidget(array(
 ));
 
 $this->registerWidget(array(
+    'name'          => 'Sale.Catalog',
+    'class'         => '\\Sale\\WidgetCatalog',
+    'icon'          => '/cms/plugins/sale/images/icon_goods.png',
+    'describ'       => $t->_('Каталог товаров'),
+    'ui'            => 'Plugin.sale.widget.Catalog',	
+));
+
+$this->registerWidget(array(
     'name'          => 'Sale.Goods.Item',
     'class'         => '\\Sale\\WidgetGoodsItem',
     'not_placeable' => true
@@ -72,12 +80,6 @@ $this->registerWidget(array(
 $this->registerWidget(array(
     'name'          => 'Sale.Filter',
     'class'         => '\\Sale\\WidgetFilter',
-    'not_placeable' => true
-));
-
-$this->registerWidget(array(
-    'name'          => 'Sale.Catalog',
-    'class'         => '\\Sale\\WidgetCatalog',
     'not_placeable' => true
 ));
 
@@ -192,7 +194,7 @@ else {
 	$this->getTwig()->addGlobal('recently_viewed',  new \Sale\Iterator\RecentlyViewed() );
     $u = $this->getUser();
 	if ($u && $u->isAdmin()) {
-        $this->addScript('/plugins/sale/js/admin-panel.js');
+        $this->addScript('/cms/plugins/sale/js/admin-panel.js');
     }    
 }
 
