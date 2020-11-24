@@ -575,6 +575,7 @@ var Sale = Sale || {};
 					if (sum) sum.html(data.total_display);
                     if (sumFull) sumFull.html(data.total_full);
 					if (s) s.html(data.sum);
+                    jQuery(".x-total-count").html(data.count);
                     if (discount) discount.html(data.total_discount);
 					jQuery(".x-total-quantity").html( data.count + ' '+_('шт.') );
 					if (options.quantity == 0) {
