@@ -42,19 +42,19 @@ class WidgetCart extends \Cetera\Widget\Templateable
 	}
     
     public function getProductsCount() {
-        return '<span class="x-total-count">'.$this->getCart()->getProductsCount().'<span>';
+        return '<span class="x-total-count">'.$this->getCart()->getProductsCount().'</span>';
     }
     
     public function getTotalFull() {
-        return '<span class="x-total-full">'.$this->getCart()->getTotalFull(1).'<span>';
+        return '<span class="x-total-full">'.$this->getCart()->getTotalFull(1).'</span>';
     }  
 
     public function getTotal() {
-        return '<span class="x-total-sum">'.$this->getCart()->getTotal(1).'<span>';
+        return '<span class="x-total-sum">'.$this->getCart()->getTotal(1).'</span>';
     }  
 
     public function getDiscountTotal() {
-        return '<span class="x-total-discount">'.$this->getCart()->getDiscountTotal(1).'<span>';
+        return '<span class="x-total-discount">'.$this->getCart()->getDiscountTotal(1).'</span>';
     }     
 	
 }
