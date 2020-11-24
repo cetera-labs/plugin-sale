@@ -59,9 +59,10 @@ if ($action == 'set_cart_quantity')
 		'count' => $cart->getProductsCount(),
 		'sum'   => $cart->getCurrency()->format( $prod->discountPrice * (int)$_GET['quantity'], $prod->currency),
 		'total' => $cart->getTotal(),
+        'total_full' => $cart->getTotalFull(),
 		'total_display' => $cart->getTotal(true),
         'total_discount' => $cart->getDiscountTotal(true),
-        'total_full' => $cart->getTotalFull(true),
+        'total_full_display' => $cart->getTotalFull(true),
 	);
 	print json_encode($data);	
 	die();
