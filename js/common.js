@@ -390,6 +390,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function sale_show_result_tooltip( elm, text ) {
+    if (!elm.foundation) return;
 	var tt = new Foundation.Tooltip(elm,{
 		 clickOpen: false,
 		 disableHover: true,
@@ -555,14 +556,27 @@ var Sale = Sale || {};
 				var sum_backup = sum.html();
 				sum.html(_('Подождите...'));
 			}
+			var sumFull = jQuery(".x-total-full");
+			if (sumFull) {
+				var sumFull_backup = sumFull.html();
+				sumFull.html(_('Подождите...'));
+			}            
+			var discount = jQuery(".x-total-discount");
+			if (discount) {
+				var discount_backup = discount.html();
+				discount.html(_('Подождите...'));
+			}            
 			
 			jQuery.ajax({
 				url : '/plugins/sale/ajax.php?action=set_cart_quantity&id='+options.id+'&quantity='+options.quantity,
 				dataType: 'json',
 				success: function(data) {
 					jQuery(document).trigger( 'cetera.sale.basket.add', [ data ] );	
-					if (sum) sum.html(data.total_sum);
+					if (sum) sum.html(data.total_display);
+                    if (sumFull) sumFull.html(data.total_full_display);
 					if (s) s.html(data.sum);
+                    jQuery(".x-total-count").html(data.count);
+                    if (discount) discount.html(data.total_discount);
 					jQuery(".x-total-quantity").html( data.count + ' '+_('шт.') );
 					if (options.quantity == 0) {
 						jQuery(itemId).remove();										
@@ -572,7 +586,9 @@ var Sale = Sale || {};
 				error: function(data) {
 					jQuery(itemId + ".x-quantity").val( jQuery(itemId + ".x-quantity").attr('data-backup') );
 					if (sum) sum.html(sum_backup);
+                    if (sumFull) sumFull.html(sumFull_backup);
 					if (s) s.html(s_backup);
+                    if (discount) discount.html(discount_backup);
 					if (options.error) options.error.call(options.scope, data);
 				}
 			});			

@@ -402,6 +402,13 @@ class Cart extends \Cetera\Base {
 		}
 		if ($display) return $this->getCurrency()->format( $this->_totalSum );
 		return $this->_totalSum;
+	}
+
+	public function getTotalFull($display = false)
+	{
+		$value = $this->getTotal() + $this->getDiscountTotal();
+		if ($display) return $this->getCurrency()->format( $value );
+		return $value;
 	}	
 	
 	public function getDiscountTotal($display = false)
