@@ -376,9 +376,8 @@ class Order {
 			}
 		}
 		$ret = $this->getAvailableProps( $this->person_type_id );
-		foreach ($ret as $id => $r)
-		{
-			$ret[$id]['value'] = $this->props[ $r['id'] ];
+		foreach ($ret as $id => $r) {
+			$ret[$id]['value'] = isset($this->props[ $r['id'] ])?$this->props[ $r['id'] ]:null;
 		}
 		return $ret;
 	}	
