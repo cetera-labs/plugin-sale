@@ -48,10 +48,15 @@ class WishList {
 		if ($this->user) {		
 			$data = self::getDbConnection()->fetchArray('SELECT * FROM sale_wishlist WHERE user_id = ? and product_id=?', array( $this->user->id, $pid ));
 			if (!$data) {
-					$this->getDbConnection()->insert('sale_wishlist', array(
-						'user_id' => $this->user->id,
-						'product_id' => $pid,
-					));				
+					$this->getDbConnection()->insert(
+                        'sale_wishlist',
+                        [
+                            'date_add' => new \DateTime(),
+                            'user_id' => $this->user->id,
+                            'product_id' => $pid,
+                        ],
+                        ['datetime']
+                    );				
 			}
 		}
 		else {
@@ -114,16 +119,19 @@ class WishList {
 	*/	
 	public function getProducts()
 	{
-		$products = [];
 		if ($this->user) {
-			$data = self::getDbConnection()->fetchAll('SELECT B.* FROM sale_wishlist A INNER JOIN sale_products B ON (A.product_id = B.id) WHERE A.user_id = ?', array( $this->user->id ));
-			foreach ($data as $value) {
-				$products[] = \Sale\Product::fetch( $value );
-			}
+            $products = new Cetera\Iterator\DynamicObject( \Sale\Product::getObjectDefinition() );
+            $products->getQuery()
+                ->select('main.*', 'wish.date_add')
+                ->innerJoin('main', 'sale_wishlist', 'wish', 'main.id = wish.product_id')
+                ->where('wish.product_id=:user')
+                ->orderBy('wish.date_add', 'DESC')
+                ->setParameter('user', $this->user->id);
 		} 
 		elseif (isset($this->s->saleWishList)) {
+            $products = new \Cetera\Iterator\Base();
 			foreach ($this->s->saleWishList as $pid) {
-				$products[] = \Sale\Product::getById( $pid );
+				$products->append(\Sale\Product::getById( $pid ));
 			}			
 		}
 		return $products;

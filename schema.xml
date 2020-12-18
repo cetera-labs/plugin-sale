@@ -81,6 +81,7 @@
 <table name="sale_wishlist">
     <field name="user_id" type="int(11)" null="0" />
     <field name="product_id" type="int(11)" null="0"  />
+    <field name="date_add" type="datetime" null="0" />
     <key name="user_id" unique="0">
         <column name="user_id" />
     </key>	

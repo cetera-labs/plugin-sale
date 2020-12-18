@@ -37,7 +37,7 @@ class WidgetWishList extends \Cetera\Widget\Templateable
 	 */ 	
     public function getChildren()
     {	
-		$list = new \Cetera\Iterator\Base( WishList::get()->getProducts() );
+		$list = WishList::get()->getProducts();
 		if ($this->getParam('limit')) $list->setItemCountPerPage($this->getParam('limit')); 
 		$list->setCurrentPageNumber( $this->getPage() ); 
 		return $list;		
