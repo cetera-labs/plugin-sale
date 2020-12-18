@@ -19,7 +19,8 @@
 	<field name="price" type="15" pseudo_type="0"   description="Price[ru=Цена]"             length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="" page="Price[ru=Цена]" />
 	<field name="currency" type="1" pseudo_type="1200" description="Currency[ru=Валюта]"        length="3"    show="1" required="1" fixed="1" editor="200" editor_user="" default_value="RUB" page="Price[ru=Цена]" />
 	<field name="quantity" type="3" pseudo_type="0" description="Quantity[ru=Количество]"    length="1"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="1" page="Price[ru=Цена]" />	
-	
+	<field name="unit" type="1" pseudo_type="0" description="Unit[ru=Ед.изм.]"    length="10"    show="1" required="1" fixed="1" editor="0" editor_user="" default_value="шт." page="Price[ru=Цена]" />	
+    
 	<field name="meta_title" type="1"       pseudo_type="0"  description="Meta title"       length="1000" show="1" required="0" fixed="1" editor="1"  editor_user="" default_value="" page="SEO" />
 	<field name="meta_keywords" type="1"    pseudo_type="0"  description="Meta keywords"    length="1000" show="1" required="0" fixed="1" editor="16" editor_user="" default_value="" page="SEO" />
 	<field name="meta_description" type="1" pseudo_type="0"  description="Meta description" length="1000" show="1" required="0" fixed="1" editor="16" editor_user="" default_value="" page="SEO" />
