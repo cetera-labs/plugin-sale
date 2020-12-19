@@ -120,7 +120,7 @@ class WishList {
 	public function getProducts()
 	{
 		if ($this->user) {
-            $products = new Cetera\Iterator\DynamicObject( \Sale\Product::getObjectDefinition() );
+            $products = new \Cetera\Iterator\DynamicObject( \Sale\Product::getObjectDefinition() );
             $products->getQuery()
                 ->select('main.*', 'wish.date_add')
                 ->innerJoin('main', 'sale_wishlist', 'wish', 'main.id = wish.product_id')
