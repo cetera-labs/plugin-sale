@@ -124,7 +124,7 @@ class WishList {
             $products->getQuery()
                 ->select('main.*', 'wish.date_add')
                 ->innerJoin('main', 'sale_wishlist', 'wish', 'main.id = wish.product_id')
-                ->where('wish.product_id=:user')
+                ->where('wish.user_id=:user')
                 ->orderBy('wish.date_add', 'DESC')
                 ->setParameter('user', $this->user->id);
 		} 
