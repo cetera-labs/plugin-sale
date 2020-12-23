@@ -20,6 +20,11 @@ abstract class Buyable extends \Cetera\Material
 	{
 		return \Cetera\ObjectDefinition::findByAlias(static::TABLE);
 	}
+    
+	public static function enum()
+	{
+		return static::getObjectDefinition()->getMaterials();
+	}    
 	
 	abstract public function getDiscount($field = 'price');
 	
