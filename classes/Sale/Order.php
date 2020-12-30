@@ -132,7 +132,14 @@ class Order {
 		$order = self::create();
 		$order->setData($data);
 		return $order;
-	}	
+	}
+
+    public static function getByTransaction($txn_id)
+    {
+        $oid = self::getDbConnection()->fetchColumn('SELECT order_id FROM sale_payment_transactions WHERE transaction_id=?',[$txn_id]);
+        if (!$oid) throw new \Exception( sprintf( self::t()->_('Транзакция %s не найдена') , $txn_id) );
+        return self::getById($oid);
+    }
 	
 	public  function getId()
 	{
