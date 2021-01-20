@@ -128,11 +128,13 @@ class WishList {
                 ->orderBy('wish.date_add', 'DESC')
                 ->setParameter('user', $this->user->id);
 		} 
-		elseif (isset($this->s->saleWishList)) {
+		else {
             $products = new \Cetera\Iterator\Base();
-			foreach ($this->s->saleWishList as $pid) {
-				$products->append(\Sale\Product::getById( $pid ));
-			}			
+            if (isset($this->s->saleWishList)) {
+                foreach ($this->s->saleWishList as $pid) {
+                    $products->append(\Sale\Product::getById( $pid ));
+                }
+            }
 		}
 		return $products;
 	}
