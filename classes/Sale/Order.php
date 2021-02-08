@@ -1014,9 +1014,9 @@ class Order {
 		return $this;
 	}
 
-    public function asArray()
+    public function asArray($fields = null)
     {
-		return [
+		$data = [
 			'id'         => $this->id,
 			'date'       => $this->date,
 			'total'      => $this->getTotal(true),
@@ -1038,5 +1038,10 @@ class Order {
 			'refresh' => 0,
 			'note' => $this->note,
 		];
-    }	
+        
+        if (!$fields) {
+            return $data;
+        }
+        return array_intersect_key($data, array_combine($fields,$fields));
+    }
 }
