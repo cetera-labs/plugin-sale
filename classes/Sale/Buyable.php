@@ -91,7 +91,7 @@ abstract class Buyable extends \Cetera\Material
 	{
 		$value = $this->getFullPrice($field) - $this->getDiscount($field);
 		if ($value < 0) $value = 0;
-		return $value;
+		return (float)$value;
 	}	
 	
 }

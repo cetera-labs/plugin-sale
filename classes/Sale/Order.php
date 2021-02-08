@@ -225,8 +225,8 @@ class Order {
 			$products = array();
 			foreach ($data as $value)
 			{
-				$q = $value['quantity'];
-				$p = $value['price'];
+				$q = (int)$value['quantity'];
+				$p = (float)$value['price'];
 
 				try {
 					if ($value['product_id']) {
@@ -255,7 +255,7 @@ class Order {
 				$products[] = array(
 					'product'      => $prod,
 					'offer'        => $offer,
-					'price'        => (float)$p,
+					'price'        => $p,
 					'displayPrice' => $this->getCurrency()->format($p),
 					'quantity'   => $q,
 					'sum'        => $q * $p,
