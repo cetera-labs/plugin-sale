@@ -255,7 +255,7 @@ class Order {
 				$products[] = array(
 					'product'      => $prod,
 					'offer'        => $offer,
-					'price'        => $p,
+					'price'        => (float)$p,
 					'displayPrice' => $this->getCurrency()->format($p),
 					'quantity'   => $q,
 					'sum'        => $q * $p,
