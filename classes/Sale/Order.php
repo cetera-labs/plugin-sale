@@ -993,7 +993,7 @@ class Order {
 				$this->products[] = [
 					'product'    => $product,
 					'offer'      => $offer,
-					'price'      => $price,
+					'price'      => (float)$price,
 					'displayPrice' => $this->getCurrency()->format($price),
 					'quantity'   => $quantity,
 					'sum'        => $quantity * $price,
