@@ -2,10 +2,28 @@
 include('common_bo.php');
 $a = \Cetera\Application::getInstance();
 
+if (!$user->hasRight(GROUP_SALE)) {
+    throw new \Exception('Нет полномочий');
+}
+
 if (isset($_GET['action']))
 {
 	$data = json_decode(file_get_contents("php://input"), true);
-	$data['active'] = (int)$data['active'];
+    if (isset($data['active'])) {
+        $data['active'] = (int)$data['active'];
+    }
+    
+	if ($_GET['action'] == 'refund')
+	{
+        $order = \Sale\Order::getById( $data['order_id'] );
+        $gateway = $order->getPaymentGateway();
+        if ($data['full']) {
+            $gateway->refund();
+        }
+        else {
+            $gateway->refund($data['products']);
+        }
+    }   
 	
 	if ($_GET['action'] == 'update')
 	{

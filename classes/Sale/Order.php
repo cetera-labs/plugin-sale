@@ -258,6 +258,7 @@ class Order {
 					'price'        => $p,
 					'displayPrice' => $this->getCurrency()->format($p),
 					'quantity'   => $q,
+                    'unit'       => $prod?$prod->unit:null,
 					'sum'        => $q * $p,
 					'displaySum' => $this->getCurrency()->format($q * $p),
 					'id'         => $value['product_id'].'-'.$value['offer_id'],

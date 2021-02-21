@@ -256,12 +256,11 @@ Ext.define('Plugin.sale.OrderEdit', {
             
             this.refund_btn = Ext.create('Ext.Button',{
                 text: _('Вернуть деньги'),
-                hidden: true,
                 scope: this,
                 margin: '0 0 0 5',
                 handler: function(button) {
                     Ext.create('Plugin.sale.OrderRefund',{
-                        record: record,
+                        record: this.record,
                         store: this.store
                     });                    
                 }

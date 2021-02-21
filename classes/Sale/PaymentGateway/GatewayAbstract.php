@@ -55,6 +55,15 @@ abstract class GatewayAbstract  {
 	public function getOrderByTransaction($txn_id)
 	{
         return self::getDbConnection()->fetchColumn('SELECT order_id FROM sale_payment_transactions WHERE transaction_id=? and gateway=?',[$txn_id,get_class($this)]);
-    }        
+    }  
+
+	public function getTransactions()
+	{
+        $data = self::getDbConnection()->fetchAll('SELECT * FROM sale_payment_transactions WHERE order_id=? and gateway=? ORDER BY date',[$this->order->id,get_class($this)]);
+        foreach ($data as $key => $value) {
+            $data[$key]['data'] = unserialize($value['data']);
+        }
+        return $data;
+    }      
 	
 }

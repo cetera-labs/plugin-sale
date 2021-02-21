@@ -1,4 +1,4 @@
-Ext.define('Plugin.sale.OrderEdit', {
+Ext.define('Plugin.sale.OrderRefund', {
     
     extend:'Ext.Window',
     
@@ -11,7 +11,7 @@ Ext.define('Plugin.sale.OrderEdit', {
 
     layout: {
         type: 'vbox',
-        padding: 2,
+        padding: 10,
         align : 'stretch',
         pack  : 'start'
     },  
@@ -31,8 +31,14 @@ Ext.define('Plugin.sale.OrderEdit', {
         
         this.products = Ext.create('Ext.grid.Panel', {
             title: _('Товары'),
-            
+            flex: 1,
             columns: [
+                { 
+                    xtype : 'checkcolumn', 
+                    text : '', 
+                    width: 50,
+                    dataIndex : 'checked' 
+                },            
                 {
                     text: _('Товар'), 
                     flex: 1, 
@@ -41,13 +47,7 @@ Ext.define('Plugin.sale.OrderEdit', {
                 {
                     text: _('Цена'), 
                     width: 100,
-                    dataIndex: 'price',
-                    editor: {
-                        xtype: 'numberfield',
-                        allowBlank: false,
-                        allowDecimals: true,
-                        minValue: 0
-                    }
+                    dataIndex: 'price'
                 },
                 {
                     text: _('Кол-во'), 
@@ -63,20 +63,22 @@ Ext.define('Plugin.sale.OrderEdit', {
                 {
                     text: _('Стоимость'), 
                     width: 100, 
-                    dataIndex: 'sum', 
+                    renderer: function (value,meta,record) {
+                        return record.get('price') * record.get('quantity');
+                    }
                 }	
             ],
             store: {
                 fields: [
+                   {name: 'checked', type: 'boolean'},
                    {name: 'name', persist: false},
                    {name: 'price', type: 'float'},
                    {name: 'quantity', type: 'integer'},
-                   {name: 'sum', type: 'float', persist: false},
                 ],
                 data: this.record.getData().products,
             },            
             plugins: [
-                {ptype: 'cellediting', clicksToEdit: 2}
+                {ptype: 'cellediting', clicksToEdit: 1}
             ],          
         });
         
@@ -90,6 +92,42 @@ Ext.define('Plugin.sale.OrderEdit', {
                     text    : _('OK'),
                     handler : function() {
                         
+                        var w = this.up('window');
+                        var products = [];
+                        
+                        w.products.getStore().each( function(rec){
+                            if (rec.get('checked')) {
+                                products.push(rec.getData());
+                            }
+                        }, this );
+                        
+                        if (!products.length) {
+                            return;
+                        }                        
+                        
+                        Ext.MessageBox.confirm(_('Вернуть средства'), _('Вы уверены'), function(btn) {
+                            if (btn == 'yes') {
+                                
+                                w.setLoading(true);
+                                Ext.Ajax.request({
+                                    url: '/plugins/sale/data_payment.php?action=refund',
+                                    method: 'POST',
+                                    scope : this,
+                                    jsonData: {
+                                        order_id: w.record.getId(),
+                                        full: w.checkAll.getValue(),
+                                        products: products
+                                    },
+                                    success: function(response){
+                                        w.destroy();
+                                    },
+                                    callback: function() {
+                                        w.setLoading(false);
+                                    }
+                                });                            
+                            }
+                        }, this);                        
+
                     }
                 },{
                     text    : _('Отмена'),

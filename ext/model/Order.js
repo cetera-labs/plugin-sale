@@ -16,6 +16,7 @@ Ext.define('Plugin.sale.model.Order', {
 		{name:'buyer', persist: false},	
 		{name:'payment_id', type: 'int'},
 		{name:'payment_data', persist: false},	
+        {name:'payment_refund_allowed', persist: false},
 		{name:'delivery_id', type: 'int'},
 		{name:'delivery_data', persist: false},
 		'delivery_cost',
