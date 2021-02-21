@@ -222,7 +222,7 @@ Ext.define('Plugin.sale.OrderEdit', {
 			}
 		});
 		this.pay_ok_btn.render(document.body, 'x-pay-button'); 	
-
+        
 		this.pay_cancel_btn = Ext.create('Ext.Button',{
 			text: _('Отмена'),
 			margin: '0 0 0 5',
@@ -251,6 +251,24 @@ Ext.define('Plugin.sale.OrderEdit', {
 			}
 		});
 		this.pay_change_btn.render(document.body, 'x-pay-button'); 
+        
+        if (this.record.get('payment_refund_allowed') && this.record.get('paid') ) {
+            
+            this.refund_btn = Ext.create('Ext.Button',{
+                text: _('Вернуть деньги'),
+                hidden: true,
+                scope: this,
+                margin: '0 0 0 5',
+                handler: function(button) {
+                    Ext.create('Plugin.sale.OrderRefund',{
+                        record: record,
+                        store: this.store
+                    });                    
+                }
+            });
+            this.refund_btn.render(document.body, 'x-pay-button');             
+            
+        }        
 		
 		this.status_change = Ext.create('Ext.form.ComboBox', {
 			store: Ext.create('Ext.data.JsonStore',{

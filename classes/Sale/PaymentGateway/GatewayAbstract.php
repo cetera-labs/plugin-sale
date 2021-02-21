@@ -21,6 +21,13 @@ abstract class GatewayAbstract  {
 	}
 	
 	abstract public function pay( $return = '' );
+    
+    public static function isRefundAllowed() {
+        return false;
+    }
+    
+    public function refund( $items = null ) {
+    }
 	
 	public function checkIfTransactionHasAlreadyBeenProcessed($txn_id)
 	{

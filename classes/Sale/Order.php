@@ -414,8 +414,7 @@ class Order {
 
 	public function getPaymentData()
 	{
-		if (!$this->payment_data)
-		{
+		if (!$this->payment_data) {
 			$this->payment_data = self::getDbConnection()->fetchAssoc('SELECT * FROM sale_payment WHERE id=?', array($this->payment_id));
 		}
 		return $this->payment_data;
@@ -1016,6 +1015,12 @@ class Order {
 
     public function asArray($fields = null)
     {
+        $refund = false;
+        $g = $this->getPaymentGateway();
+        if ($g) {
+            $refund = $g->isRefundAllowed();
+        }
+        
 		$data = [
 			'id'         => $this->id,
 			'date'       => $this->date,
@@ -1030,6 +1035,7 @@ class Order {
 			'buyer'      => $this->getName().' ('.$this->getEmail().')',
 			'payment_id' => $this->getPaymentId(),
 			'payment_data' => $this->getPaymentData(),
+            'payment_refund_allowed' => $refund,
 			'delivery_id'  => $this->getDeliveryId(),
 			'delivery_data' => $this->getDeliveryData(),
 			'delivery_cost' => $this->getDeliveryCost(),
