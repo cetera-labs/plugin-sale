@@ -16,12 +16,11 @@ if (isset($_GET['action']))
 	if ($_GET['action'] == 'refund')
 	{
         $order = \Sale\Order::getById( $data['order_id'] );
-        $gateway = $order->getPaymentGateway();
         if ($data['full']) {
-            $gateway->refund();
+            $order->refund();
         }
         else {
-            $gateway->refund($data['products']);
+            $order->refund($data['products']);
         }
     }   
 	

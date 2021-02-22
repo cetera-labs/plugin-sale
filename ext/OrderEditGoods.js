@@ -38,6 +38,11 @@ Ext.define('Plugin.sale.OrdereditGoods', {
 			text: _('Стоимость'), 
 			width: 100, 
 			dataIndex: 'sum', 
+		},		
+        {
+			text: _('Возвращено'), 
+			width: 100, 
+			dataIndex: 'sum_refund', 
 		}	
 
     ],

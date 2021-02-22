@@ -28,7 +28,7 @@ abstract class GatewayAbstract  {
     
     public function refund( $items = null ) {
     }
-	
+    
 	public function checkIfTransactionHasAlreadyBeenProcessed($txn_id)
 	{
 		$data = self::getDbConnection()->fetchArray('SELECT COUNT(*) FROM sale_payment_transactions WHERE transaction_id=? and gateway=?',array($txn_id,get_class($this)));
@@ -37,9 +37,9 @@ abstract class GatewayAbstract  {
 	
 	public function saveTransaction($txn_id, $data)
 	{
-		if ($this->checkIfTransactionHasAlreadyBeenProcessed($txn_id)) {
-			return false;
-		}
+		//if ($this->checkIfTransactionHasAlreadyBeenProcessed($txn_id)) {
+		//	return false;
+		//}
 		
 		self::getDbConnection()->insert('sale_payment_transactions',array(
 			'date'             => new \DateTime(),		

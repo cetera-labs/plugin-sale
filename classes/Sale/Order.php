@@ -144,7 +144,37 @@ class Order {
 	public  function getId()
 	{
 		return $this->id;
-	}	
+	}
+
+    public function refund( $items = null ) {
+        $gateway = $this->getPaymentGateway();
+        if (!$gateway->isRefundAllowed()) {
+            throw new \Exception('Возврат невозможен');
+        }
+        $gateway->refund($items);
+        
+        $this->getProducts();
+        if ($items = null) {
+            foreach ($this->products as $key => $product) {
+                $this->products[$key]['sum_refund'] = $this->products[$key]['quantity'] * $this->products[$key]['price'];
+                $this->products[$key]['quantity'] = 0;
+            }
+            $this->setPaid(self::PAY_REFUND)->save();
+        } 
+        else {
+            $refunded = [];
+            foreach ($items as $item) {
+                if (!$item['checked']) continue;
+                $refunded[$item['id']] = $item;
+            }
+            foreach ($this->products as $key => $product) {
+                if (!isset($refunded[$product['id']] )) continue;
+                $this->products[$key]['sum_refund'] += $refunded[$product['id']]['price'] * $refunded[$product['id']]['quantity'];
+                $this->products[$key]['quantity'] -= $refunded[$product['id']]['quantity'];
+            }
+            $this->save();
+        }
+    }
 	
 	public static function getStatuses()	
 	{
@@ -258,8 +288,9 @@ class Order {
 					'price'        => $p,
 					'displayPrice' => $this->getCurrency()->format($p),
 					'quantity'   => $q,
-                    'unit'       => $prod?$prod->unit:null,
+                    'unit'       => $value['unit'],
 					'sum'        => $q * $p,
+                    'sum_refund' => $value['sum_refund'],
 					'displaySum' => $this->getCurrency()->format($q * $p),
 					'id'         => $value['product_id'].'-'.$value['offer_id'],
 					'name'       => $value['product_name'],
@@ -730,6 +761,8 @@ class Order {
 				'product_name' => $p['name'],
 				'quantity'     => $p['quantity'],
 				'price'        => $p['price'],
+                'unit'         => $p['unit'],
+                'sum_refund'   => $p['sum_refund'],
 				'options'      => is_array($p['options'])?serialize($p['options']):'',
 				'offer_id'     => $p['offer']?$p['offer']->id:0,
 			);
@@ -927,7 +960,7 @@ class Order {
 	* добавить продукт к заказу или изменить количество
 	* $quantity = 0 - удалить из заказа
 	*/
-	public function setProduct( $product, $quantity = 1, $offer = 0, $options = null, $price = null )
+	public function setProduct( $product, $quantity = 1, $offer = 0, $options = null, $price = null, $sum_refund = null )
 	{	
 		
 		$t = \Cetera\Application::getInstance()->getTranslator();
@@ -987,7 +1020,10 @@ class Order {
 			
 			if ($exists >= 0) {
 				$this->products[$exists]['quantity'] = $quantity;
-				$this->products[$exists]['price'] = $price;
+				$this->products[$exists]['price'] = $price; 
+                if ($sum_refund !== null) {
+                    $this->products[$exists]['sum_refund'] = $sum_refund;
+                }
 			}
 			else {
 				$this->products[] = [
@@ -1002,7 +1038,8 @@ class Order {
 					'options'    => $options,
 					'name'       => $product->name.($offer?', '.$offer->name:''),
 					'bo_url'     => '',
-					'options'    => null,
+                    'unit'       => $product->unit,
+                    'sum_refund' => ($sum_refund !== null)?$sum_refund:0,
 				];
 			}
 			

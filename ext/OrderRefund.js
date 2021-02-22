@@ -95,17 +95,19 @@ Ext.define('Plugin.sale.OrderRefund', {
                         var w = this.up('window');
                         var products = [];
                         
+                        var count = 0;
                         w.products.getStore().each( function(rec){
                             if (rec.get('checked')) {
-                                products.push(rec.getData());
+                                count = 1;
                             }
+                            products.push(rec.getData());
                         }, this );
                         
-                        if (!products.length) {
+                        if (!w.checkAll.getValue() && !count) {
                             return;
                         }                        
                         
-                        Ext.MessageBox.confirm(_('Вернуть средства'), _('Вы уверены'), function(btn) {
+                        Ext.MessageBox.confirm(_('Вернуть средства'), _('Вы уверены?'), function(btn) {
                             if (btn == 'yes') {
                                 
                                 w.setLoading(true);
