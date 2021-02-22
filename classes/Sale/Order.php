@@ -154,7 +154,7 @@ class Order {
         $gateway->refund($items);
         
         $this->getProducts();
-        if ($items = null) {
+        if ($items == null) {
             foreach ($this->products as $key => $product) {
                 $this->products[$key]['sum_refund'] = $this->products[$key]['quantity'] * $this->products[$key]['price'];
                 $this->products[$key]['quantity'] = 0;
@@ -290,7 +290,7 @@ class Order {
 					'quantity'   => $q,
                     'unit'       => $value['unit'],
 					'sum'        => $q * $p,
-                    'sum_refund' => $value['sum_refund'],
+                    'sum_refund' => (int)$value['sum_refund'],
 					'displaySum' => $this->getCurrency()->format($q * $p),
 					'id'         => $value['product_id'].'-'.$value['offer_id'],
 					'name'       => $value['product_name'],

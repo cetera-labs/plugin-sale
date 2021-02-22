@@ -121,6 +121,8 @@ Ext.define('Plugin.sale.OrderRefund', {
                                         products: products
                                     },
                                     success: function(response){
+                                        w.fireEvent('success');
+                                        w.store.reload();
                                         w.destroy();
                                     },
                                     callback: function() {

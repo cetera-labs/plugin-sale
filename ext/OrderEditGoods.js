@@ -61,6 +61,7 @@ Ext.define('Plugin.sale.OrdereditGoods', {
 			   {name: 'price', type: 'float'},
 			   {name: 'quantity', type: 'integer'},
 			   {name: 'sum', type: 'float', persist: false},
+               {name: 'sum_refund', type: 'float', persist: false},
 			   'add_product'
 			],
 			data: this.record.getData().products,

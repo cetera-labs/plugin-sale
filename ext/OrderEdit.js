@@ -259,10 +259,13 @@ Ext.define('Plugin.sale.OrderEdit', {
                 scope: this,
                 margin: '0 0 0 5',
                 handler: function(button) {
-                    Ext.create('Plugin.sale.OrderRefund',{
+                    var w = Ext.create('Plugin.sale.OrderRefund',{
                         record: this.record,
                         store: this.store
-                    });                    
+                    }); 
+                    w.on('success', function(){
+                       this.destroy();
+                    }, this);                  
                 }
             });
             this.refund_btn.render(document.body, 'x-pay-button');             
