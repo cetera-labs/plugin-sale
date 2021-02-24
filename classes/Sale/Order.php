@@ -762,7 +762,7 @@ class Order {
 				'quantity'     => $p['quantity'],
 				'price'        => $p['price'],
                 'unit'         => $p['unit'],
-                'sum_refund'   => $p['sum_refund'],
+                'sum_refund'   => (int)$p['sum_refund'],
 				'options'      => is_array($p['options'])?serialize($p['options']):'',
 				'offer_id'     => $p['offer']?$p['offer']->id:0,
 			);
