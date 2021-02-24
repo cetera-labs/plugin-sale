@@ -32,13 +32,7 @@ Ext.define('Plugin.sale.OrderRefund', {
         this.products = Ext.create('Ext.grid.Panel', {
             title: _('Товары'),
             flex: 1,
-            columns: [
-                { 
-                    xtype : 'checkcolumn', 
-                    text : '', 
-                    width: 50,
-                    dataIndex : 'checked' 
-                },            
+            columns: [          
                 {
                     text: _('Товар'), 
                     flex: 1, 
@@ -52,7 +46,19 @@ Ext.define('Plugin.sale.OrderRefund', {
                 {
                     text: _('Кол-во'), 
                     width: 75,
-                    dataIndex: 'quantity', 
+                    dataIndex: 'quantity'
+                },
+                {
+                    text: _('Сумма'), 
+                    width: 100, 
+                    renderer: function (value,meta,record) {
+                        return record.get('price') * record.get('quantity');
+                    }
+                },
+                {
+                    text: _('Кол-во к возврату'), 
+                    width: 150,
+                    dataIndex: 'quantity_refund', 
                     editor: {
                         xtype: 'numberfield',
                         allowBlank: false,
@@ -61,19 +67,19 @@ Ext.define('Plugin.sale.OrderRefund', {
                     }
                 },
                 {
-                    text: _('Стоимость'), 
-                    width: 100, 
+                    text: _('Сумма к возврату'), 
+                    width: 150, 
                     renderer: function (value,meta,record) {
-                        return record.get('price') * record.get('quantity');
+                        return record.get('price') * record.get('quantity_refund');
                     }
-                }	
+                }
             ],
             store: {
                 fields: [
-                   {name: 'checked', type: 'boolean'},
                    {name: 'name', persist: false},
                    {name: 'price', type: 'float'},
                    {name: 'quantity', type: 'integer'},
+                   {name: 'quantity_refund', type: 'integer'},
                 ],
                 data: this.record.getData().products,
             },            
@@ -97,7 +103,7 @@ Ext.define('Plugin.sale.OrderRefund', {
                         
                         var count = 0;
                         w.products.getStore().each( function(rec){
-                            if (rec.get('checked')) {
+                            if (rec.get('quantity_refund') > 0) {
                                 count = 1;
                             }
                             products.push(rec.getData());

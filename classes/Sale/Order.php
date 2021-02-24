@@ -164,13 +164,13 @@ class Order {
         else {
             $refunded = [];
             foreach ($items as $item) {
-                if (!$item['checked']) continue;
+                if ($item['quantity_refund'] <= 0) continue;
                 $refunded[$item['id']] = $item;
             }
             foreach ($this->products as $key => $product) {
                 if (!isset($refunded[$product['id']] )) continue;
-                $this->products[$key]['sum_refund'] += $refunded[$product['id']]['price'] * $refunded[$product['id']]['quantity'];
-                $this->products[$key]['quantity'] -= $refunded[$product['id']]['quantity'];
+                $this->products[$key]['sum_refund'] += $refunded[$product['id']]['price'] * $refunded[$product['id']]['quantity_refund'];
+                $this->products[$key]['quantity'] -= $refunded[$product['id']]['quantity_refund'];
             }
             $this->save();
         }
