@@ -156,20 +156,10 @@ if ($this->getBo()) {
 			'class'    => 'Plugin.sale.Setup',
 			'submenu'  => array(
 				array(
-					'name'  => $t->_('Товары'),
-					'icon'  => '/cms/plugins/sale/images/icon_goods.png',
-					'class' => 'Plugin.sale.Goods'
-				),
-				array(
-					'name'  => $t->_('Скидки'),
-					'icon'  => '/cms/plugins/sale/images/icon_discount.png',
-					'class' => 'Plugin.sale.DiscountsAndCoupons'
-				),			
-				array(
 					'name'  => $t->_('Заказы'),
 					'icon'  => '/cms/plugins/sale/images/icon_orders.png',
 					'class' => 'Plugin.sale.Orders'
-				),
+				),            	
 				array(
 					'name'  => $t->_('Платежные системы'),
 					'icon'  => '/cms/plugins/sale/images/money.png',
@@ -184,7 +174,17 @@ if ($this->getBo()) {
 					'name'  => $t->_('Свойства заказов'),
 					'icon'  => '/cms/plugins/sale/images/icon_orders_props.png',
 					'class' => 'Plugin.sale.OrderPropsSetup'
-				),			
+				),
+				array(
+					'name'  => $t->_('Товары'),
+					'icon'  => '/cms/plugins/sale/images/icon_goods.png',
+					'class' => 'Plugin.sale.Goods'
+				),
+				array(
+					'name'  => $t->_('Скидки'),
+					'icon'  => '/cms/plugins/sale/images/icon_discount.png',
+					'class' => 'Plugin.sale.DiscountsAndCoupons'
+				),	                
 			) 
 		));
 
