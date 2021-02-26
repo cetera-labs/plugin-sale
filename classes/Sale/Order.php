@@ -954,7 +954,52 @@ class Order {
 		}
 		$this->setProduct( $pid, $quantity, $oid, $options );
 		return $this;
-	}	
+	}
+
+    public function removeProduct( $product, $offer = 0 )
+	{	
+        $t = \Cetera\Application::getInstance()->getTranslator();
+		if ( $product instanceOf Product ) {
+			$pid = $product->id;
+		}
+		else {
+			$pid = (int)$product;
+			$product = \Sale\Product::getById($pid);
+		} 
+        
+		if (!$pid) throw new \Exception( $t->_('Не указан продукт') );
+		
+		if ( $product->hasOffers() && $offer ) {
+			
+			if ( $offer instanceOf Offer ) {
+				$oid = $offer->id;
+			}
+			else {
+				$oid = (int)$offer;
+				if ($oid) $offer = \Sale\Offer::getById($oid);
+			}			
+			
+			if (!$oid) throw new \Exception( $t->_('Не указано торговое предложение') );
+			
+		}
+		else {
+			$oid = 0;
+		}
+		
+		$itemID = $pid.'-'.$oid;
+
+		$this->getProducts();
+		
+		$exists = -1;
+		foreach ($this->products as $key => $value) {
+			if ($value['id'] == $itemID) {
+				$exists = $key;
+				break;
+			}
+		}
+
+        if ($exists >= 0) unset($this->products[$exists]);
+    }
 	
 	/*
 	* добавить продукт к заказу или изменить количество
@@ -1004,46 +1049,43 @@ class Order {
 			}
 		}
 		
-		if ($quantity < 1) {
-			
-			if ($exists >= 0) unset($this->products[$exists]);
-						
+		if ($quantity <= 0) {
+			$quantity = 0;		
 		}
-		else {		
-			if (!$product->canBuy((int)$quantity)) {
-				throw new \Exception( $t->_('Отсутствует указанное количество') );
-			}
-			
-			if ($price === null) {
-				$price = $offer?$offer->price:$product->price;
-			}
-			
-			if ($exists >= 0) {
-				$this->products[$exists]['quantity'] = $quantity;
-				$this->products[$exists]['price'] = $price; 
-                if ($sum_refund !== null) {
-                    $this->products[$exists]['sum_refund'] = $sum_refund;
-                }
-			}
-			else {
-				$this->products[] = [
-					'product'    => $product,
-					'offer'      => $offer,
-					'price'      => (float)$price,
-					'displayPrice' => $this->getCurrency()->format($price),
-					'quantity'   => $quantity,
-					'sum'        => $quantity * $price,
-					'displaySum' => $this->getCurrency()->format($quantity * $price),
-					'id'         => $itemID,
-					'options'    => $options,
-					'name'       => $product->name.($offer?', '.$offer->name:''),
-					'bo_url'     => '',
-                    'unit'       => $product->unit,
-                    'sum_refund' => ($sum_refund !== null)?$sum_refund:0,
-				];
-			}
-			
-		}		
+        else {
+            if (!$product->canBuy((int)$quantity)) {
+                throw new \Exception( $t->_('Отсутствует указанное количество') );
+            }
+        }
+        
+        if ($price === null) {
+            $price = $offer?$offer->price:$product->price;
+        }
+        
+        if ($exists >= 0) {
+            $this->products[$exists]['quantity'] = $quantity;
+            $this->products[$exists]['price'] = $price; 
+            if ($sum_refund !== null) {
+                $this->products[$exists]['sum_refund'] = $sum_refund;
+            }
+        }
+        else {
+            $this->products[] = [
+                'product'    => $product,
+                'offer'      => $offer,
+                'price'      => (float)$price,
+                'displayPrice' => $this->getCurrency()->format($price),
+                'quantity'   => $quantity,
+                'sum'        => $quantity * $price,
+                'displaySum' => $this->getCurrency()->format($quantity * $price),
+                'id'         => $itemID,
+                'options'    => $options,
+                'name'       => $product->name.($offer?', '.$offer->name:''),
+                'bo_url'     => '',
+                'unit'       => $product->unit,
+                'sum_refund' => ($sum_refund !== null)?$sum_refund:0,
+            ];
+        }		
 		
 		//$this->save();
 		//$this->products = null;

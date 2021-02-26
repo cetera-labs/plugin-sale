@@ -16,7 +16,7 @@ if (isset($_GET['action']))
 	
 	if ($_GET['action'] == 'destroy') {	
 		list($product,$offer) = explode('-', $data['id']);
-		$order->setProduct($product,0,$offer);
+		$order->removeProduct( $product, $offer );
 		$order->save();
 	}
 	
