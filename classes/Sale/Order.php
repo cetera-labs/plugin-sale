@@ -290,7 +290,7 @@ class Order {
 					'quantity'   => $q,
                     'unit'       => isset($value['unit'])?$value['unit']:'',
 					'sum'        => $q * $p,
-                    'sum_refund' => (int)$value['sum_refund'],
+                    'sum_refund' => isset($value['sum_refund'])?(int)$value['sum_refund']:0,
 					'displaySum' => $this->getCurrency()->format($q * $p),
 					'id'         => $value['product_id'].'-'.$value['offer_id'],
 					'name'       => $value['product_name'],
@@ -317,11 +317,11 @@ class Order {
 	public function getProperty($name)
 	{
 		if ((int)$name) {
-			return $this->props[$name];
+			return isset($this->props[$name])?$this->props[$name]:null;
 		}
 		else {
 			$p = $this->getProps();
-			return $p[$name]['value'];
+			return isset($p[$name])?$p[$name]['value']:null;
 		}
 	}	
 	
@@ -762,7 +762,7 @@ class Order {
 				'quantity'     => $p['quantity'],
 				'price'        => $p['price'],
                 'unit'         => $p['unit'],
-                'sum_refund'   => (int)$p['sum_refund'],
+                'sum_refund'   => isset($p['sum_refund'])?(int)$p['sum_refund']:0,
 				'options'      => is_array($p['options'])?serialize($p['options']):'',
 				'offer_id'     => $p['offer']?$p['offer']->id:0,
 			);

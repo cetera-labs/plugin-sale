@@ -371,6 +371,7 @@ class Cart extends \Cetera\Base {
 				'price'      => $price,
 				'displayPrice' => $this->getCurrency()->format($price),
 				'quantity'   => $q,
+                'unit'       => $prod?$prod->unit:'',
 				'sum'        => $q * $price,
 				'displaySum' => $this->getCurrency()->format($q * $price),
 				'id'         => $value['id'],
