@@ -1104,7 +1104,7 @@ class Order {
 		$data = [
 			'id'         => $this->id,
 			'date'       => $this->date,
-			'total'      => $this->getTotal(true),
+			'total'      => $this->getTotal(),
 			'user_id'    => $this->user_id,
 			'status_text'=> $this->getStatusText(),
 			'paid_text'  => $this->getPayText(),
