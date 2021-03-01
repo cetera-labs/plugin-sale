@@ -288,7 +288,7 @@ class Order {
 					'price'        => $p,
 					'displayPrice' => $this->getCurrency()->format($p),
 					'quantity'   => $q,
-                    'unit'       => $value['unit'],
+                    'unit'       => isset($value['unit'])?$value['unit']:'',
 					'sum'        => $q * $p,
                     'sum_refund' => (int)$value['sum_refund'],
 					'displaySum' => $this->getCurrency()->format($q * $p),
