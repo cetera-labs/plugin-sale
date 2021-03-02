@@ -8,7 +8,7 @@ Ext.define('Plugin.sale.OrdereditGoods', {
     columns: [
         {
 			text: 'ID', 
-			width: 100,
+			width: 50,
 			dataIndex: 'id', 
 		},
         {
@@ -18,7 +18,7 @@ Ext.define('Plugin.sale.OrdereditGoods', {
 		},	
         {
 			text: _('Цена'), 
-			width: 100,
+			width: 60,
 			dataIndex: 'price',
 			editor: {
 				xtype: 'numberfield',
@@ -29,7 +29,7 @@ Ext.define('Plugin.sale.OrdereditGoods', {
 		},		
         {
 			text: _('Кол-во'), 
-			width: 75,
+			width: 50,
 			dataIndex: 'quantity', 
 			editor: {
 				xtype: 'numberfield',
@@ -40,12 +40,12 @@ Ext.define('Plugin.sale.OrdereditGoods', {
 		},		
         {
 			text: _('Стоимость'), 
-			width: 100, 
+			width: 60, 
 			dataIndex: 'sum', 
 		},		
         {
 			text: _('Возвращено'), 
-			width: 100, 
+			width: 80, 
 			dataIndex: 'sum_refund', 
 		}	
 

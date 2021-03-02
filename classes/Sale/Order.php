@@ -280,7 +280,15 @@ class Order {
 				}
 				catch (\Exception $e) {
 					$offer = null;
-				}				
+				}
+                
+                $name = $value['product_name'];
+                if ($prod) {
+                    $name = $prod->name;
+                    if ($offer) {
+                        $name .= ' > '.$offer->name;
+                    }
+                }
 				
 				$products[] = array(
 					'product'      => $prod,

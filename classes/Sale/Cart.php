@@ -357,6 +357,9 @@ class Cart extends \Cetera\Base {
 				
 				$price = $this->getCurrency()->convert($price, $buyable->getCurrency());
 				$name = $prod->name;
+                if ($offer) {
+                    $name .= ' > '.$offer->name;
+                }                
 			}
 			else {
 				$prod = null;
