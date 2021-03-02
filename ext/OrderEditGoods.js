@@ -6,7 +6,11 @@ Ext.define('Plugin.sale.OrdereditGoods', {
 	title: _('Товары'),
 	
     columns: [
-
+        {
+			text: 'ID', 
+			width: 100,
+			dataIndex: 'id', 
+		},
         {
 			text: _('Товар'), 
 			flex: 1, 
