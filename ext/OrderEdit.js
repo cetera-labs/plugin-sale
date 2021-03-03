@@ -64,7 +64,11 @@ Ext.define('Plugin.sale.OrderEdit', {
 					},
 					{
                         flex:1,
-						layout: 'fit',
+						layout: {
+							type: 'hbox',
+							pack: 'start',
+							align: 'stretch'
+						},
 						items: [
                             {
                                 flex: 3,
