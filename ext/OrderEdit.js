@@ -63,24 +63,37 @@ Ext.define('Plugin.sale.OrderEdit', {
 						]					
 					},
 					{
+                        flex:1,
 						layout: 'fit',
-						flex:1,
-						items: {
-							data: d,
-							padding: 3,
-							bodyPadding: 5,	
-							overflowY: 'auto',
-							tpl: [
-								'<div style="float: right"><span id="x-props-edit-button"></span></div>',
-								'<p><b>'+_('Покупатель')+':</b> <a href="javascript:Cetera.getApplication().openBoLink(\'user:{user_id}\')">{buyer}</a></p>',
-								'<p><b>'+_('Способ оплаты')+':</b> {payment_data.name}</p>',
-								'<p><b>'+_('Способ доставки')+':</b> {delivery_data.name}</p>',
-								'<p>{delivery_note}</p>',
-								'<tpl for="props">', 
-									'<p><b>{name}:</b> {value}</p>', 
-								'</tpl>'
-							]
-						}
+						items: [
+                            {
+                                flex: 3,
+                                data: d,
+                                padding: 3,
+                                bodyPadding: 5,	
+                                overflowY: 'auto',
+                                tpl: [
+                                    '<div style="float: right"><span id="x-props-edit-button"></span></div>',
+                                    '<p><b>'+_('Покупатель')+':</b> <a href="javascript:Cetera.getApplication().openBoLink(\'user:{user_id}\')">{buyer}</a></p>',
+                                    '<p><b>'+_('Способ оплаты')+':</b> {payment_data.name}</p>',
+                                    '<p><b>'+_('Способ доставки')+':</b> {delivery_data.name}</p>',
+                                    '<p>{delivery_note}</p>',
+                                    '<tpl for="props">', 
+                                        '<p><b>{name}:</b> {value}</p>', 
+                                    '</tpl>'
+                                ]
+                            },
+							{
+								title:'Сумма', 
+								flex:1,
+								data: d,
+								tpl: [
+									'<p>'+_('Товары')+': {products_cost}</p>',
+									'<p>'+_('Доставка')+': {delivery_cost}</p>',
+									'<p style="font-size: 120%; font-weight: bold">'+_('Всего')+': {total}</p>',
+								]
+							}
+                        ]
 					},				
 					{
 						flex:1,
@@ -114,18 +127,7 @@ Ext.define('Plugin.sale.OrderEdit', {
 										scope: this
 									}						
 								}							
-							},
-							{
-								title:'Сумма', 
-								flex:1,
-								data: d,
-								tpl: [
-									'<p>'+_('Товары')+': {products_cost}</p>',
-									'<p>'+_('Доставка')+': {delivery_cost}</p>',
-									'<p style="font-size: 120%; font-weight: bold">'+_('Всего')+': {total}</p>',
-								]
 							}
-							
 						]			
 					}
 				]	

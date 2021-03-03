@@ -301,7 +301,7 @@ class Order {
                     'sum_refund' => isset($value['sum_refund'])?(int)$value['sum_refund']:0,
 					'displaySum' => $this->getCurrency()->format($q * $p),
 					'id'         => $value['product_id'].'-'.$value['offer_id'],
-					'name'       => $value['product_name'],
+					'name'       => $name,
 					'bo_url'     => /*$prod?$prod->getBoUrl( true ):*/$value['product_name'],
 					'options'    => $value['options']?unserialize($value['options']):null,
 				);
