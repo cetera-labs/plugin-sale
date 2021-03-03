@@ -71,6 +71,7 @@ Ext.define('Plugin.sale.OrderEdit', {
 						},
 						items: [
                             {
+                                title:'Параметры заказа', 
                                 flex: 3,
                                 data: d,
                                 padding: 3,
@@ -91,6 +92,8 @@ Ext.define('Plugin.sale.OrderEdit', {
 								title:'Сумма', 
 								flex:1,
 								data: d,
+                                padding: 3,
+                                bodyPadding: 5,	
 								tpl: [
 									'<p>'+_('Товары')+': {products_cost}</p>',
 									'<p>'+_('Доставка')+': {delivery_cost}</p>',
