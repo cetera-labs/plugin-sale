@@ -172,7 +172,7 @@
     <key name="order_id" unique="0">
         <column name="order_id" />
     </key>	
-	<key name="transaction_id" unique="1">
+	<key name="transaction_id" unique="0">
         <column name="transaction_id" />
     </key>	
 </table>
