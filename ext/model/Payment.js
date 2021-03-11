@@ -20,14 +20,15 @@ Ext.define('Plugin.sale.model.Payment', {
 		type: 'ajax',
 		simpleSortMode: true,
         api: {
-            read    : '/plugins/sale/data_payment.php',
-            update  : '/plugins/sale/data_payment.php?action=update',
-            create  : '/plugins/sale/data_payment.php?action=create',
-            destroy : '/plugins/sale/data_payment.php?action=destroy'			
+            read    : '/cms/plugins/sale/data_payment.php',
+            update  : '/cms/plugins/sale/data_payment.php?action=update',
+            create  : '/cms/plugins/sale/data_payment.php?action=create',
+            destroy : '/cms/plugins/sale/data_payment.php?action=destroy'			
         },		
         reader: {
 			type: 'json',
-            root: 'rows'
+            root: 'rows',
+            rootProperty: 'rows'
         }
     }	
 }); 

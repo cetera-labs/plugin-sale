@@ -13,14 +13,15 @@ Ext.define('Plugin.sale.model.PersonType', {
 		type: 'ajax',
 		simpleSortMode: true,
         api: {
-            read    : '/plugins/sale/data_person_type.php',
-            update  : '/plugins/sale/data_person_type.php?action=update',
-            create  : '/plugins/sale/data_person_type.php?action=create',
-            destroy : '/plugins/sale/data_person_type.php?action=destroy'			
+            read    : '/cms/plugins/sale/data_person_type.php',
+            update  : '/cms/plugins/sale/data_person_type.php?action=update',
+            create  : '/cms/plugins/sale/data_person_type.php?action=create',
+            destroy : '/cms/plugins/sale/data_person_type.php?action=destroy'			
         },		
         reader: {
 			type: 'json',
-            root: 'rows'
+            root: 'rows',
+            rootProperty: 'rows'
         }
     }	
 }); 

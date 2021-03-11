@@ -25,14 +25,15 @@ Ext.define('Plugin.sale.model.OrderProps', {
 		type: 'ajax',
 		simpleSortMode: true,
         api: {
-            read    : '/plugins/sale/data_order_props.php',
-            update  : '/plugins/sale/data_order_props.php?action=update',
-            create  : '/plugins/sale/data_order_props.php?action=create',
-            destroy : '/plugins/sale/data_order_props.php?action=destroy'			
+            read    : '/cms/plugins/sale/data_order_props.php',
+            update  : '/cms/plugins/sale/data_order_props.php?action=update',
+            create  : '/cms/plugins/sale/data_order_props.php?action=create',
+            destroy : '/cms/plugins/sale/data_order_props.php?action=destroy'			
         },		
         reader: {
 			type: 'json',
-            root: 'rows'
+            root: 'rows',
+            rootProperty: 'rows'
         }
     }	
 }); 

@@ -17,14 +17,15 @@ Ext.define('Plugin.sale.model.Coupon', {
 		type: 'ajax',
 		simpleSortMode: true,
         api: {
-            read    : '/plugins/sale/data_coupon.php',
-            update  : '/plugins/sale/data_coupon.php?action=update',
-            create  : '/plugins/sale/data_coupon.php?action=create',
-            destroy : '/plugins/sale/data_coupon.php?action=destroy'			
+            read    : '/cms/plugins/sale/data_coupon.php',
+            update  : '/cms/plugins/sale/data_coupon.php?action=update',
+            create  : '/cms/plugins/sale/data_coupon.php?action=create',
+            destroy : '/cms/plugins/sale/data_coupon.php?action=destroy'			
         },		
         reader: {
 			type: 'json',
-            root: 'rows'
+            root: 'rows',
+            rootProperty: 'rows'
         }		
     }	
 }); 

@@ -31,13 +31,14 @@ Ext.define('Plugin.sale.model.Order', {
 		type: 'ajax',
 		simpleSortMode: true,
         api: {
-            read    : '/plugins/sale/data_orders.php',
-            update  : '/plugins/sale/data_orders.php?action=update',
-            destroy : '/plugins/sale/data_orders.php?action=delete'
+            read    : '/cms/plugins/sale/data_orders.php',
+            update  : '/cms/plugins/sale/data_orders.php?action=update',
+            destroy : '/cms/plugins/sale/data_orders.php?action=delete'
         },		
         reader: {
 			type: 'json',
-            root: 'rows'
+            root: 'rows',
+            rootProperty: 'rows'
         }
     }	
 }); 

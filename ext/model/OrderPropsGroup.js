@@ -14,14 +14,15 @@ Ext.define('Plugin.sale.model.OrderPropsGroup', {
 		type: 'ajax',
 		simpleSortMode: true,
         api: {
-            read    : '/plugins/sale/data_order_props_groups.php',
-            update  : '/plugins/sale/data_order_props_groups.php?action=update',
-            create  : '/plugins/sale/data_order_props_groups.php?action=create',
-            destroy : '/plugins/sale/data_order_props_groups.php?action=destroy'			
+            read    : '/cms/plugins/sale/data_order_props_groups.php',
+            update  : '/cms/plugins/sale/data_order_props_groups.php?action=update',
+            create  : '/cms/plugins/sale/data_order_props_groups.php?action=create',
+            destroy : '/cms/plugins/sale/data_order_props_groups.php?action=destroy'			
         },		
         reader: {
 			type: 'json',
-            root: 'rows'
+            root: 'rows',
+            rootProperty: 'rows'
         }
     }	
 }); 
