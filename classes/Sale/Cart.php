@@ -321,7 +321,7 @@ class Cart extends \Cetera\Base {
 		
 		foreach ($data as $value)
 		{
-			$q = $value['quantity'];
+			$q = (int)$value['quantity'];
 			
 			if ($value['product_id']) {
                 
