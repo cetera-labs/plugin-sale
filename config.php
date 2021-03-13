@@ -171,7 +171,7 @@ if ($this->getBo()) {
 				array(
 					'name'  => $t->_('Способы доставки'),
 					'icon'  => '/cms/plugins/sale/images/delivery-icon.png',
-                    'iconCls'=> 'x-fas fa-credit-card',
+                    'iconCls'=> 'x-fas fa-truck',
 					'class' => 'Plugin.sale.Delivery'
 				),
 				array(
