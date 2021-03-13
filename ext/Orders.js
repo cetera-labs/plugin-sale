@@ -28,7 +28,7 @@ Ext.define('Plugin.sale.Orders', {
 	
     border: false,
         
-	_plugins: [{
+	plugins: [{
             ptype: 'rowexpander',
             rowBodyTpl : new Ext.XTemplate(
 				'<div style="padding: 10px"><table cellpadding="3" class="stats">',
@@ -49,34 +49,7 @@ Ext.define('Plugin.sale.Orders', {
 				'<td colspan="3" class="total">'+_('Всего')+':</td><td class="total">{products_cost}</td>',
 				'</tr>',				
 				'</table></div>')
-    }],
-
-    plugins: {
-        rowexpander: true
-    },
-    itemConfig: {
-        body: {
-            tpl: new Ext.XTemplate(
-				'<div style="padding: 10px"><table cellpadding="3" class="stats">',
-				'<tr>',
-					'<td class="total">'+_('Товар')+'</td><td class="total">'+_('Цена')+'</td><td class="total">'+_('Кол-во')+'</td><td class="total">'+_('Стоимость')+'</td>',
-				'</tr>',				
-				'<tpl for="products">',  
-					'<tr>',
-						'<td>',
-							'{name}',
-							'<tpl for="options">', 
-								'<br>{name}: {value}',
-							'</tpl>',
-						'</td><td>{price}</td><td>{quantity}</td><td>{sum}</td>',
-					'</tr>',
-				'</tpl>',
-				'<tr>',
-				'<td colspan="3" class="total">'+_('Всего')+':</td><td class="total">{products_cost}</td>',
-				'</tr>',				
-				'</table></div>')
-        }
-    },    
+    }],  
 
     initComponent: function(){
         
@@ -180,7 +153,7 @@ Ext.define('Plugin.sale.Orders', {
 								fields: ['id', 'name'],
 								proxy: {
 									type: 'ajax',
-									url: '/plugins/sale/data_orders.php?action=get_status_list',
+									url: '/cms/plugins/sale/data_orders.php?action=get_status_list',
 									reader: {
 										type: 'json',
 										root: 'rows'
@@ -225,7 +198,11 @@ Ext.define('Plugin.sale.Orders', {
 				this.deleteAction
             ]
         });
-
+					  
+        this.store.load();
+        
+        this.callParent(arguments);
+        
         this.getSelectionModel().on({
             selectionchange: function(sm, selections) {
                 if (selections.length) {
@@ -237,12 +214,7 @@ Ext.define('Plugin.sale.Orders', {
                 }
             },
             scope: this
-        });
-		
-			  
-        this.store.load();
-        
-        this.callParent(arguments);
+        });        
 
     },
 

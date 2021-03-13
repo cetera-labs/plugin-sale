@@ -1,15 +1,17 @@
 <?php
 include('common_bo.php');
 
-if ($_GET['action'] == 'get_status_list')
-{
+if (!isset($_GET['action'])) {
+    $_GET['action'] = false;
+}
+
+if ($_GET['action'] == 'get_status_list') {
 	echo json_encode(array(
 		'rows'    => \Sale\Order::callStatic('getStatuses')
 	));	
 	die();
 }
-elseif ($_GET['action'] == 'get_pay_status_list')
-{
+elseif ($_GET['action'] == 'get_pay_status_list') {
 	echo json_encode(array(
 		'rows'    => \Sale\Order::callStatic('getPayStatuses')
 	));	
