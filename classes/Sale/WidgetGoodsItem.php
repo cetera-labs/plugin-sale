@@ -4,6 +4,8 @@ namespace Sale;
 class WidgetGoodsItem extends \Cetera\Widget\Material
 {
 	
+    use \Cetera\Widget\Traits\Meta;
+    
 	private $tabs = null;
 	private $properties = null;
 	
@@ -21,6 +23,7 @@ class WidgetGoodsItem extends \Cetera\Widget\Material
 			'show_properties' => 'code',
 			'show_comments' => true,
 			'share_buttons' => true,
+            'show_meta'     => false,
 			
 			'template'     => 'default.twig',
 		);
@@ -44,9 +47,30 @@ class WidgetGoodsItem extends \Cetera\Widget\Material
 			array_unshift($_SESSION['sale_recently_viewed'], $m->id);
 			$_SESSION['sale_recently_viewed'] = array_unique($_SESSION['sale_recently_viewed']);
 			
-			if ($this->getParam('show_meta'))
-			{
-				$this->application->addHeadString('<meta property="og:type" content="product.item"/>', 'og:type');
+			if ($this->getParam('show_meta')) {
+
+                if ($m->meta_title) 
+                    $name = $m->meta_title;
+                    else $name = strip_tags($m->name);
+                    
+                if ($m->meta_description) 
+                    $short = strip_tags($m->meta_description);
+                    else $short = strip_tags($m->short);
+                            
+                $this->setMetaTitle($name);
+                $this->setMetaDescription($short);
+                
+                if ($m->pic) {
+                    $this->setMetaPicture($m->pic);
+                }
+                
+                $a = $this->application;
+            
+                if ($m->meta_keywords) {
+                    $a->setPageProperty('keywords', $m->meta_keywords);
+                }
+                
+				$a->addHeadString('<meta property="og:type" content="product.item"/>', 'og:type');
 			}
 		}		
 	}	
