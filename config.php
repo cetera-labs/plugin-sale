@@ -157,42 +157,42 @@ if ($this->getBo()) {
 			'class'    => 'Plugin.sale.Setup',
 			'items'  => array(
 				array(
-                    'id'    => 'sale-orders',
+                    'id'    => 'orders',
 					'name'  => $t->_('Заказы'),
 					'icon'  => '/cms/plugins/sale/images/icon_orders.png',
                     'iconCls'=> 'x-fas fa-receipt',
 					'class' => 'Plugin.sale.Orders'
 				),            	
 				array(
-                    'id'    => 'sale-payment',
+                    'id'    => 'payment',
 					'name'  => $t->_('Платежные системы'),
 					'icon'  => '/cms/plugins/sale/images/money.png',
                     'iconCls'=> 'x-fas fa-credit-card',
 					'class' => 'Plugin.sale.Payment'
 				),	
 				array(
-                    'id'    => 'sale-delivery',
+                    'id'    => 'delivery',
 					'name'  => $t->_('Способы доставки'),
 					'icon'  => '/cms/plugins/sale/images/delivery-icon.png',
                     'iconCls'=> 'x-fas fa-truck',
 					'class' => 'Plugin.sale.Delivery'
 				),
 				array(
-                    'id'    => 'sale-opder-props',
+                    'id'    => 'opder-props',
 					'name'  => $t->_('Свойства заказов'),
 					'icon'  => '/cms/plugins/sale/images/icon_orders_props.png',
                     'iconCls'=> 'x-fas fa-asterisk',
 					'class' => 'Plugin.sale.OrderPropsSetup'
 				),
 				array(
-                    'id'    => 'sale-goods',
+                    'id'    => 'goods',
 					'name'  => $t->_('Товары'),
 					'icon'  => '/cms/plugins/sale/images/icon_goods.png',
                     'iconCls'=> 'x-fas fa-shopping-bag',
 					'class' => 'Plugin.sale.Goods'
 				),
 				array(
-                    'id'    => 'sale-discount',
+                    'id'    => 'discount',
 					'name'  => $t->_('Скидки'),
 					'icon'  => '/cms/plugins/sale/images/icon_discount.png',
                     'iconCls'=> 'x-fas fa-percentage',
