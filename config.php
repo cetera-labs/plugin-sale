@@ -155,7 +155,7 @@ if ($this->getBo()) {
 			'icon'     => '/cms/plugins/sale/images/icon.png',
             'iconCls'  => 'x-fas fa-store',
 			'class'    => 'Plugin.sale.Setup',
-			'submenu'  => array(
+			'items'  => array(
 				array(
 					'name'  => $t->_('Заказы'),
 					'icon'  => '/cms/plugins/sale/images/icon_orders.png',
