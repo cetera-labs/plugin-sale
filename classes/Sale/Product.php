@@ -117,58 +117,8 @@ class Product extends Buyable
 			try {	
 			
                 if (\Sale\Discount::isConditionExists($condition['field'])) {
-                    $match = $condition['field']::check($condition, $this, $offer->id, $is_in_cart);
-                }
-				// скидка по количеству товаров в корзине УДАЛИТЬ!!!
-				elseif ($condition['field'] == 'cart_quantity') {
-					
-					// товаров в корзине больше чем указано, то делаем скидку на эти товары
-					if ($condition['condition'] == 'gt') {
-						$match = Cart::get()->getProductsCount() >= $condition['value'];
-					}	
-					// скидка только на указанное кол-во самых дешевых товаров
-					if ($condition['condition'] == 'lt') {
-						$match = true;
-						
-						$this->correctDiscountValue = [
-							'function' => function($value, $params) {
-								
-											  // товары в корзине без учета скидок
-											  $products = Cart::get()->getProducts(false);								  											  
-											  usort ( $products , function($a,$b){ if ($a['price'] == $b['price']) return 0;  return ($a['price'] < $b['price']) ? -1 : 1; } );
-											  $count = 0;
-											  foreach ($products as $p) {												  
-												  
-												  if ( $p['product'] && $p['product']->id == $params['pid'] && (!$p['offer'] || $p['offer']->id == $params['oid']) ) {
-													  // товар попал в указанное кол-во самых дешевых
-													  
-													  $q = $params['max_cart_quantity'] - $count - 1; // макс кол-во ДАННОГО товара со скидкой
-													  if ($q >= $p['quantity']) return $value; // уместились в это количество
-													  
-													  // пересчет скидки
-													  $value = $q * $value / $p['quantity'];		
-												  
-													  return $value;
-												  }
-												  
-												  $count += $p['quantity'];
-												  if ($count >= $params['max_cart_quantity']) {
-													  // товар не попал в указанное кол-во самых дешевых: скидка=0
-													  return 0;
-												  }
-											  }
-											  return 0;
-										  },
-							'params' => [
-								'pid'               => $this->id,
-								'oid'               => $offer->id,
-								'max_cart_quantity' => $condition['value'],
-							]
-						
-						];
-						
-					}
-				}				
+                    $match = $condition['field']::check($condition, $this, $offer, $is_in_cart);
+                }				
 				else {
 					
 					if (isset($fields[$condition['field']])){

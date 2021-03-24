@@ -24,6 +24,7 @@ catch (\Exception $e) {}
 \Cetera\User::addPlugin( '\Sale\User' );
 
 \Sale\Discount::addCondition( '\Sale\Discount\ConditionCartCount' );
+\Sale\Discount::addCondition( '\Sale\Discount\ConditionDate' );
 
 $this->registerWidget(array(
     'name'     => 'Sale.Goods.List',

@@ -8,7 +8,7 @@ class ConditionCartCount extends ConditionAbstract {
         return $a->getTranslator()->_('Кол-во товаров в корзине');
     }
     
-    public static function check($condition, $product, $offer_id, $is_in_cart) {
+    public static function check($condition, $product, $offer, $is_in_cart) {
 
         $match = false;
         
@@ -51,8 +51,8 @@ class ConditionCartCount extends ConditionAbstract {
                               },
                 'params' => [
                     'pid'               => $product->id,
-                    'oid'               => $offer_id,
-                    'max_cart_quantity' =>  $condition['value'],
+                    'oid'               => $offer->id,
+                    'max_cart_quantity' => $condition['value'],
                 ]
             
             ];
