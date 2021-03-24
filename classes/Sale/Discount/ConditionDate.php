@@ -1,7 +1,7 @@
 <?php
 namespace Sale\Discount;
 
-class ConditionCartCount extends ConditionAbstract {
+class ConditionDate extends ConditionAbstract {
 		
     public static function getName() {
         return \Cetera\Application::getInstance()->getTranslator()->_('Дата');
