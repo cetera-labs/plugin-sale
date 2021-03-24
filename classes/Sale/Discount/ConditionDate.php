@@ -4,7 +4,7 @@ namespace Sale\Discount;
 class ConditionDate extends ConditionAbstract {
 		
     public static function getName() {
-        return \Cetera\Application::getInstance()->getTranslator()->_('Дата');
+        return \Cetera\Application::getInstance()->getTranslator()->_('Текущая дата');
     }
     
     public static function check($condition, $product, $offer, $is_in_cart) {
