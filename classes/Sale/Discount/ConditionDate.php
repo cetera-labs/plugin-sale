@@ -9,8 +9,8 @@ class ConditionDate extends ConditionAbstract {
     
     public static function check($condition, $product, $offer, $is_in_cart) {
 
-        $now = new DateTime('NOW');
-        $value = new DateTime($condition['value']);
+        $now = new \DateTime('NOW');
+        $value = new \DateTime($condition['value']);
         
         if ($condition['condition'] == 'gt') {
             return $now >= $value;
