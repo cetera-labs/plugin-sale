@@ -424,7 +424,8 @@ class Cart extends \Cetera\Base {
 		{
 			$this->_totalDiscountSum = 0;
 			foreach ($this->getProducts() as $p) {
-				$this->_totalDiscountSum += $this->getCurrency()->convert( $p['product']->getDiscount() * $p['quantity'], $p['product']->getCurrency() );
+                $b = $p['offer']?$p['offer']:$p['product'];
+				$this->_totalDiscountSum += $this->getCurrency()->convert( $b->getDiscount() * $p['quantity'], $b->getCurrency() );
 			}
 		}
 		if ($display) return $this->getCurrency()->format( $this->_totalDiscountSum );
