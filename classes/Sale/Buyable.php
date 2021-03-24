@@ -3,8 +3,9 @@ namespace Sale;
 
 abstract class Buyable extends \Cetera\Material
 {
-	
 	protected static $priceDecimals = null;
+    
+    public $options = null;
 	
 	public static function fetch($data, $type = 0, $table = NULL)
 	{

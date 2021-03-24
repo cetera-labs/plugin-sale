@@ -321,6 +321,7 @@ class Cart extends \Cetera\Base {
 		
 		foreach ($data as $value)
 		{
+            
 			$q = (int)$value['quantity'];
 			
 			if ($value['product_id']) {
@@ -347,6 +348,8 @@ class Cart extends \Cetera\Base {
 					$prod->isInCart = true;
 					$buyable = $prod;
 				}
+                
+                $buyable->options = $value['options']?unserialize($value['options']):null;
 				
 				if ($discountPrice) {
 					$price = $buyable->discountPrice;
@@ -379,7 +382,7 @@ class Cart extends \Cetera\Base {
 				'displaySum' => $this->getCurrency()->format($q * $price),
 				'id'         => $value['id'],
 				'name'       => $name,
-				'options'    => $value['options']?unserialize($value['options']):null,
+				'options'    => $buyable->options,
 				'db_data'    => $value,
 			];
 			
