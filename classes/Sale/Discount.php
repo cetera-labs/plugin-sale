@@ -23,9 +23,10 @@ class Discount  {
 	public static function getConditions()
 	{
         $data = [];
+        $id = -1;
 		foreach (self::$conditions as $g) {
 			$d = [
-                'id' => $g,
+                'id' => $id--,
                 'alias' => $g,
                 'name'  => $g::getName()
             ];

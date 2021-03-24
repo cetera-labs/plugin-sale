@@ -4,11 +4,10 @@ Ext.define('Plugin.sale.DiscountEdit', {
 
     modal: true,
     autoShow: true,
-    width: 600,
-    height: 550,
+    width: 800,
+    height: 600,
     minWidth: 600,
     minHeight: 400,
-	maxHeight: 550,
 	layout: 'fit',
 		
     items: {
@@ -98,7 +97,7 @@ Ext.define('Plugin.sale.DiscountEdit', {
 					title: _('Условия'),
 					layout: 'fit',
 					items: {
-						hideEmptyLabel: true,
+						labelWidth: 0,
 						xtype: 'sale.discountcondition',
 						name: 'conditions'
 					}

@@ -5,10 +5,8 @@ Ext.define('Plugin.sale.PaymentEdit', {
     modal: true,
     autoShow: true,
     width: 500,
-    height: 550,
+    height: 750,
     minWidth: 400,
-    minHeight: 600,
-	maxHeight: 600,
 	layout: 'fit',
 		
     items: {
@@ -87,7 +85,7 @@ Ext.define('Plugin.sale.PaymentEdit', {
 					//console.log(params.data);
 					if (!params) return;
 					Ext.create('Plugin.sale.PaymentGateway',{
-						data: params.data,
+						buildData: params.data,
 						values: Ext.JSON.decode( cp.getValue(), true ),
 						listeners: {
 							'dataReady': function( values ) {
