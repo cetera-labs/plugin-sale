@@ -236,7 +236,7 @@ class Cart extends \Cetera\Base {
 					'product_id' => $pid,
 					'offer_id'   => $oid,
 					'quantity'   => (int)$quantity,
-                                        'options'    => '',
+                    'options'    => '',
 				);
 				if (is_array($options)) {
 					$data['options'] = serialize($options);
