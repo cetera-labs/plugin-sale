@@ -107,7 +107,8 @@ class Product extends Buyable
 		
 	private function checkCondition($conditions, $is_in_cart, $offer_id)
 	{
-		$fields = $this->getFieldsDef();
+		$fields = \Sale\Product::getObjectDefinition()->getFieldsDef();
+        $fields_offer = \Sale\Offer::getObjectDefinition()->getFields();
 	
 		foreach ($conditions['conditions'] as $condition) {
 			

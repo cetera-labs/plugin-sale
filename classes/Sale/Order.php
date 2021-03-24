@@ -251,7 +251,7 @@ class Order {
 	{
 		if (!$this->products)
 		{
-			$data = self::getDbConnection()->fetchAll('SELECT * FROM sale_order_products WHERE order_id = ?',array($this->id));
+			$data = self::getDbConnection()->fetchAll('SELECT * FROM sale_order_products WHERE order_id = ?',[$this->id]);
 			$products = array();
 			foreach ($data as $value)
 			{
@@ -354,7 +354,7 @@ class Order {
 	public function setParams($params)
 	{
 		if (isset($params['id'])) {
-			$this->id = $params['id'];
+			$this->id = (int)$params['id'];
 		}		
 		if (isset($params['user_id'])) {
 			$this->user_id = $params['user_id'];
@@ -717,7 +717,7 @@ class Order {
 		if (!$this->id) {
 			$new_order = true;
 			self::getDbConnection()->insert('sale_orders', $data);
-			$this->id = self::getDbConnection()->lastInsertId();
+			$this->id = (int)self::getDbConnection()->lastInsertId();
 			self::getDbConnection()->update('sale_orders', array('date' => new \DateTime()), array('id' => $this->id), array('datetime'));	
 			
 			if (!$this->date){
@@ -764,7 +764,7 @@ class Order {
 		foreach ($this->getProducts() as $p)
 		{
 			$d = array(
-				'order_id'     => $this->id,
+				'order_id'     => (int)$this->id,
 				'product_id'   => $p['product']->id,
 				'product_name' => $p['name'],
 				'quantity'     => $p['quantity'],
@@ -1110,7 +1110,7 @@ class Order {
         }
         
 		$data = [
-			'id'         => $this->id,
+			'id'         => (int)$this->id,
 			'date'       => $this->date,
 			'total'      => $this->getTotal(),
 			'user_id'    => $this->user_id,
