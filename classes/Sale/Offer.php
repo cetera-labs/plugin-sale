@@ -17,7 +17,7 @@ class Offer extends Buyable
 			$value = 0;
 		}
 		else {
-			$value = $this->product->getDiscount($field, $this->getFullPrice($field), $this->isInCart, $this->id);
+			$value = $this->product->getDiscount($field, $this->getFullPrice($field), $this->isInCart, $this);
 		}
 		return $value;
 	}

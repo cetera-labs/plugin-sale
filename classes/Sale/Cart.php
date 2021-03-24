@@ -433,14 +433,16 @@ class Cart extends \Cetera\Base {
 		return $this->getCurrency()->format( $this->getTotal() );
 	}
 	
-	public function clear()
+	public function clear( $coupons = true )
 	{
 		self::getDbConnection()->delete('sale_cart_products', array(
 			'cart_id' => $this->id,
 		));	
-		self::getDbConnection()->delete('sale_cart_coupons', array(
-			'cart_id'  => $this->getId(),
-		));			
+        if ($coupons) {
+            self::getDbConnection()->delete('sale_cart_coupons', array(
+                'cart_id'  => $this->getId(),
+            ));
+        }        
 		return $this;
 	}
 	

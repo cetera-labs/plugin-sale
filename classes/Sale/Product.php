@@ -27,7 +27,7 @@ class Product extends Buyable
 		return $this->activeDiscounts;
 	}			
 	
-	public function getDiscount($field = 'price', $full_price = null, $is_in_cart = null, $offer_id = null) {
+	public function getDiscount($field = 'price', $full_price = null, $is_in_cart = null, $offer = null) {
 		if ($this->discount === null) {
 			
 			if ($full_price === null) {
@@ -71,7 +71,7 @@ class Product extends Buyable
 							
 				$discount['conditions'] = json_decode($discount['conditions'], true);
 							
-				if (!$this->checkCondition($discount['conditions'], $is_in_cart, $offer_id)) continue;
+				if (!$this->checkCondition($discount['conditions'], $is_in_cart, $offer)) continue;
 
 				switch ($discount['value_type']) {
 					case 0:
@@ -105,9 +105,9 @@ class Product extends Buyable
 		return $this->discount;
 	}
 		
-	private function checkCondition($conditions, $is_in_cart, $offer_id)
+	private function checkCondition($conditions, $is_in_cart, $offer)
 	{
-		$fields = \Sale\Product::getObjectDefinition()->getFieldsDef();
+		$fields = \Sale\Product::getObjectDefinition()->getFields();
         $fields_offer = \Sale\Offer::getObjectDefinition()->getFields();
 	
 		foreach ($conditions['conditions'] as $condition) {
@@ -117,7 +117,7 @@ class Product extends Buyable
 			try {	
 			
                 if (\Sale\Discount::isConditionExists($condition['field'])) {
-                    $match = $condition['field']::check($condition, $this, $offer_id, $is_in_cart);
+                    $match = $condition['field']::check($condition, $this, $offer->id, $is_in_cart);
                 }
 				// скидка по количеству товаров в корзине УДАЛИТЬ!!!
 				elseif ($condition['field'] == 'cart_quantity') {
@@ -161,7 +161,7 @@ class Product extends Buyable
 										  },
 							'params' => [
 								'pid'               => $this->id,
-								'oid'               => $offer_id,
+								'oid'               => $offer->id,
 								'max_cart_quantity' => $condition['value'],
 							]
 						
@@ -171,10 +171,17 @@ class Product extends Buyable
 				}				
 				else {
 					
-					if (!isset($fields[$condition['field']])) throw new \Exception('Field "'.$condition['field'].'" does not exist');
-				
-					$field = $fields[$condition['field']];
-					$field_value = $this->getDynamicField($condition['field']);					
+					if (isset($fields[$condition['field']])){
+                        $field = $fields[$condition['field']];
+                        $field_value = $this->getDynamicField($condition['field']);	                        
+                    }
+                    elseif ($offer && isset($fields_offer[$condition['field']])) {
+                        $field = $fields_offer[$condition['field']];
+                        $field_value = $offer->getDynamicField($condition['field']);	                        
+                    }
+                    else {
+                        throw new \Exception('Field "'.$condition['field'].'" does not exist');
+                    }				
 					
 					// скидка по принадлежности к разделу
 					if ($condition['field'] == 'idcat') {
@@ -193,8 +200,7 @@ class Product extends Buyable
 					}
 					// скидка по полю товара
 					else {
-						switch ($field['type']) {
-							
+						switch ($field['type']) {                            
 							case FIELD_LINK:
 							case FIELD_MATERIAL:
 							case FIELD_FORM:
