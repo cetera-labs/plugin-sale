@@ -56,7 +56,7 @@ class WidgetOrder extends \Cetera\Widget\Templateable
 			if ($this->order_from_cart) $this->getCart()->clear();			
 			
 			if (!$this->getParam('ajaxCall')) {
-                if ($this->application->getSession())
+                if ($this->application->getSession()) {
                     $this->application->getSession()->saleOrderCreated = $this->getOrder()->getId();
                 }
 				header('Location: '.$_SERVER['REQUEST_URI']);
