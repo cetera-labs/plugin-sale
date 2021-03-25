@@ -21,8 +21,9 @@ Ext.define('Plugin.sale.DiscountConditionContainer', {
     
     closable: true,
     
-    margin: '5 5 0 5',
+    margin: '5 0 0 0',
     bodyCls: 'x-window-body-default',
+    border: 1,
     bodyPadding: 5,
 	layout: 'hbox',
 	defaults: {

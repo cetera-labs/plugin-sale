@@ -14,9 +14,9 @@ Ext.define('Plugin.sale.DeliveryCalculator', {
 	layout: 'fit',
 			
     initComponent: function(){
-				
+				                
 		Ext.apply(this, {
-			title: this.data.name,
+			title: this.buildData.name,
 			items: {
 				xtype: 'form',		
 				itemId: 'form',
@@ -31,7 +31,7 @@ Ext.define('Plugin.sale.DeliveryCalculator', {
 				bodyPadding: 10,		
 				bodyCls: 'x-window-body-default',
 				
-				items: this.data.params,
+				items: this.buildData.params,
 			
 				buttons: [
 					{
