@@ -9,7 +9,9 @@ $t = $application->getTranslator();
 $order = \Sale\Order::getById( (int)$_REQUEST['order'] );
 
 if (!$order->canBePaid()) {
-	die($t->_('В настоящее время заказ не может быть оплачен'));
+    
+    die($t->_('В настоящее время заказ не может быть оплачен'));
+    
 }
 
 try {
