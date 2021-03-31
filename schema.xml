@@ -110,7 +110,7 @@
 	<field name="max_discount" type="float" null="0" default="0" />
 	<field name="last_discount" type="tinyint(3)" null="0" default="0" />
 	<field name="describ" type="varchar(500)" null="1" />
-	<field name="conditions" type="varchar(500)" null="1" />
+	<field name="conditions" type="varchar(1500)" null="1" />
     <key name="PRIMARY" unique="1">
         <column name="id" />
     </key>	
