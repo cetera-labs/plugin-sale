@@ -27,7 +27,12 @@ abstract class GatewayAbstract  {
     }
     
     public function refund( $items = null ) {
+        throw new \Exception('Возврат средств не реализован');
     }
+    
+	public function getStatus() {
+        throw new \Exception('Нельзя получить статус заказа');
+	}    
     
 	public function checkIfTransactionHasAlreadyBeenProcessed($txn_id)
 	{
