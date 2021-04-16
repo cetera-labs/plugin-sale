@@ -1,7 +1,7 @@
 <?php
 namespace Sale\PaymentGateway;
 
-abstract class GatewayAtol  {
+abstract class GatewayAtol extends GatewayAbstract {
     
     const ATOL_PRODUCTION = 'https://online.atol.ru/possystem/v4/';
     const ATOL_TEST = 'https://testonline.atol.ru/possystem/v4/';    
