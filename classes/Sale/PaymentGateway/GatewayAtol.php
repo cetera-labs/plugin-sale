@@ -6,9 +6,11 @@ abstract class GatewayAtol extends GatewayAbstract {
     const ATOL_PRODUCTION = 'https://online.atol.ru/possystem/v4/';
     const ATOL_TEST = 'https://testonline.atol.ru/possystem/v4/';    
 	
-    abstract public static function getInfo2();
+    public static function getInfo2(){
+        return [];
+    }
     
-	public static function getAtolParams() {
+	public static function getInfo() {
         
         $atolParams = [
             [
@@ -115,7 +117,7 @@ abstract class GatewayAtol extends GatewayAbstract {
             ],
         ];
         
-        $data = self::getInfo2();
+        $data = static::getInfo2();
         
         $data['params'] = array_merge($data['params'], $atolParams);
         
