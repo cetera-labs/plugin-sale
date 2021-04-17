@@ -16,7 +16,7 @@ abstract class GatewayAtol extends GatewayAbstract {
             [
                 "xtype"          => 'checkbox',
                 "name"           => 'atol',
-                "boxLabel"       => 'формировать кассовый чек 54-ФЗ (ATOL)',
+                "boxLabel"       => 'формировать кассовый чек',
                 "inputValue"     => 1,
                 "uncheckeDvalue" => 0
             ],
@@ -114,12 +114,44 @@ abstract class GatewayAtol extends GatewayAbstract {
                     ["vat20", 'НДС чека по ставке 20%'],
                     ["vat120", 'НДС чека по расчётной ставке 20/120'],
                 ],
-            ],
+            ],                       
         ];
         
         $data = static::getInfo2();
         
-        $data['params'] = array_merge($data['params'], $atolParams);
+        $params = $data['params'];
+        
+        //$data['params'] = array_merge($data['params'], $atolParams);
+        
+        $data['params'] = [
+            'xtype' => 'tabpanel',
+            'border' => false,
+            'bodyCls' => 'x-window-body-default', 
+            'items' => [
+                [
+                    "title" => 'Параметры',
+                    'border' => false,
+                    'bodyCls' => 'x-window-body-default',                     
+                    "defaults" => [
+                        'anchor' => '100%',
+                        'labelWidth' => 200,
+                    ],
+                    "layout" => 'anchor',                    
+                    'items' => $params,
+                ],
+                [
+                    "title" => 'Кассовый чек ATOL',
+                    'border' => false,
+                    'bodyCls' => 'x-window-body-default',  
+                    "defaults" => [
+                        'anchor' => '100%',
+                        'labelWidth' => 200,
+                    ],
+                    "layout" => 'anchor', 
+                    'items' => $atolParams,
+                ]
+            ]
+        ];
         
         return $data;
 	}
@@ -136,13 +168,18 @@ abstract class GatewayAtol extends GatewayAbstract {
         }
 
         $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', $this->getUrl().'getToken', [
-            'verify' => false,
-            'json' => [
-                'login' => $this->params["atol_login"],
-                'pass' => $this->params["atol_pass"],
-            ],
-        ]);         
+        try {
+            $response = $client->request('POST', $this->getUrl().'getToken', [
+                'verify' => false,
+                'json' => [
+                    'login' => $this->params["atol_login"],
+                    'pass' => $this->params["atol_pass"],
+                ],
+            ]); 
+        } 
+        catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+        }        
         
         $res = $this->decodeResponse($response);
 
@@ -152,7 +189,7 @@ abstract class GatewayAtol extends GatewayAbstract {
     private function decodeResponse($response) {
         $res = json_decode($response->getBody(), true);	
         if ($res['error']) {
-            throw new \Exception( $res['error']["code"].' '.$res['error']["text"] );
+            throw new \Exception( 'Ошибка '.$res['error']["code"].'. '.$res['error']["text"] );
         }
         return $res;
     }
@@ -169,25 +206,31 @@ abstract class GatewayAtol extends GatewayAbstract {
         $token = $this->auth();
         
         $params = [
-            'external_id' => $this->order->id,
+            'external_id' => (string)$this->order->id,
             'timestamp' => date('d.m.Y H:i:s'),
-            'reciept' => $this->getReciept(),
+            'receipt' => $this->getReceipt(),
         ];
-        
+                
         $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', $this->getUrl().$this->params['atol_group'].'/sell', [
-            'verify' => false,
-            'headers' => [
-                'Token' => $token
-            ],
-            'json' => $params,
-        ]); 
+        try {
+            $response = $client->request('POST', $this->getUrl().$this->params['atol_group'].'/sell', [
+                'verify' => false,
+                'headers' => [
+                    'Token' => $token
+                ],
+                'json' => $params,
+            ]); 
+        } 
+        catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+        }          
 
         $res = $this->decodeResponse($response);
+        return $res;
     }
     
-    public function getReciept() {
-        $reciept = [
+    public function getReceipt() {
+        $receipt = [
             'client'  => $this->getClient(),
             'company' => [
                 'email' => $this->params['atol_email'],
@@ -197,13 +240,15 @@ abstract class GatewayAtol extends GatewayAbstract {
             ],
             'items' => $this->getItems(),
             'payments' => [
-                'type' => 1,
-                'sum' => $this->order->getTotal(),
+                [
+                    'type' => 1,
+                    'sum' => $this->order->getTotal(),
+                ],
             ],
             'total' => $this->order->getTotal()
         ];
         
-        return $reciept;
+        return $receipt;
     }
     
     public function getClient() {
@@ -225,6 +270,7 @@ abstract class GatewayAtol extends GatewayAbstract {
             $items[] = [
                 'name' => $p['name'],
                 'quantity' => floatval($p['quantity']),
+                'price' => floatval($p['price']),
                 'sum' => $p['price']*$p['quantity'],
                 'measurement_unit' => 'шт.',
                 'payment_method' => $this->params['atol_payment_method'],
