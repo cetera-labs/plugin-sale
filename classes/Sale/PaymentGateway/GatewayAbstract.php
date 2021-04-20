@@ -52,14 +52,14 @@ abstract class GatewayAbstract  {
 		return true;
 	}	
 
-	public function getOrderByTransaction($txn_id)
+	public static function getOrderByTransaction($txn_id)
 	{
-        return self::getDbConnection()->fetchColumn('SELECT order_id FROM sale_payment_transactions WHERE transaction_id=? and gateway=?',[$txn_id,get_class($this)]);
+        return self::getDbConnection()->fetchColumn('SELECT order_id FROM sale_payment_transactions WHERE transaction_id=? and gateway=?',[$txn_id,get_called_class()]);
     }  
 
-	public function getTransactions()
+	public static function getTransactions()
 	{
-        $data = self::getDbConnection()->fetchAll('SELECT * FROM sale_payment_transactions WHERE order_id=? and gateway=? ORDER BY date',[$this->order->id,get_class($this)]);
+        $data = self::getDbConnection()->fetchAll('SELECT * FROM sale_payment_transactions WHERE order_id=? and gateway=? ORDER BY date',[$this->order->id,get_called_class()]);
         foreach ($data as $key => $value) {
             $data[$key]['data'] = unserialize($value['data']);
         }
