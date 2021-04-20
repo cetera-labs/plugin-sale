@@ -35,7 +35,6 @@ Ext.define('Plugin.sale.CouponEdit', {
 						itemId: 'code',
 						name: 'code',
 						allowBlank: false,
-						regex: /^[\.\-\_A-Z0-9]+$/i,
 						flex: 1
 					},{
 						xtype: 'splitter'

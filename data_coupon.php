@@ -45,7 +45,7 @@ elseif (isset($_GET['modes'])) {
 	}
 }
 else {
-	$data = $a->getDbConnection()->fetchAll('SELECT A.*, B.name as discount_name FROM sale_coupon A LEFT JOIN sale_discount B ON (A.discount_id = B.id) ORDER BY id');
+	$data = $a->getDbConnection()->fetchAll('SELECT A.*, B.name as discount_name FROM sale_coupon A LEFT JOIN sale_discount B ON (A.discount_id = B.id) ORDER BY mode DESC, id ASC');
 	foreach ($data as $key => $value) {
 		$data[$key]['mode_text'] = $coupon_modes[$data[$key]['mode']];
 	}	
