@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+    var Ext = Ext || null;
+    if (!Ext) return;
+
     Ext.onReady(function(){
         
         panel = Ext.getCmp('admin-toolbar');
