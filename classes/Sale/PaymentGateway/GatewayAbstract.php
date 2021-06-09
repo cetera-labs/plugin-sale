@@ -37,9 +37,9 @@ abstract class GatewayAbstract  {
         throw new \Exception('Нельзя получить статус заказа');
 	}    
     
-	public function checkIfTransactionHasAlreadyBeenProcessed($txn_id)
+	public static function checkIfTransactionHasAlreadyBeenProcessed($txn_id)
 	{
-		$data = self::getDbConnection()->fetchArray('SELECT COUNT(*) FROM sale_payment_transactions WHERE transaction_id=? and gateway=?',array($txn_id,get_class($this)));
+		$data = self::getDbConnection()->fetchArray('SELECT COUNT(*) FROM sale_payment_transactions WHERE transaction_id=? and gateway=?',array($txn_id,get_called_class()));
 		return $data[0]>0;
 	}
 	
@@ -53,21 +53,21 @@ abstract class GatewayAbstract  {
 			'date'             => new \DateTime(),		
 			'order_id'         => $this->order->id,
 			'transaction_id'   => $txn_id,
-			'gateway'          => get_class($this),
+			'gateway'          => get_called_class(),
 			'data'             => serialize($data)
 		), array('datetime'));
 		
 		return true;
 	}	
 
-	public function getOrderByTransaction($txn_id)
+	public static function getOrderByTransaction($txn_id)
 	{
-        return self::getDbConnection()->fetchColumn('SELECT order_id FROM sale_payment_transactions WHERE transaction_id=? and gateway=?',[$txn_id,get_class($this)]);
+        return self::getDbConnection()->fetchColumn('SELECT order_id FROM sale_payment_transactions WHERE transaction_id=? and gateway=?',[$txn_id,get_called_class()]);
     }  
 
 	public function getTransactions()
 	{
-        $data = self::getDbConnection()->fetchAll('SELECT * FROM sale_payment_transactions WHERE order_id=? and gateway=? ORDER BY date',[$this->order->id,get_class($this)]);
+        $data = self::getDbConnection()->fetchAll('SELECT * FROM sale_payment_transactions WHERE order_id=? and gateway=? ORDER BY date',[$this->order->id,get_called_class()]);
         foreach ($data as $key => $value) {
             $data[$key]['data'] = unserialize($value['data']);
         }
