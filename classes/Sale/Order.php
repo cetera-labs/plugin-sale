@@ -890,10 +890,10 @@ class Order {
 		return true;
 	}	
 
-	public function getPayUrl( $return = '' )
+	public function getPayUrl( $return = '', $payParams = [] )
 	{
 		if (!$this->canBePaid()) return false;
-		return '/plugins/sale/pay.php?order='.$this->id.'&return='.urlencode($return);
+		return '/plugins/sale/pay.php?order='.$this->id.'&return='.urlencode($return).'&params='.urlencode(serialize($payParams));
 	}
 	
 	public function getCurrency()

@@ -14,8 +14,13 @@ if (!$order->canBePaid()) {
     
 }
 
+$payParams = [];
+if (isset($_REQUEST['params'])) {
+    $payParams = unserialize($_REQUEST['params']);
+}
+
 try {
-    $order->getPaymentGateway()->pay($_REQUEST['return']);
+    $order->getPaymentGateway()->pay($_REQUEST['return'], $payParams );
 }
 catch (\Exception $e) {
     print $e->getMessage();
