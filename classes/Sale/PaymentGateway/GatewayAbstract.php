@@ -30,6 +30,9 @@ abstract class GatewayAbstract  {
         throw new \Exception('Возврат средств не реализован');
     }
     
+    public function cancel() {
+    }    
+    
 	public function getStatus() {
         throw new \Exception('Нельзя получить статус заказа');
 	}    
