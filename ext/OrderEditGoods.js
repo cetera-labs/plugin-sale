@@ -54,11 +54,23 @@ Ext.define('Plugin.sale.OrdereditGoods', {
     border: true,
 	
 	plugins: [
-		{ptype: 'cellediting', clicksToEdit: 2}
+		{
+            ptype: 'cellediting', 
+            clicksToEdit: 2
+        },
+        {
+            ptype: 'rowexpander',
+            rowBodyTpl : new Ext.XTemplate(
+				'<div style="padding: 5px">',
+							'<tpl for="options">', 
+								'<div><b>{name}</b>: {value}</div>',
+							'</tpl>',				
+				'</div>')
+        }
 	],
 	
     initComponent: function(){
-        	
+                	
 		this.store = Ext.create('Ext.data.Store', {
 			fields: [
 			   {name: 'name', persist: false},
@@ -66,7 +78,7 @@ Ext.define('Plugin.sale.OrdereditGoods', {
 			   {name: 'quantity', type: 'integer'},
 			   {name: 'sum', type: 'float', persist: false},
                {name: 'sum_refund', type: 'float', persist: false},
-			   'add_product'
+			   'add_product','options'
 			],
 			data: this.record.getData().products,
 			autoSync: true,
