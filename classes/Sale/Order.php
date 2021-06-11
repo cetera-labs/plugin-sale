@@ -1118,7 +1118,27 @@ class Order {
 			'paid_text'  => $this->getPayText(),
 			'status'     => $this->status,
 			'paid'       => $this->paid,		
-			'products'   => $this->getProducts(),
+			'products'   => array_map(function($prod){
+                                $prod['product'] = $prod['product']->id;
+                                if ($prod['offer']) {
+                                    $prod['offer'] = $prod['offer']->id;
+                                }
+                                if (is_array($prod['options'])) {
+                                    $options = [];
+                                    $str = [];
+                                    foreach ($prod['options'] as $name => $value) {
+                                        $options[] = [
+                                            'name' => $name,
+                                            'value' => $value,
+                                        ];
+                                        $value = (is_array($value))?implode(', ', $value):$value;
+                                        $str[] = $name.': '.$value;
+                                    }
+                                    $prod['options'] = $options;
+                                    $prod['name'] .= ' ['.implode(', ', $str).']';
+                                }
+                                return $prod;
+                            },$this->getProducts()),
 			'props'      => array_values($this->getProps()),
 			'buyer'      => $this->getName().' ('.$this->getEmail().')',
 			'payment_id' => $this->getPaymentId(),
