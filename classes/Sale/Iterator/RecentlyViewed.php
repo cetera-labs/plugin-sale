@@ -21,8 +21,13 @@ class RecentlyViewed extends \Cetera\Iterator\DynamicObject {
             while (($i = array_search($exclude, $_SESSION['sale_recently_viewed'])) !== false) {
                 unset($_SESSION['sale_recently_viewed'][$i]);
             }
-			$this->query->where('main.id IN ('.implode( ',', array_slice($_SESSION['sale_recently_viewed'],0,$max_length) ).')');
-            $this->empty = false;
+            if (count($_SESSION['sale_recently_viewed'])) {
+                $this->query->where('main.id IN ('.implode( ',', array_slice($_SESSION['sale_recently_viewed'],0,$max_length) ).')');
+                $this->empty = false;
+            }
+            else {
+                $this->empty = true;
+            }
 		}
         else {
             $this->empty = true;

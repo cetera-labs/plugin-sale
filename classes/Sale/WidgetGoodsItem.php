@@ -42,7 +42,7 @@ class WidgetGoodsItem extends \Cetera\Widget\Material
 				$_SESSION['sale_recently_viewed'] = [];
 			}
 			array_unshift($_SESSION['sale_recently_viewed'], $m->id);
-			$_SESSION['sale_recently_viewed'] = array_slice(array_unique($_SESSION['sale_recently_viewed']),100);
+			$_SESSION['sale_recently_viewed'] = array_slice(array_unique($_SESSION['sale_recently_viewed']),0,100);
 			
 			if ($this->getParam('show_meta')) {
                 $a = $this->application;                
