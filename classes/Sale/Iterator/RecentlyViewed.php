@@ -15,9 +15,8 @@ class RecentlyViewed extends \Cetera\Iterator\DynamicObject {
     protected $empty;
     
     public function __construct($exclude = null, $max_length = 10) {
-        
         parent::__construct( \Sale\Product::getObjectDefinition() );
-        
+
 		if (isset($_SESSION['sale_recently_viewed']) && is_array( $_SESSION['sale_recently_viewed'] )) {
             while (($i = array_search($exclude, $_SESSION['sale_recently_viewed'])) !== false) {
                 unset($_SESSION['sale_recently_viewed'][$i]);
@@ -27,10 +26,8 @@ class RecentlyViewed extends \Cetera\Iterator\DynamicObject {
 		}
         else {
             $this->empty = true;
-        }
-        
-        
-    }   
+        } 
+    }
 
     public function fetchElements()
     {
@@ -43,10 +40,6 @@ class RecentlyViewed extends \Cetera\Iterator\DynamicObject {
         if ($this->empty) return 0;
         return parent::getCountAll();
     }        
-	
-	public function where() {
-		return $this;
-	}
 	
 	public function exclude($pid) {
 		return $this;
