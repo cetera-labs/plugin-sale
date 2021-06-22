@@ -10,43 +10,53 @@
  
 namespace Sale\Iterator; 
  
-class RecentlyViewed extends \Cetera\Iterator\DynamicObject {
-		
-    protected $empty;
+class RecentlyViewed extends \Cetera\Iterator\Base {
+    
+    protected $products = null;
     
     public function __construct($exclude = null, $max_length = 10) {
-        parent::__construct( \Sale\Product::getObjectDefinition() );
 
+        $list = [];
 		if (isset($_SESSION['sale_recently_viewed']) && is_array( $_SESSION['sale_recently_viewed'] )) {
             while (($i = array_search($exclude, $_SESSION['sale_recently_viewed'])) !== false) {
                 unset($_SESSION['sale_recently_viewed'][$i]);
             }
             if (count($_SESSION['sale_recently_viewed'])) {
-                $this->query->where('main.id IN ('.implode( ',', array_slice($_SESSION['sale_recently_viewed'],0,$max_length) ).')');
-                $this->empty = false;
-            }
-            else {
-                $this->empty = true;
+                $list = array_slice($_SESSION['sale_recently_viewed'],0,$max_length);
             }
 		}
-        else {
-            $this->empty = true;
-        } 
+        parent::__construct( $list );
     }
 
-    public function fetchElements()
+    public function getElements()
     {
-        if ($this->empty) return [];
-        return parent::fetchElements();
+        if (!$this->products) {
+            $this->products = [];
+            if (count($this->elements)) {
+                foreach (\Sale\Product::enum()->where('main.id IN ('.implode( ',', $this->elements ).')') as $p) {
+                    $this->products[] = $p;
+                }
+                
+                usort($this->products, function($a, $b){
+                    $key_a = array_search($a->id, $this->elements);
+                    $key_b = array_search($b->id, $this->elements);
+                    return ($key_a < $key_b) ? -1 : 1;
+                });
+            }
+        }
+        return $this->products;
     }
 
     public function getCountAll()
     {
-        if ($this->empty) return 0;
-        return parent::getCountAll();
+        return count($this->elements);
     }        
 	
 	public function exclude($pid) {
 		return $this;
 	}	
+
+	public function where() {
+		return $this;
+	}    
 }
