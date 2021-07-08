@@ -124,6 +124,17 @@ class Order {
 		$order->coupons = $cart->getCoupons();		
 		return $order;
 	}
+    
+	public function addCoupon($coupon)
+	{
+		$d = self::getDbConnection()->fetchAssoc('SELECT * FROM sale_coupon WHERE active=1 and code=?', array( $coupon ));
+		if (!$d) {
+            return;
+        }
+		if (!isset($this->coupons[$d['id']])) {
+			$this->coupons[$d['id']] = $d;
+		}
+	}    
 	
 	public static function getById($id)
 	{
