@@ -688,15 +688,20 @@ class Order {
 		return $this->date;
 	}
 
-	protected function getMailEventParams()
+	protected function getMailEventParams($message = null)
 	{
+        $msg = 'Order #'.$this->id.' ['.$this->getName().' ('.$this->getEmail().')'.']';
+        if ($message) {
+            $msg .= ' '.$message;
+        }
+        
 		return array(
 			'sale'   => array(
 				'email'   => \Sale\Setup::configGet('sale_email'),	
 			),
 			'order'  => $this,		
 			'server' => \Cetera\Application::getInstance()->getServer(),
-			'message' => 'Order #'.$this->id.' ['.$this->getName().' ('.$this->getEmail().')'.']',
+			'message' => $msg,
 		);
 	}	
 
@@ -972,6 +977,7 @@ class Order {
 			$quantity = $data[0] + $quantity;				
 		}
 		$this->setProduct( $pid, $quantity, $oid, $options );
+        \Cetera\Event::trigger( 'SALE_ORDER_PRODUCTS_CHANGED', $this->getMailEventParams('ADD: '.$quantity.' '.(int)$product.'-'.(int)$offer) );
 		return $this;
 	}
 
@@ -1017,7 +1023,10 @@ class Order {
 			}
 		}
 
-        if ($exists >= 0) unset($this->products[$exists]);
+        if ($exists >= 0) {
+            unset($this->products[$exists]);
+            \Cetera\Event::trigger( 'SALE_ORDER_PRODUCTS_CHANGED', $this->getMailEventParams('REMOVE: '.(int)$product.'-'.(int)$offer) );
+        }
     }
 	
 	/*
