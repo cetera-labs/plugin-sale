@@ -130,6 +130,7 @@ if ($this->getBo()) {
     $this->getBo()->registerEvent('SALE_ORDER_CANCEL', $t->_('Отмена заказа в магазине'), $params);
     $this->getBo()->registerEvent('SALE_ORDER_PAID', $t->_('Заказ оплачен'), $params);
 	$this->getBo()->registerEvent('SALE_ORDER_STATUS_CHANGED', $t->_('Статус заказа изменился'), $params);
+    $this->getBo()->registerEvent('SALE_ORDER_PRODUCTS_CHANGED', $t->_('Состав заказа изменился'), $params);
 	
     $this->getBo()->addEditor(array(
          'id'    => EDITOR_TEXT_CURRENCY,
