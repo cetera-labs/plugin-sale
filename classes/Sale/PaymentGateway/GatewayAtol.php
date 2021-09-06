@@ -194,6 +194,67 @@ abstract class GatewayAtol extends GatewayAbstract {
         return $res;
     }
     
+    public function sendRecieptRefund( $items = null ) {
+        
+        if ($this->params["test_mode"]) {
+            $this->params['atol_group'] = 'v4-online-atol-ru_4179';
+            $this->params['atol_inn'] = '5544332219';
+            $this->params['atol_payment_address'] = 'https://v4.online.atol.ru';            
+        }
+
+        $url = $this->params["test_mode"]?self::ATOL_TEST:self::ATOL_PRODUCTION;
+        $token = $this->auth();
+
+        $params = [
+            'external_id' => (string)$this->order->id,
+            'timestamp' => date('d.m.Y H:i:s'),
+            'receipt' => $this->getReceipt(),
+        ];
+        
+        if ($items !== null) {
+            $amount = 0;
+            $params['receipt']['items'] = [];
+            foreach ($items as $key => $item) {
+                if ($item['quantity_refund'] <= 0) continue;
+                
+                $params['receipt']['items'][] = [
+                    'name' => $item['name'],
+                    'quantity' => floatval($item['quantity_refund']),
+                    'price' => floatval($item['price']),
+                    'sum' => $item['price']*$item['quantity_refund'],
+                    'measurement_unit' => 'шт.',
+                    'payment_method' => $this->params['atol_payment_method'],
+                    'payment_object' => $this->params['atol_payment_object'],
+                    'vat' => [
+                        'type' => $this->params['atol_vat'],
+                    ],
+                ];                
+                
+                $amount += floatval($item['quantity_refund']) * $item['price'];
+            }
+            $params['receipt']['total'] = $amount;   
+            $params['receipt']['payments']['sum'] = $amount;      
+        }
+                
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $this->getUrl().$this->params['atol_group'].'/sell_refund', [
+                'verify' => false,
+                'headers' => [
+                    'Token' => $token
+                ],
+                'json' => $params,
+            ]); 
+        } 
+        catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+        }          
+
+        $res = $this->decodeResponse($response);
+        return $res;        
+        
+    }
+    
     public function sendRecieptSell() {
         
         if ($this->params["test_mode"]) {
