@@ -1,5 +1,5 @@
 {% if not widget.getParam('ajaxCall') %}
-	<span id="{{ widget.uniqueId }}">
+	<div class="sale-cart-line" id="{{ widget.uniqueId }}">
 {% endif %}
 
 	{% block html %}
@@ -10,7 +10,7 @@
 	{% endblock %}
 
 {% if not widget.getParam('ajaxCall') %}
-	</span> 
+	</div> 
 {% endif %}
 
 {% if not widget.getParam('ajaxCall') %}
