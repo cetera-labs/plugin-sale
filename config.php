@@ -181,7 +181,7 @@ if ($this->getBo()) {
 
     $this->getBo()->addEditor(array(
         'id'    => EDITOR_TEXT_ATOL_PAYMENT_OBJECT,
-        'alias' => 'editor_text_ATOL_tax',
+        'alias' => 'editor_text_ATOL_payment_object',
         'name'  => $t->_('Редактор ATOL Тип оплачиваемой позиции')
     ));
     $this->getBo()->addPseudoField(array(
@@ -194,7 +194,7 @@ if ($this->getBo()) {
 
     $this->getBo()->addEditor(array(
         'id'    => EDITOR_TEXT_ATOL_PAYMENT_METHOD,
-        'alias' => 'editor_text_ATOL_tax',
+        'alias' => 'editor_text_ATOL_payment_method',
         'name'  => $t->_('Редактор ATOL Тип оплаты')
     ));
     $this->getBo()->addPseudoField(array(
