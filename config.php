@@ -2,6 +2,14 @@
 define('GROUP_SALE', -106);
 define('PSEUDO_FIELD_CURRENCY', 1200);
 define('EDITOR_TEXT_CURRENCY', 200);
+define('PSEUDO_FIELD_ATOL_TAX_SYSTEM', 1124);
+define('EDITOR_TEXT_ATOL_TAX_SYSTEM', 1134);
+define('PSEUDO_FIELD_ATOL_TAX', 1125);
+define('EDITOR_TEXT_ATOL_TAX', 1135);
+define('PSEUDO_FIELD_ATOL_PAYMENT_OBJECT', 1126);
+define('EDITOR_TEXT_ATOL_PAYMENT_OBJECT', 1136);
+define('PSEUDO_FIELD_ATOL_PAYMENT_METHOD', 1127);
+define('EDITOR_TEXT_ATOL_PAYMENT_METHOD', 1137);
 
 $t = $this->getTranslator();
 $t->addTranslation(__DIR__.'/lang');
@@ -137,15 +145,65 @@ if ($this->getBo()) {
          'alias' => 'editor_text_currency',
          'name'  => $t->_('Редактор валют')
     ));
-
     $this->getBo()->addPseudoField(array(
          'id'       => PSEUDO_FIELD_CURRENCY,
          'original' => FIELD_TEXT,
          'len'      => 3,
          'name'     => $t->_('Валюта')
     ));
-    
     $this->getBo()->addFieldEditor(PSEUDO_FIELD_CURRENCY, EDITOR_TEXT_CURRENCY);
+    
+    $this->getBo()->addEditor(array(
+        'id'    => EDITOR_TEXT_ATOL_TAX_SYSTEM,
+        'alias' => 'editor_text_ATOL_tax_system',
+        'name'  => $t->_('Редактор ATOL СНО')
+    ));
+    $this->getBo()->addPseudoField(array(
+        'id'       => PSEUDO_FIELD_ATOL_TAX_SYSTEM,
+        'original' => FIELD_TEXT,
+        'len'      => 1,
+        'name'     => $t->_('ATOL СНО')
+    ));
+    $this->getBo()->addFieldEditor(PSEUDO_FIELD_ATOL_TAX_SYSTEM, EDITOR_TEXT_ATOL_TAX_SYSTEM);
+	
+    $this->getBo()->addEditor(array(
+        'id'    => EDITOR_TEXT_ATOL_TAX,
+        'alias' => 'editor_text_ATOL_tax',
+        'name'  => $t->_('Редактор ATOL НДС')
+    ));
+    $this->getBo()->addPseudoField(array(
+        'id'       => PSEUDO_FIELD_ATOL_TAX,
+        'original' => FIELD_TEXT,
+        'len'      => 1,
+        'name'     => $t->_('ATOL Ставка НДС')
+    ));
+    $this->getBo()->addFieldEditor(PSEUDO_FIELD_ATOL_TAX, EDITOR_TEXT_ATOL_TAX);
+
+    $this->getBo()->addEditor(array(
+        'id'    => EDITOR_TEXT_ATOL_PAYMENT_OBJECT,
+        'alias' => 'editor_text_ATOL_tax',
+        'name'  => $t->_('Редактор ATOL Тип оплачиваемой позиции')
+    ));
+    $this->getBo()->addPseudoField(array(
+        'id'       => PSEUDO_FIELD_ATOL_PAYMENT_OBJECT,
+        'original' => FIELD_TEXT,
+        'len'      => 1,
+        'name'     => $t->_('ATOL Тип оплачиваемой позиции')
+    ));
+    $this->getBo()->addFieldEditor(PSEUDO_FIELD_ATOL_PAYMENT_OBJECT, EDITOR_TEXT_ATOL_PAYMENT_OBJECT);
+
+    $this->getBo()->addEditor(array(
+        'id'    => EDITOR_TEXT_ATOL_PAYMENT_METHOD,
+        'alias' => 'editor_text_ATOL_tax',
+        'name'  => $t->_('Редактор ATOL Тип оплаты')
+    ));
+    $this->getBo()->addPseudoField(array(
+        'id'       => PSEUDO_FIELD_ATOL_PAYMENT_METHOD,
+        'original' => FIELD_TEXT,
+        'len'      => 1,
+        'name'     => $t->_('ATOL Тип оплаты')
+    ));
+    $this->getBo()->addFieldEditor(PSEUDO_FIELD_ATOL_PAYMENT_METHOD, EDITOR_TEXT_ATOL_PAYMENT_METHOD);	    
 
 	include_once( __DIR__.'/editor_text_currency.php' );   	
 	
@@ -252,3 +310,118 @@ $this->getRouter()->addRoute('api_sale',
         ],
     ])
 );
+
+function editor_text_ATOL_payment_object_draw($field_def, $fieldvalue)
+{
+    ?>
+    Ext.create('Ext.form.ComboBox',{
+		fieldLabel: '<?= $field_def['describ'] ?>',
+		name: '<?= $field_def['name'] ?>',
+		allowBlank:<?= ($field_def['required'] ? 'false' : 'true') ?>,
+		value: '<?= str_replace("\r", '\r', str_replace("\n", '\n', addslashes($fieldvalue))) ?>',
+		editable: false,
+		valueField: 'code',
+		displayField: 'value',
+		store: new Ext.data.SimpleStore({
+			fields: ['code', 'value'],
+			data : [
+                    ["commodity", 'товар'],
+                    ["excise", 'подакцизный товар'],
+                    ["job", 'работа'],
+                    ["service", 'услуга'],
+                    ["payment", 'платёж'],
+                    ["agent_commission", 'агентское вознаграждение'],           
+            ]
+		}),
+		defaultValue: '1'
+    })
+    <?
+    return 28;
+}
+
+function editor_text_ATOL_payment_method_draw($field_def, $fieldvalue)
+{
+    ?>
+    Ext.create('Ext.form.ComboBox',{
+		fieldLabel: '<?= $field_def['describ'] ?>',
+		name: '<?= $field_def['name'] ?>',
+		allowBlank:<?= ($field_def['required'] ? 'false' : 'true') ?>,
+		value: '<?= str_replace("\r", '\r', str_replace("\n", '\n', addslashes($fieldvalue))) ?>',
+		editable: false,
+		valueField: 'code',
+		displayField: 'value',
+		store: new Ext.data.SimpleStore({
+			fields: ['code', 'value'],
+			data : [
+                    ["full_prepayment", 'полная предварительная оплата до момента передачи предмета расчёта'],
+                    ["prepayment", 'частичная предварительная оплата до момента передачи предмета расчёта'],
+                    ["advance", 'аванс'],
+                    ["full_payment", 'полная оплата в момент передачи предмета расчёта'],
+                    ["partial_payment", 'частичная оплата предмета расчёта в момент его передачи с последующей оплатой в кредит'],
+                    ["credit", 'передача предмета расчёта без его оплаты в момент его передачи с последующей оплатой в кредит'],
+                    ["credit_payment", 'оплата предмета расчёта после его передачи с оплатой в кредит'],            
+            ]
+		}),
+		defaultValue: '1'
+    })
+    <?
+    return 28;
+}
+
+function editor_text_ATOL_tax_system_draw($field_def, $fieldvalue)
+{
+    ?>
+    Ext.create('Ext.form.ComboBox',{
+		fieldLabel: '<?= $field_def['describ'] ?>',
+		name: '<?= $field_def['name'] ?>',
+		allowBlank:<?= ($field_def['required'] ? 'false' : 'true') ?>,
+		value: '<?= str_replace("\r", '\r', str_replace("\n", '\n', addslashes($fieldvalue))) ?>',
+		editable: false,
+		valueField: 'code',
+		displayField: 'value',
+		store: new Ext.data.SimpleStore({
+			fields: ['code', 'value'],
+			data : [
+                    ["osn", 'общая СН'],
+                    ["usn_income", 'упрощенная СН (доходы)'],
+                    ["usn_income_outcome", 'упрощенная СН (доходы минус расходы)'],
+                    ["envd", 'единый налог на вмененный доход'],
+                    ["esn", 'единый сельскохозяйственный налог'],
+                    ["patent", 'патентная СН'],            
+            ]
+		}),
+		defaultValue: '1'
+    })
+    <?
+    return 28;
+}
+
+function editor_text_ATOL_tax_draw($field_def, $fieldvalue)
+{
+    ?>
+    Ext.create('Ext.form.ComboBox',{
+		fieldLabel: '<?= $field_def['describ'] ?>',
+		name: '<?= $field_def['name'] ?>',
+		allowBlank:<?= ($field_def['required'] ? 'false' : 'true') ?>,
+		value: '<?= str_replace("\r", '\r', str_replace("\n", '\n', addslashes($fieldvalue))) ?>',
+		editable: false,
+		valueField: 'code',
+		displayField: 'value',
+		store: new Ext.data.SimpleStore({
+			fields: ['code', 'value'],
+			data : [
+                    ["none", 'без НДС'],
+                    ["vat0", 'НДС по ставке 0%'],
+                    ["vat10", 'НДС чека по ставке 10%'],
+                    ["vat18", 'НДС чека по ставке 18%'],
+                    ["vat110", 'НДС чека по расчетной ставке 10/110'],
+                    ["vat118", 'НДС чека по расчетной ставке 18/118'],
+                    ["vat20", 'НДС чека по ставке 20%'],
+                    ["vat120", 'НДС чека по расчётной ставке 20/120'],            
+            ]
+		}),
+		defaultValue: '1'
+    })
+    <?
+    return 28;
+}

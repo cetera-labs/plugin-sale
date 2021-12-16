@@ -334,10 +334,10 @@ abstract class GatewayAtol extends GatewayAbstract {
                 'price' => floatval($p['price']),
                 'sum' => $p['price']*$p['quantity'],
                 'measurement_unit' => 'шт.',
-                'payment_method' => $this->params['atol_payment_method'],
-                'payment_object' => $this->params['atol_payment_object'],
+                'payment_method' => $p['product']->atol_payment_method ? $p['product']->atol_payment_method : $this->params['atol_payment_method'],
+                'payment_object' => $p['product']->atol_payment_object ? $p['product']->atol_payment_object : $this->params['atol_payment_object'],
                 'vat' => [
-                    'type' => $this->params['atol_vat'],
+                    'type' => $p['product']->atol_vat ? $p['product']->atol_vat : $this->params['atol_vat'],
                 ],
             ];
         }
