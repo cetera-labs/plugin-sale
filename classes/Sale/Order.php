@@ -416,7 +416,7 @@ class Order {
 		}			
 		
 		if (isset($params['props'])) {
-			//$this->props = $params['props'];
+			$this->props = $params['props'];
 		}
 			
 		return $this;
