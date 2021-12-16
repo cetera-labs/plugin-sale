@@ -34,7 +34,7 @@ elseif ($_GET['action'] == 'delete') {
 }
 else {
 	$orders = \Sale\Order::enum()->setItemCountPerPage( $_GET['limit'] )->setCurrentPageNumber( $_GET['page'] );
-	if ($_GET['query']) $orders->search( $_GET['query'] );
+	if (isset($_GET['query'])) $orders->search( $_GET['query'] );
 	$orders->filter($_GET);
 }
 
