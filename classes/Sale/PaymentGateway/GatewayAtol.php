@@ -217,16 +217,19 @@ abstract class GatewayAtol extends GatewayAbstract {
             foreach ($items as $key => $item) {
                 if ($item['quantity_refund'] <= 0) continue;
                 
+                $pid = explode('-', $item['id']);
+                $product = \Sale\Product::getById($pid);
+                
                 $params['receipt']['items'][] = [
                     'name' => $item['name'],
                     'quantity' => floatval($item['quantity_refund']),
                     'price' => floatval($item['price']),
                     'sum' => $item['price']*$item['quantity_refund'],
                     'measurement_unit' => 'шт.',
-                    'payment_method' => $this->params['atol_payment_method'],
-                    'payment_object' => $this->params['atol_payment_object'],
+                    'payment_method' => $product->atol_payment_method ? $product->atol_payment_method : $this->params['atol_payment_method'],
+                    'payment_object' => $product->atol_payment_object ? $product->atol_payment_object : $this->params['atol_payment_object'],
                     'vat' => [
-                        'type' => $this->params['atol_vat'],
+                        'type' => $product->atol_vat ? $product->atol_vat : $this->params['atol_vat'],
                     ],
                 ];                
                 
