@@ -38,9 +38,9 @@ class Order extends \Cetera\Iterator\DbObject {
     }	
 	
 	public function filter($values) {
-		if ($values['date_from']) $this->where( 'date >= STR_TO_DATE(:date_from,"%Y-%m-%d")' )->setParameter('date_from',$values['date_from']);
-		if ($values['date_to']) $this->where( 'date <= STR_TO_DATE(:date_to,"%Y-%m-%d")' )->setParameter('date_to',$values['date_to']);
-		if ($values['status']) $this->where( 'status = :status' )->setParameter('status', (int)$values['status']);	
+		if (isset($values['date_from'])) $this->where( 'date >= STR_TO_DATE(:date_from,"%Y-%m-%d")' )->setParameter('date_from',$values['date_from']);
+		if (isset($values['date_to'])) $this->where( 'date <= STR_TO_DATE(:date_to,"%Y-%m-%d")' )->setParameter('date_to',$values['date_to']);
+		if (isset($values['status'])) $this->where( 'status = :status' )->setParameter('status', (int)$values['status']);	
 		return $this;		
 	}
 
