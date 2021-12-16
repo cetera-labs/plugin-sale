@@ -7,7 +7,10 @@ class Delivery  {
 	
 	private static $calculators = array();
 	private $order;
-	private $data;
+	private $data = [
+        'calculator' => '\\Sale\\DeliveryCalculator\\Unknown',
+        'calculator_params' => '',
+    ];
 	public $id;
 	public $name;
 	private $cost = null;
@@ -40,17 +43,19 @@ class Delivery  {
 	
 	public function __construct($data, Order $order)
 	{
-		$this->data = $data;
 		$this->order = $order;
-		$this->id = $data['id'];
-		$this->name = $data['name'];
+        if (is_array($data)) {
+            $this->data = $data;
+            $this->id = $data['id'];
+            $this->name = $data['name'];
+        }
 	}
 	
 	public function getCalculator()
 	{
 		if ($this->calculator == null)
 		{
-			$class = $this->data['calculator'];
+            $class = $this->data['calculator'];
 			if (!in_array($class, self::$calculators)) {
 				$class = '\\Sale\\DeliveryCalculator\\Unknown';
 			}
