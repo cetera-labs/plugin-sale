@@ -6,6 +6,8 @@ class WidgetGoodsList extends \Cetera\Widget\Templateable
 
 	use \Cetera\Widget\Traits\Catalog;
 	use \Cetera\Widget\Traits\Paginator;
+    
+    protected $_children = null;
 	
 	protected function initParams()
 	{

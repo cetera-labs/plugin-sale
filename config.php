@@ -161,7 +161,7 @@ if ($this->getBo()) {
     $this->getBo()->addPseudoField(array(
         'id'       => PSEUDO_FIELD_ATOL_TAX_SYSTEM,
         'original' => FIELD_TEXT,
-        'len'      => 1,
+        'len'      => 32,
         'name'     => $t->_('ATOL СНО')
     ));
     $this->getBo()->addFieldEditor(PSEUDO_FIELD_ATOL_TAX_SYSTEM, EDITOR_TEXT_ATOL_TAX_SYSTEM);
@@ -174,7 +174,7 @@ if ($this->getBo()) {
     $this->getBo()->addPseudoField(array(
         'id'       => PSEUDO_FIELD_ATOL_TAX,
         'original' => FIELD_TEXT,
-        'len'      => 1,
+        'len'      => 32,
         'name'     => $t->_('ATOL Ставка НДС')
     ));
     $this->getBo()->addFieldEditor(PSEUDO_FIELD_ATOL_TAX, EDITOR_TEXT_ATOL_TAX);
@@ -187,7 +187,7 @@ if ($this->getBo()) {
     $this->getBo()->addPseudoField(array(
         'id'       => PSEUDO_FIELD_ATOL_PAYMENT_OBJECT,
         'original' => FIELD_TEXT,
-        'len'      => 1,
+        'len'      => 32,
         'name'     => $t->_('ATOL Тип оплачиваемой позиции')
     ));
     $this->getBo()->addFieldEditor(PSEUDO_FIELD_ATOL_PAYMENT_OBJECT, EDITOR_TEXT_ATOL_PAYMENT_OBJECT);
@@ -200,7 +200,7 @@ if ($this->getBo()) {
     $this->getBo()->addPseudoField(array(
         'id'       => PSEUDO_FIELD_ATOL_PAYMENT_METHOD,
         'original' => FIELD_TEXT,
-        'len'      => 1,
+        'len'      => 32,
         'name'     => $t->_('ATOL Тип оплаты')
     ));
     $this->getBo()->addFieldEditor(PSEUDO_FIELD_ATOL_PAYMENT_METHOD, EDITOR_TEXT_ATOL_PAYMENT_METHOD);	    
