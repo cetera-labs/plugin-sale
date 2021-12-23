@@ -325,6 +325,7 @@ function editor_text_ATOL_payment_object_draw($field_def, $fieldvalue)
 		store: new Ext.data.SimpleStore({
 			fields: ['code', 'value'],
 			data : [
+                    ['', '- не установлено -'],
                     ["commodity", 'товар'],
                     ["excise", 'подакцизный товар'],
                     ["job", 'работа'],
@@ -353,6 +354,7 @@ function editor_text_ATOL_payment_method_draw($field_def, $fieldvalue)
 		store: new Ext.data.SimpleStore({
 			fields: ['code', 'value'],
 			data : [
+                    ['', '- не установлено -'],
                     ["full_prepayment", 'полная предварительная оплата до момента передачи предмета расчёта'],
                     ["prepayment", 'частичная предварительная оплата до момента передачи предмета расчёта'],
                     ["advance", 'аванс'],
@@ -382,6 +384,7 @@ function editor_text_ATOL_tax_system_draw($field_def, $fieldvalue)
 		store: new Ext.data.SimpleStore({
 			fields: ['code', 'value'],
 			data : [
+                    ['', '- не установлено -'],
                     ["osn", 'общая СН'],
                     ["usn_income", 'упрощенная СН (доходы)'],
                     ["usn_income_outcome", 'упрощенная СН (доходы минус расходы)'],
@@ -410,6 +413,7 @@ function editor_text_ATOL_tax_draw($field_def, $fieldvalue)
 		store: new Ext.data.SimpleStore({
 			fields: ['code', 'value'],
 			data : [
+                    ['', '- не установлено -'],
                     ["none", 'без НДС'],
                     ["vat0", 'НДС по ставке 0%'],
                     ["vat10", 'НДС чека по ставке 10%'],
