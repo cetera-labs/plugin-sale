@@ -194,7 +194,7 @@ abstract class GatewayAtol extends GatewayAbstract {
         return $res;
     }
     
-    private function report($uuid) {
+    public function report($uuid) {
         if ($this->params["test_mode"]) {
             $this->params['atol_group'] = 'v4-online-atol-ru_4179';
             $this->params['atol_inn'] = '5544332219';
