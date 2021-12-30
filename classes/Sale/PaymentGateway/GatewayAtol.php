@@ -194,6 +194,33 @@ abstract class GatewayAtol extends GatewayAbstract {
         return $res;
     }
     
+    private function report($uuid) {
+        if ($this->params["test_mode"]) {
+            $this->params['atol_group'] = 'v4-online-atol-ru_4179';
+            $this->params['atol_inn'] = '5544332219';
+            $this->params['atol_payment_address'] = 'https://v4.online.atol.ru';            
+        }
+
+        $url = $this->params["test_mode"]?self::ATOL_TEST:self::ATOL_PRODUCTION;
+        $token = $this->auth();
+        
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('GET', $this->getUrl().$this->params['atol_group'].'/report/'.$uuid, [
+                'verify' => false,
+                'headers' => [
+                    'Token' => $token
+                ]
+            ]); 
+        } 
+        catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+        }          
+
+        $res = $this->decodeResponse($response);
+        return $res;        
+    }        
+    
     public function sendRecieptRefund( $items = null ) {
         
         if ($this->params["test_mode"]) {
