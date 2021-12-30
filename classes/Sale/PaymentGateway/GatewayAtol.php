@@ -189,7 +189,7 @@ abstract class GatewayAtol extends GatewayAbstract {
     private function decodeResponse($response) {
         $res = json_decode($response->getBody(), true);	
         if ($res['error']) {
-            throw new \Exception( 'Ошибка '.$res['error']["code"].'. '.$res['error']["text"] );
+            throw new \Exception( 'Ошибка '.$res['error']["code"].'. '.$res['error']["text"].'. '.json_encode($res) );
         }
         return $res;
     }
