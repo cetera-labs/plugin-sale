@@ -933,7 +933,9 @@ class Order {
 
 	public function paymentSuccess()
 	{
-		$this->setPaid(self::PAY_PAID)->save();
+        if ($this->paid != self::PAY_PAID) {
+            $this->setPaid(self::PAY_PAID)->save();
+        }
 	}	
 	
    /*
