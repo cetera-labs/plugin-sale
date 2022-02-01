@@ -296,7 +296,7 @@ else {
 });
 
 $this->getRouter()->addRoute('api_sale',
-    \Zend\Router\Http\Segment::factory([
+    \Laminas\Router\Http\Segment::factory([
         'route' => '/api/sale[/:controller][/:action][/:id]',
         'constraints' => [
             'controller' => '[a-zA-Z][a-zA-Z0-9_-]+',

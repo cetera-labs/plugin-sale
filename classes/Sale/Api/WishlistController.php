@@ -1,7 +1,7 @@
 <?php
 namespace Sale\Api;
 
-use Zend\View\Model\JsonModel;
+use Laminas\View\Model\JsonModel;
 
 class WishlistController extends AbstractController
 {
