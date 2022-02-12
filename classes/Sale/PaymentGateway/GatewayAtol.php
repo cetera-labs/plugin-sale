@@ -233,7 +233,7 @@ abstract class GatewayAtol extends GatewayAbstract {
         $token = $this->auth();
 
         $params = [
-            'external_id' => (string)$this->order->id,
+            'external_id' => (string)$this->order->id.'_refund',
             'timestamp' => date('d.m.Y H:i:s'),
             'receipt' => $this->getReceipt(),
         ];
