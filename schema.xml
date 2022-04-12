@@ -358,4 +358,21 @@
     </key>		
 </table>
 
+    <table name="sale_atol_queue">
+        <field name="id" type="int(11)" null="0" auto_increment="1" />
+        <field name="order_id" type="int(11)" null="0"  />
+        <field name="action" type="varchar(32)" null="0" />
+        <field name="is_sent" type="tinyint(3)" null="0" default="0"  />
+        <field name="date_create" type="datetime" null="0" />
+        <field name="date_send" type="datetime" null="1" />
+        <field name="reciept" type="text" null="0" />
+        <field name="response" type="text" null="1" />
+        <key name="PRIMARY" unique="1">
+            <column name="id" />
+        </key>
+        <key name="order_id" unique="0">
+            <column name="order_id" />
+        </key>
+    </table>
+
 </schema>

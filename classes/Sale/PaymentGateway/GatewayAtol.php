@@ -2,7 +2,9 @@
 namespace Sale\PaymentGateway;
 
 abstract class GatewayAtol extends GatewayAbstract {
-    
+
+    use \Cetera\DbConnection;
+
     const ATOL_PRODUCTION = 'https://online.atol.ru/possystem/v4/';
     const ATOL_TEST = 'https://testonline.atol.ru/possystem/v4/';    
 	
@@ -201,7 +203,6 @@ abstract class GatewayAtol extends GatewayAbstract {
             $this->params['atol_payment_address'] = 'https://v4.online.atol.ru';            
         }
 
-        $url = $this->params["test_mode"]?self::ATOL_TEST:self::ATOL_PRODUCTION;
         $token = $this->auth();
         
         $client = new \GuzzleHttp\Client();
@@ -219,35 +220,87 @@ abstract class GatewayAtol extends GatewayAbstract {
 
         $res = $this->decodeResponse($response);
         return $res;        
-    }        
-    
-    public function sendRecieptRefund( $items = null ) {
-        
+    }
+
+    public function addToQueue( $action, $receipt ) {
+        self::getDbConnection()->insert('sale_atol_queue',[
+            'date_create' => new \DateTime(),
+            'is_sent'   => 0,
+            'receipt'  => json_encode($receipt),
+            'action'   => $action,
+            'order_id' => $this->order->id,
+        ],
+        [
+            'datetime'
+        ]);
+
+        return (int)self::getDbConnection()->lastInsertId();
+    }
+
+    public function sendFromQueue( $id ) {
+        $data = self::getDbConnection()->fetchAssoc('SELECT * FROM sale_atol_queue WHERE id=?',[$id]);
+        if (!$data) return false;
+        if ($data['is_sent']) return false;
+
         if ($this->params["test_mode"]) {
             $this->params['atol_group'] = 'v4-online-atol-ru_4179';
             $this->params['atol_inn'] = '5544332219';
-            $this->params['atol_payment_address'] = 'https://v4.online.atol.ru';            
+            $this->params['atol_payment_address'] = 'https://v4.online.atol.ru';
         }
 
-        $url = $this->params["test_mode"]?self::ATOL_TEST:self::ATOL_PRODUCTION;
         $token = $this->auth();
 
+        $date = new \DateTime($data['date_create']);
+
         $params = [
-            'external_id' => (string)$this->order->id.'_refund',
-            'timestamp' => date('d.m.Y H:i:s'),
-            'receipt' => $this->getReceipt(),
+            'external_id' => (string)$data['order_id'].'_'.$data['action'],
+            'timestamp' => $date->format('d.m.Y H:i:s'),
+            'receipt' => json_decode($data['receipt'], true),
         ];
-        
+
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $this->getUrl().$this->params['atol_group'].'/'.$data['action'], [
+                'verify' => false,
+                'headers' => [
+                    'Token' => $token
+                ],
+                'json' => $params,
+            ]);
+            self::getDbConnection()->update('sale_atol_queue',[
+                'date_send' => new \DateTime(),
+                'is_sent'   => 1,
+                'response'  => $response,
+            ],
+            [
+                'id' => $id
+            ],
+            [
+                'datetime'
+            ]);
+        }
+        catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+        }
+
+        $res = $this->decodeResponse($response);
+        return $res;
+
+    }
+    
+    public function sendRecieptRefund( $items = null ) {
+
         if ($items !== null) {
             $amount = 0;
-            $params['receipt']['items'] = [];
+            $receipt = [];
+            $receipt['items'] = [];
             foreach ($items as $key => $item) {
                 if ($item['quantity_refund'] <= 0) continue;
                 
                 $pid = explode('-', $item['id']);
                 $product = \Sale\Product::getById($pid);
-                
-                $params['receipt']['items'][] = [
+
+                $receipt['items'][] = [
                     'name' => $item['name'],
                     'quantity' => floatval($item['quantity_refund']),
                     'price' => floatval($item['price']),
@@ -262,62 +315,27 @@ abstract class GatewayAtol extends GatewayAbstract {
                 
                 $amount += floatval($item['quantity_refund']) * $item['price'];
             }
-            $params['receipt']['total'] = $amount;   
-            $params['receipt']['payments']['sum'] = $amount;      
+            $receipt['total'] = $amount;
+            $receipt['payments']['sum'] = $amount;
         }
-                
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $this->getUrl().$this->params['atol_group'].'/sell_refund', [
-                'verify' => false,
-                'headers' => [
-                    'Token' => $token
-                ],
-                'json' => $params,
-            ]); 
-        } 
-        catch (\GuzzleHttp\Exception\ClientException $e) {
-            $response = $e->getResponse();
-        }          
+        else {
+            $receipt = $this->getReceipt();
+        }
 
-        $res = $this->decodeResponse($response);
-        return $res;        
+        $id = $this->addToQueue('sell_refund', $receipt);
+        return $this->sendFromQueue( $id );
         
     }
     
     public function sendRecieptSell() {
-        
-        if ($this->params["test_mode"]) {
-            $this->params['atol_group'] = 'v4-online-atol-ru_4179';
-            $this->params['atol_inn'] = '5544332219';
-            $this->params['atol_payment_address'] = 'https://v4.online.atol.ru';            
-        }
-        
-        $url = $this->params["test_mode"]?self::ATOL_TEST:self::ATOL_PRODUCTION;
-        $token = $this->auth();
-        
-        $params = [
-            'external_id' => (string)$this->order->id,
-            'timestamp' => date('d.m.Y H:i:s'),
-            'receipt' => $this->getReceipt(),
-        ];
-                
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $this->getUrl().$this->params['atol_group'].'/sell', [
-                'verify' => false,
-                'headers' => [
-                    'Token' => $token
-                ],
-                'json' => $params,
-            ]); 
-        } 
-        catch (\GuzzleHttp\Exception\ClientException $e) {
-            $response = $e->getResponse();
-        }          
 
-        $res = $this->decodeResponse($response);
-        return $res;
+        if (!$this->params['atol']) {
+            return false;
+        }
+
+        $id = $this->addToQueue('sell', $this->getReceipt());
+        return $this->sendFromQueue( $id );
+
     }
     
     public function getReceipt() {
