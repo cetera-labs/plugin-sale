@@ -278,6 +278,7 @@ abstract class GatewayAtol extends GatewayAbstract {
             ]);
         }
         catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
             self::getDbConnection()->update('sale_atol_queue',[
                     'date_send' => new \DateTime(),
                     'response'  => $response,
@@ -285,7 +286,6 @@ abstract class GatewayAtol extends GatewayAbstract {
                 ['id' => $id],
                 ['datetime']
             );
-            $response = $e->getResponse();
         }
 
         $res = $this->decodeResponse($response);
