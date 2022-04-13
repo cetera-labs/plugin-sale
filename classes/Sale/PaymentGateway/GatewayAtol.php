@@ -3,8 +3,6 @@ namespace Sale\PaymentGateway;
 
 abstract class GatewayAtol extends GatewayAbstract {
 
-    use \Cetera\DbConnection;
-
     const ATOL_PRODUCTION = 'https://online.atol.ru/possystem/v4/';
     const ATOL_TEST = 'https://testonline.atol.ru/possystem/v4/';    
 	
