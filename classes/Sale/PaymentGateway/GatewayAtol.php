@@ -155,6 +155,19 @@ abstract class GatewayAtol extends GatewayAbstract {
         
         return $data;
 	}
+
+    public static function sendQueue() {
+        $data = self::getDbConnection()->fetchAll('SELECT id, order_id FROM sale_atol_queue WHERE is_sent=0 ORDER BY id');
+        foreach ($data as $item) {
+            try {
+                $order = \Sale\Order::getById( $item['order_id'] );
+                $order->getPaymentGateway()->sendFromQueue( $item['id'] );
+            }
+            catch (\Exception $e) {
+                continue;
+            }
+        }
+    }
     
     private function getUrl() {
         return $this->params["test_mode"]?self::ATOL_TEST:self::ATOL_PRODUCTION;
@@ -261,21 +274,20 @@ abstract class GatewayAtol extends GatewayAbstract {
                 ],
                 'json' => $params,
             ]);
-            self::getDbConnection()->update('sale_atol_queue',[
-                'date_send' => new \DateTime(),
-                'is_sent'   => 1,
-                'response'  => $response,
-            ],
-            [
-                'id' => $id
-            ],
-            [
-                'datetime'
-            ]);
+            self::getDbConnection()->update('sale_atol_queue',
+                [
+                    'date_send' => new \DateTime(),
+                    'is_sent'   => 1,
+                    'response'  => $response->getBody(),
+                ],
+                ['id' => $id],
+                ['datetime']
+            );
         }
         catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
-            self::getDbConnection()->update('sale_atol_queue',[
+            self::getDbConnection()->update('sale_atol_queue',
+                [
                     'date_send' => new \DateTime(),
                     'response'  => $response->getBody(),
                 ],
