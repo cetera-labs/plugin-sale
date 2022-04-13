@@ -281,7 +281,7 @@ abstract class GatewayAtol extends GatewayAbstract {
             $response = $e->getResponse();
             self::getDbConnection()->update('sale_atol_queue',[
                     'date_send' => new \DateTime(),
-                    'response'  => $response,
+                    'response'  => $response->getBody(),
                 ],
                 ['id' => $id],
                 ['datetime']
