@@ -278,6 +278,7 @@ abstract class GatewayAtol extends GatewayAbstract {
                 [
                     'date_send' => new \DateTime(),
                     'is_sent'   => 1,
+                    'success'   => 1,
                     'response'  => $response->getBody(),
                 ],
                 ['id' => $id],
@@ -289,6 +290,7 @@ abstract class GatewayAtol extends GatewayAbstract {
             self::getDbConnection()->update('sale_atol_queue',
                 [
                     'date_send' => new \DateTime(),
+                    'is_sent'   => 1,
                     'response'  => $response->getBody(),
                 ],
                 ['id' => $id],
