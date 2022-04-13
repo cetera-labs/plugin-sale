@@ -197,8 +197,6 @@ abstract class GatewayAtol extends GatewayAbstract {
     public function report($uuid) {
         if ($this->params["test_mode"]) {
             $this->params['atol_group'] = 'v4-online-atol-ru_4179';
-            $this->params['atol_inn'] = '5544332219';
-            $this->params['atol_payment_address'] = 'https://v4.online.atol.ru';            
         }
 
         $token = $this->auth();
@@ -242,8 +240,6 @@ abstract class GatewayAtol extends GatewayAbstract {
 
         if ($this->params["test_mode"]) {
             $this->params['atol_group'] = 'v4-online-atol-ru_4179';
-            $this->params['atol_inn'] = '5544332219';
-            $this->params['atol_payment_address'] = 'https://v4.online.atol.ru';
         }
 
         $token = $this->auth();
@@ -348,6 +344,12 @@ abstract class GatewayAtol extends GatewayAbstract {
     }
     
     public function getReceipt() {
+
+        if ($this->params["test_mode"]) {
+            $this->params['atol_inn'] = '5544332219';
+            $this->params['atol_payment_address'] = 'https://v4.online.atol.ru';
+        }
+
         $receipt = [
             'client'  => $this->getClient(),
             'company' => [
