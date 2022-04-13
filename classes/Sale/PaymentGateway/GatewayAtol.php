@@ -286,8 +286,12 @@ abstract class GatewayAtol extends GatewayAbstract {
 
     }
     
-    public function sendRecieptRefund( $items = null ) {
+    public function sendReceiptRefund( $items = null ) {
 
+        if (!$this->params['atol']) {
+            return false;
+        }
+        
         if ($items !== null) {
             $amount = 0;
             $receipt = [];
@@ -325,7 +329,7 @@ abstract class GatewayAtol extends GatewayAbstract {
         
     }
     
-    public function sendRecieptSell() {
+    public function sendReceiptSell() {
 
         if (!$this->params['atol']) {
             return false;

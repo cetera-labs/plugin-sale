@@ -365,7 +365,7 @@
         <field name="is_sent" type="tinyint(3)" null="0" default="0"  />
         <field name="date_create" type="datetime" null="0" />
         <field name="date_send" type="datetime" null="1" />
-        <field name="reciept" type="text" null="0" />
+        <field name="receipt" type="text" null="0" />
         <field name="response" type="text" null="1" />
         <key name="PRIMARY" unique="1">
             <column name="id" />
