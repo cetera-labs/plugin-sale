@@ -346,14 +346,17 @@ abstract class GatewayAtol extends GatewayAbstract {
         
     }
     
-    public function sendReceiptSell() {
+    public function sendReceiptSell($forceSend = false) {
 
         if (!$this->params['atol']) {
             return false;
         }
 
         $id = $this->addToQueue('sell', $this->getReceipt());
-        return $this->sendFromQueue( $id );
+        if ($forceSend){
+			$this->sendFromQueue( $id );
+		}
+		return true;
 
     }
     
