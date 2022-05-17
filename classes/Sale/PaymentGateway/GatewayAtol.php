@@ -372,7 +372,7 @@ abstract class GatewayAtol extends GatewayAbstract {
                 'inn' => $this->params['atol_inn'],
                 'payment_address' => $this->params['atol_payment_address'],
             ],
-            'items' => $this->getItems(),
+            'items' => $this->getItemsAtol(),
             'payments' => [
                 [
                     'type' => 1,
@@ -385,7 +385,7 @@ abstract class GatewayAtol extends GatewayAbstract {
         return $receipt;
     }
     
-    public function getClient() {
+    protected function getClient() {
         $data = [];
         $phone = preg_replace('/\D/','',$this->order->getPhone());
         if ($this->order->getEmail()) {
@@ -397,7 +397,7 @@ abstract class GatewayAtol extends GatewayAbstract {
         return $data;
     }
     
-	public function getItems() {
+	protected function getItemsAtol() {
         $items = [];
         
         foreach ($this->order->getProducts() as $p) {
