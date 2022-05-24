@@ -309,15 +309,16 @@ abstract class GatewayAtol extends GatewayAbstract {
             return false;
         }
 
+		$receipt = $this->getReceipt();
+		
         if ($items !== null) {
             $amount = 0;
-            $receipt = [];
             $receipt['items'] = [];
             foreach ($items as $key => $item) {
                 if ($item['quantity_refund'] <= 0) continue;
                 
                 $pid = explode('-', $item['id']);
-                $product = \Sale\Product::getById($pid);
+                $product = \Sale\Product::getById($pid[0]);
 
                 $receipt['items'][] = [
                     'name' => $item['name'],
@@ -336,9 +337,6 @@ abstract class GatewayAtol extends GatewayAbstract {
             }
             $receipt['total'] = $amount;
             $receipt['payments']['sum'] = $amount;
-        }
-        else {
-            $receipt = $this->getReceipt();
         }
 
         $id = $this->addToQueue('sell_refund', $receipt);
