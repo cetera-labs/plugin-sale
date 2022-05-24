@@ -336,7 +336,7 @@ abstract class GatewayAtol extends GatewayAbstract {
                 $amount += floatval($item['quantity_refund']) * $item['price'];
             }
             $receipt['total'] = $amount;
-            $receipt['payments']['sum'] = $amount;
+            $receipt['payments'][0]['sum'] = $amount;
         }
 
         $id = $this->addToQueue('sell_refund', $receipt);
