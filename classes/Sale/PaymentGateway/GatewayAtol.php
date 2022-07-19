@@ -260,7 +260,7 @@ abstract class GatewayAtol extends GatewayAbstract {
         $date = new \DateTime($data['date_create']);
 
         $params = [
-            'external_id' => (string)$data['order_id'].'_'.$data['action'],
+            'external_id' => (string)$data['order_id'].'_'.$data['action'].'_'.$date->format('dmY_His'),
             'timestamp' => $date->format('d.m.Y H:i:s'),
             'receipt' => json_decode($data['receipt'], true),
         ];
