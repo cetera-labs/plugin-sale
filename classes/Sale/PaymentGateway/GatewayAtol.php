@@ -258,9 +258,14 @@ abstract class GatewayAtol extends GatewayAbstract {
         $token = $this->auth();
 
         $date = new \DateTime($data['date_create']);
+		
+		$external_id = (string)$data['order_id'].'_'.$data['action'];
+		if ($data['action'] == 'sell_refund') {
+			$external_id .= $date->format('dmY_His');
+		}
 
         $params = [
-            'external_id' => (string)$data['order_id'].'_'.$data['action'].'_'.$date->format('dmY_His'),
+            'external_id' => $external_id,
             'timestamp' => $date->format('d.m.Y H:i:s'),
             'receipt' => json_decode($data['receipt'], true),
         ];
