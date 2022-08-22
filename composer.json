@@ -1,6 +1,6 @@
 {
     "name": "cetera-labs/plugin-sale",
-    "description": "Cetera CMS E-commerce Plugin",
+    "description": "Fastsite CMS E-commerce Plugin",
     "type": "cetera-cms-plugin",
     "license": "MIT",
     "authors": [

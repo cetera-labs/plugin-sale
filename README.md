@@ -1,2 +1,2 @@
 # sale
-E-commerce plugin for Cetera CMS
+E-commerce plugin for Fastsite CMS
