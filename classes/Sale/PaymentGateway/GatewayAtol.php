@@ -276,7 +276,7 @@ abstract class GatewayAtol extends GatewayAbstract {
                 ],
             ]);
 			
-			$res = $this->decodeResponse($response);
+			$res = json_decode($response->getBody(), true);	
 			
             self::getDbConnection()->update('sale_atol_queue',
                 [
@@ -296,15 +296,6 @@ abstract class GatewayAtol extends GatewayAbstract {
                 ['id' => $id]
             );
         }
-		catch (\Exception $e) {
-            self::getDbConnection()->update('sale_atol_queue',
-                [
-                    'status'    => $res['status'],
-                    'response'  => $response->getBody(),
-                ],
-                ['id' => $id]
-            );			
-		}
 
         $res = $this->decodeResponse($response);
         return $res;
@@ -345,7 +336,7 @@ abstract class GatewayAtol extends GatewayAbstract {
                 'json' => $params,
             ]);
 			
-			$res = $this->decodeResponse($response);
+			$res = json_decode($response->getBody(), true);	
 			
             self::getDbConnection()->update('sale_atol_queue',
                 [
@@ -372,17 +363,6 @@ abstract class GatewayAtol extends GatewayAbstract {
                 ['datetime']
             );
         }
-		catch (\Exception $e) {
-            self::getDbConnection()->update('sale_atol_queue',
-                [
-                    'date_send' => new \DateTime(),
-                    'is_sent'   => 1,
-                    'response'  => $response->getBody(),
-                ],
-                ['id' => $id],
-                ['datetime']
-            );			
-		}
 
         $res = $this->decodeResponse($response);
         return $res;
