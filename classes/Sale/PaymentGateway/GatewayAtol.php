@@ -167,8 +167,18 @@ abstract class GatewayAtol extends GatewayAbstract {
                 continue;
             }
         }
+        $data = self::getDbConnection()->fetchAll('SELECT id, order_id FROM sale_atol_queue WHERE status="wait" ORDER BY id');
+        foreach ($data as $item) {
+            try {
+                $order = \Sale\Order::getById( $item['order_id'] );
+                $order->getPaymentGateway()->checkStatusFromQueue( $item['id'] );
+            }
+            catch (\Exception $e) {
+                continue;
+            }
+        }		
     }
-    
+	
     private function getUrl() {
         return $this->params["test_mode"]?self::ATOL_TEST:self::ATOL_PRODUCTION;
     }
@@ -245,6 +255,61 @@ abstract class GatewayAtol extends GatewayAbstract {
 
         return (int)self::getDbConnection()->lastInsertId();
     }
+	
+    public function checkStatusFromQueue( $id ) {
+        $data = self::getDbConnection()->fetchAssoc('SELECT * FROM sale_atol_queue WHERE id=?',[$id]);
+        if (!$data) return false;
+        if ($data['status'] != 'wait' || !$data['uuid']) return false;
+
+        if ($this->params["test_mode"]) {
+            $this->params['atol_group'] = 'v4-online-atol-ru_4179';
+        }
+
+        $token = $this->auth();
+
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('GET', $this->getUrl().$this->params['atol_group'].'/report/'.$data['uuid'], [
+                'verify' => false,
+                'headers' => [
+                    'Token' => $token
+                ],
+            ]);
+			
+			$res = $this->decodeResponse($response);
+			
+            self::getDbConnection()->update('sale_atol_queue',
+                [
+                    'response'  => $response->getBody(),
+					'status'    => $res['status'],
+                ],
+                ['id' => $id]
+            );
+        }
+        catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+            self::getDbConnection()->update('sale_atol_queue',
+                [
+
+                    'response'  => $response->getBody(),
+                ],
+                ['id' => $id]
+            );
+        }
+		catch (\Exception $e) {
+            self::getDbConnection()->update('sale_atol_queue',
+                [
+                    'status'    => $res['status'],
+                    'response'  => $response->getBody(),
+                ],
+                ['id' => $id]
+            );			
+		}
+
+        $res = $this->decodeResponse($response);
+        return $res;
+
+    }	
 
     public function sendFromQueue( $id ) {
         $data = self::getDbConnection()->fetchAssoc('SELECT * FROM sale_atol_queue WHERE id=?',[$id]);
@@ -279,12 +344,17 @@ abstract class GatewayAtol extends GatewayAbstract {
                 ],
                 'json' => $params,
             ]);
+			
+			$res = $this->decodeResponse($response);
+			
             self::getDbConnection()->update('sale_atol_queue',
                 [
                     'date_send' => new \DateTime(),
                     'is_sent'   => 1,
                     'success'   => 1,
                     'response'  => $response->getBody(),
+					'uuid'      => $res['uuid'],
+					'status'    => $res['status'],
                 ],
                 ['id' => $id],
                 ['datetime']
@@ -302,6 +372,17 @@ abstract class GatewayAtol extends GatewayAbstract {
                 ['datetime']
             );
         }
+		catch (\Exception $e) {
+            self::getDbConnection()->update('sale_atol_queue',
+                [
+                    'date_send' => new \DateTime(),
+                    'is_sent'   => 1,
+                    'response'  => $response->getBody(),
+                ],
+                ['id' => $id],
+                ['datetime']
+            );			
+		}
 
         $res = $this->decodeResponse($response);
         return $res;

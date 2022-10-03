@@ -366,6 +366,8 @@
         <field name="success" type="tinyint(3)" null="0" default="0"  />
         <field name="date_create" type="datetime" null="0" />
         <field name="date_send" type="datetime" null="1" />
+		<field name="uuid" type="varchar(100)" null="1" />
+		<field name="status" type="varchar(32)" null="1" />
         <field name="receipt" type="text" null="0" />
         <field name="response" type="text" null="1" />
         <key name="PRIMARY" unique="1">
