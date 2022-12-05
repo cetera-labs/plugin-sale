@@ -16,6 +16,14 @@ class ConditionCartCount extends ConditionAbstract {
         if ($condition['condition'] == 'gt') {
             $match = \Sale\Cart::get()->getProductsCount() >= $condition['value'];
         }	
+        // товаров в корзине <= чем указано, то делаем скидку на эти товары
+        if ($condition['condition'] == 'le') {
+            $match = \Sale\Cart::get()->getProductsCount() <= $condition['value'];
+        }	
+        // товаров в корзине равное количество, то делаем скидку на эти товары
+        if ($condition['condition'] == 'eq') {
+            $match = \Sale\Cart::get()->getProductsCount() == $condition['value'];
+        }	
         // скидка только на указанное кол-во самых дешевых товаров
         if ($condition['condition'] == 'lt') {
             $match = true;

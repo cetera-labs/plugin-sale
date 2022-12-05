@@ -53,7 +53,8 @@ Ext.define('Plugin.sale.DiscountConditionContainer', {
 				['like',_('содержит')],
 				['not_like',_('не содержит')],
 				['gt',_('больше или равно')],
-				['lt',_('меньше')]
+				['lt',_('меньше')],
+				['le',_('меньше или равно')]
 			],
 			value: 'eq'
 		});	
