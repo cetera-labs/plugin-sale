@@ -645,7 +645,16 @@ class Order {
 		$this->getProps();
 		foreach (self::getAvailableProps($this->person_type_id) as $p)
 		{
-			if ($p['is_email']) return trim($this->getProperty($p['id']));
+			if ($p['is_email'])
+			{
+				if(is_array($this->getProperty($p['id']))){
+					return $this->getProperty($p['id']);
+				}
+				else{
+					return trim($this->getProperty($p['id']));
+				}
+			
+			}
 		}
 	}
 	
