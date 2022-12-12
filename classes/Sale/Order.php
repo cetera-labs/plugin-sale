@@ -536,8 +536,8 @@ class Order {
 	
 	public function getTotal($display = false)
 	{
-		if ($display) return $this->getCurrency()->format( $this->getDeliveryCost() + round($this->getProductsCost()));
-		return $this->getDeliveryCost() + round($this->getProductsCost());
+		if ($display) return $this->getCurrency()->format( $this->getDeliveryCost() + $this->getProductsCost());
+		return $this->getDeliveryCost() + $this->getProductsCost();
 	}
 	
 	public function getProductsCost($display = false)
