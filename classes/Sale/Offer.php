@@ -19,7 +19,7 @@ class Offer extends Buyable
 		else {
 			$value = $this->product->getDiscount($field, $this->getFullPrice($field), $this->isInCart, $this);
 		}
-		return $value;
+		return round($value);
 	}
 	
 }
