@@ -106,7 +106,7 @@
 	<field name="active" type="tinyint(3)" null="0" default="1" />
 	<field name="priority" type="int(11)" null="0" default="1" />
 	<field name="value" type="float" null="0" default="0" />
-	<field name="value_type" type="tinyint(3)" null="0" default="0" />
+	<field name="value_type" type="tinyint(5)" null="0" default="0" />
 	<field name="max_discount" type="float" null="0" default="0" />
 	<field name="last_discount" type="tinyint(3)" null="0" default="0" />
 	<field name="describ" type="varchar(500)" null="1" />
