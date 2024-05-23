@@ -424,14 +424,12 @@ class Order {
 	
 	public function getProps()
 	{
-		if ($this->props === null)
-		{
-			$data = self::getDbConnection()->fetchAll('SELECT * FROM sale_order_props_value WHERE order_id=?', array($this->id));
-			$this->props = array();
-			foreach ($data as $d) {
-				$this->props[ (int)$d['order_props_id'] ] = $d['value'];
-			}
-		}
+        $data = self::getDbConnection()->fetchAll('SELECT * FROM sale_order_props_value WHERE order_id=?', array($this->id));
+        $this->props = array();
+        foreach ($data as $d) {
+            $this->props[ (int)$d['order_props_id'] ] = $d['value'];
+        }
+
 		$ret = $this->getAvailableProps( $this->person_type_id );
 		foreach ($ret as $id => $r) {
 			$ret[$id]['value'] = isset($this->props[ $r['id'] ])?$this->props[ $r['id'] ]:null;
@@ -684,10 +682,7 @@ class Order {
 		$res = array();
 		foreach (self::getAvailableProps($this->person_type_id) as $p)
 		{
-			if ($p['is_login']) 
-				if ($this->getProperty($p['id'])) {
-					$res[] = $this->getProperty((int)$p['id']);
-                }
+			if ($p['is_login']) $res[] = $this->getProperty($p['id']);
 		}
 		return implode(' ', $res);
 	}
