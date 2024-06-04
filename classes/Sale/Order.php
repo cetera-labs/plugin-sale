@@ -415,8 +415,15 @@ class Order {
 			$this->note = $params['note'];
 		}			
 		
-		if (isset($params['props'])) {
-			$this->props = $params['props'];
+		if (isset($params['props']) && is_array($params['props'])) {
+	            $this->props = [];
+	            foreach ($params['props'] as $id => $value) {
+	                if (is_array($value)) {
+	                    $id = $value['id'];
+	                    $value = $value['value'];
+	                }
+	                $this->props[$id] = $value;
+	            }
 		}
 			
 		return $this;
@@ -424,11 +431,13 @@ class Order {
 	
 	public function getProps()
 	{
-        $data = self::getDbConnection()->fetchAll('SELECT * FROM sale_order_props_value WHERE order_id=?', array($this->id));
-        $this->props = array();
-        foreach ($data as $d) {
-            $this->props[ (int)$d['order_props_id'] ] = $d['value'];
-        }
+		if ($this->props === null) {
+		        $data = self::getDbConnection()->fetchAll('SELECT * FROM sale_order_props_value WHERE order_id=?', array($this->id));
+		        $this->props = array();
+		        foreach ($data as $d) {
+		            $this->props[ (int)$d['order_props_id'] ] = $d['value'];
+		        }
+		}
 
 		$ret = $this->getAvailableProps( $this->person_type_id );
 		foreach ($ret as $id => $r) {
