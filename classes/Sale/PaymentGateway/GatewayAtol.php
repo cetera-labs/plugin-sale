@@ -426,7 +426,7 @@ abstract class GatewayAtol extends GatewayAbstract {
     
     public function getReceipt() {
 
-        if ($this->params["test_mode"]) {
+        if (isset($this->params["test_mode"])) {
             $this->params['atol_inn'] = '5544332219';
             $this->params['atol_payment_address'] = 'https://v4.online.atol.ru';
         }
