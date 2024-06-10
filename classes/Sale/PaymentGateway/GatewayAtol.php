@@ -159,23 +159,13 @@ abstract class GatewayAtol extends GatewayAbstract {
     public static function sendQueue() {
         $data = self::getDbConnection()->fetchAll('SELECT id, order_id FROM sale_atol_queue WHERE is_sent=0 ORDER BY id');
         foreach ($data as $item) {
-            try {
-                $order = \Sale\Order::getById( $item['order_id'] );
-                $order->getPaymentGateway()->sendFromQueue( $item['id'] );
-            }
-            catch (\Exception $e) {
-                continue;
-            }
+            $order = \Sale\Order::getById( $item['order_id'] );
+            $order->getPaymentGateway()->sendFromQueue( $item['id'] );
         }
         $data = self::getDbConnection()->fetchAll('SELECT id, order_id FROM sale_atol_queue WHERE status="wait" ORDER BY id');
         foreach ($data as $item) {
-            try {
-                $order = \Sale\Order::getById( $item['order_id'] );
-                $order->getPaymentGateway()->checkStatusFromQueue( $item['id'] );
-            }
-            catch (\Exception $e) {
-                continue;
-            }
+            $order = \Sale\Order::getById( $item['order_id'] );
+            $order->getPaymentGateway()->checkStatusFromQueue( $item['id'] );
         }		
     }
 	
