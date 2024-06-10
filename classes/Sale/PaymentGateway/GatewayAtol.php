@@ -170,12 +170,12 @@ abstract class GatewayAtol extends GatewayAbstract {
     }
 	
     private function getUrl() {
-        return $this->params["test_mode"]?self::ATOL_TEST:self::ATOL_PRODUCTION;
+        return isset($this->params["test_mode"])?self::ATOL_TEST:self::ATOL_PRODUCTION;
     }
     
     private function auth() {
 
-        if ($this->params["test_mode"]) {
+        if (isset($this->params["test_mode"])) {
             $this->params["atol_login"] = 'v4-online-atol-ru';
             $this->params["atol_pass"] = 'iGFFuihss';
         }
@@ -208,7 +208,7 @@ abstract class GatewayAtol extends GatewayAbstract {
     }
     
     public function report($uuid) {
-        if ($this->params["test_mode"]) {
+        if (isset($this->params["test_mode"])) {
             $this->params['atol_group'] = 'v4-online-atol-ru_4179';
         }
 
@@ -251,7 +251,7 @@ abstract class GatewayAtol extends GatewayAbstract {
         if (!$data) return false;
         if ($data['status'] != 'wait' || !$data['uuid']) return false;
 
-        if ($this->params["test_mode"]) {
+        if (isset($this->params["test_mode"])) {
             $this->params['atol_group'] = 'v4-online-atol-ru_4179';
         }
 
@@ -297,7 +297,7 @@ abstract class GatewayAtol extends GatewayAbstract {
         if (!$data) return false;
         if ($data['is_sent']) return false;
 
-        if ($this->params["test_mode"]) {
+        if (isset($this->params["test_mode"])) {
             $this->params['atol_group'] = 'v4-online-atol-ru_4179';
         }
 
