@@ -119,7 +119,9 @@ abstract class GatewayAtol extends GatewayAbstract {
         
         $data = static::getInfo2();
         
-        $params = $data['params'];
+        if (isset($data['params'])){
+            $params = $data['params'];
+          } 
         
         //$data['params'] = array_merge($data['params'], $atolParams);
         
