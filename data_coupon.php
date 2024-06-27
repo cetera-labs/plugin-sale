@@ -7,16 +7,14 @@ $coupon_modes = [
 	1 => $t->_('Одноразовый'),
 	2 => $t->_('Многоразовый'),
 ];
-
-if ($_GET['action'] == 'update' || $_GET['action'] == 'create') {
-	$data = json_decode(file_get_contents("php://input"), true);
-	$d = $a->getDbConnection()->fetchColumn('SELECT COUNT(*) FROM sale_coupon WHERE id<>? and code=?', [(int)$data['id'],$data['code']]);
-	if ($d) {
-		throw new \Exception( $t->_('Купон с таким кодом уже существует') );
-	}
-}
-
 if (isset($_GET['action'])) {
+	if ($_GET['action'] == 'update' || $_GET['action'] == 'create') {
+		$data = json_decode(file_get_contents("php://input"), true);
+		$d = $a->getDbConnection()->fetchColumn('SELECT COUNT(*) FROM sale_coupon WHERE id<>? and code=?', [(int)$data['id'],$data['code']]);
+		if ($d) {
+			throw new \Exception( $t->_('Купон с таким кодом уже существует') );
+		}
+	}
 	$data = json_decode(file_get_contents("php://input"), true);
 	$data['active'] = (int)$data['active'];
 	
