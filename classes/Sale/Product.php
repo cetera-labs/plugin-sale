@@ -87,6 +87,10 @@ class Product extends Buyable
 						$count = Cart::get()->getProductsCount();
 						$value = $full_price/$count * $discount['value'];
 						break;
+					case 4:
+						$count = Cart::get()->getProductsCount();
+						$value = ($full_price/$count)/100 * $discount['value'];
+						break;						
 					default: 
 						$value = 0;
 				}
