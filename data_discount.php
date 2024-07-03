@@ -5,7 +5,9 @@ $a = \Cetera\Application::getInstance();
 if (isset($_GET['action']))
 {
 	$data = json_decode(file_get_contents("php://input"), true);
-	$data['active'] = (int)$data['active'];
+	if (isset($data['active'])){
+		$data['active'] = (int)$data['active'];
+	}
 	$data['last_discount'] = (int)$data['last_discount'];
 	
 	if ($_GET['action'] == 'update')
