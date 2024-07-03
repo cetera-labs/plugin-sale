@@ -49,5 +49,9 @@ function value_text($data)
 				return $data['value'];
 			case 2:
 				return '= '.$data['value'];
+			case 3:
+				return $data['value'];
+			case 4:
+				return $data['value'].'%';
 		}	
 }
