@@ -1154,8 +1154,10 @@ class Order {
 			'status'     => $this->status,
 			'paid'       => $this->paid,		
 			'products'   => array_map(function($prod){
-                                $prod['product'] = $prod['product']->id;
-                                if ($prod['offer']) {
+								if(isset($prod['product'])){
+									$prod['product'] = $prod['product']->id;
+								}
+                                if (isset($prod['offer'])) {
                                     $prod['offer'] = $prod['offer']->id;
                                 }
                                 return $prod;
