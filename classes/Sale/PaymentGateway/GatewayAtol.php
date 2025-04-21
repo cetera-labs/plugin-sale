@@ -446,7 +446,7 @@ abstract class GatewayAtol extends GatewayAbstract {
     
     protected function getClient() {
         $data = [];
-        $phone = preg_replace('/\D/','',$this->order->getPhone());
+        $phone = preg_replace('/^\+7|\D/', '', $this->order->getPhone());
         if ($this->order->getEmail()) {
             $data['email'] = $this->order->getEmail();
         }
