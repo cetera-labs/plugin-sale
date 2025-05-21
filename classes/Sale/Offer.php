@@ -19,7 +19,8 @@ class Offer extends Buyable
 		else {
 			$value = $this->product->getDiscount($field, $this->getFullPrice($field), $this->isInCart, $this);
 		}
-		return round($value);
+
+		return $value;
 	}
 	public function getActiveDiscounts($field = 'price') {
 		if (!$this->product) {

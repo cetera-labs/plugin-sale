@@ -350,7 +350,7 @@ class Cart extends \Cetera\Base {
 				}
                 
                 $buyable->options = $value['options']?unserialize($value['options']):null;
-				
+			
 				if ($discountPrice) {
 					$price = $buyable->discountPrice;
 				}
@@ -407,15 +407,16 @@ class Cart extends \Cetera\Base {
 		if ($this->_totalSum === null) {
 			$this->getProducts();
 		}
+		
 		if ($display) return $this->getCurrency()->format( $this->_totalSum );
-		return $this->_totalSum;
+		return round($this->_totalSum);
 	}
 
 	public function getTotalFull($display = false)
 	{
 		$value = $this->getTotal() + $this->getDiscountTotal();
 		if ($display) return $this->getCurrency()->format( $value );
-		return $value;
+		return round($value);
 	}	
 	
 	public function getDiscountTotal($display = false)
@@ -429,7 +430,7 @@ class Cart extends \Cetera\Base {
 			}
 		}
 		if ($display) return $this->getCurrency()->format( $this->_totalDiscountSum );
-		return $this->_totalDiscountSum;
+		return round($this->_totalDiscountSum);
 	}	
 
 	public function getDisplayTotal()
