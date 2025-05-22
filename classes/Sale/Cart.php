@@ -409,14 +409,14 @@ class Cart extends \Cetera\Base {
 		}
 		
 		if ($display) return $this->getCurrency()->format( $this->_totalSum );
-		return round($this->_totalSum);
+		return $this->_totalSum;
 	}
 
 	public function getTotalFull($display = false)
 	{
 		$value = $this->getTotal() + $this->getDiscountTotal();
 		if ($display) return $this->getCurrency()->format( $value );
-		return round($value);
+		return $value;
 	}	
 	
 	public function getDiscountTotal($display = false)
@@ -430,7 +430,7 @@ class Cart extends \Cetera\Base {
 			}
 		}
 		if ($display) return $this->getCurrency()->format( $this->_totalDiscountSum );
-		return round($this->_totalDiscountSum);
+		return $this->_totalDiscountSum;
 	}	
 
 	public function getDisplayTotal()
