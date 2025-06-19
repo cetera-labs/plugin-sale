@@ -294,8 +294,8 @@ abstract class GatewayAtol extends GatewayAbstract {
 
     }	
 
-    public function sendFromQueue( $id ) {
-        $data = self::getDbConnection()->fetchAssoc('SELECT * FROM sale_atol_queue WHERE id=?',[$id]);
+    public function sendFromQueue($id, $external_id = null) {
+        $data = self::getDbConnection()->fetchAssoc('SELECT * FROM sale_atol_queue WHERE id=?', [$id]);
         if (!$data) return false;
         if ($data['is_sent']) return false;
 
@@ -306,11 +306,13 @@ abstract class GatewayAtol extends GatewayAbstract {
         $token = $this->auth();
 
         $date = new \DateTime($data['date_create']);
-		
-		$external_id = (string)$data['order_id'].'_'.$data['action'];
-		if ($data['action'] == 'sell_refund') {
-			$external_id .= $date->format('dmY_His');
-		}
+        
+        if ($external_id === null) {
+            $external_id = (string)$data['order_id'] . '_' . $data['action'];
+            if ($data['action'] == 'sell_refund') {
+                $external_id .= $date->format('dmY_His');
+            }
+        }
 
         $params = [
             'external_id' => $external_id,
@@ -327,23 +329,22 @@ abstract class GatewayAtol extends GatewayAbstract {
                 ],
                 'json' => $params,
             ]);
-			
-			$res = json_decode($response->getBody(), true);	
-			
+            
+            $res = json_decode($response->getBody(), true);   
+            
             self::getDbConnection()->update('sale_atol_queue',
                 [
                     'date_send' => new \DateTime(),
                     'is_sent'   => 1,
                     'success'   => 1,
                     'response'  => $response->getBody(),
-					'uuid'      => $res['uuid'],
-					'status'    => $res['status'],
+                    'uuid'      => $res['uuid'],
+                    'status'    => $res['status'],
                 ],
                 ['id' => $id],
                 ['datetime']
             );
-        }
-        catch (\GuzzleHttp\Exception\ClientException $e) {
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
             self::getDbConnection()->update('sale_atol_queue',
                 [
@@ -358,7 +359,6 @@ abstract class GatewayAtol extends GatewayAbstract {
 
         $res = $this->decodeResponse($response);
         return $res;
-
     }
     
     public function sendReceiptRefund( $items = null ) {
@@ -402,18 +402,16 @@ abstract class GatewayAtol extends GatewayAbstract {
         
     }
     
-    public function sendReceiptSell($forceSend = false) {
-
+    public function sendReceiptSell($forceSend = false, $external_id = null) {
         if (!$this->params['atol']) {
             return false;
         }
 
         $id = $this->addToQueue('sell', $this->getReceipt());
         if ($forceSend){
-			$this->sendFromQueue( $id );
-		}
-		return true;
-
+            $this->sendFromQueue($id, $external_id);
+        }
+        return true;
     }
     
     public function getReceipt() {
