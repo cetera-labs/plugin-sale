@@ -297,7 +297,7 @@ abstract class GatewayAtol extends GatewayAbstract {
     public function sendFromQueue($id, $external_id = null) {
         $data = self::getDbConnection()->fetchAssoc('SELECT * FROM sale_atol_queue WHERE id=?', [$id]);
         if (!$data) return false;
-        if ($data['is_sent']) return false;
+        if ($external_id == null && $data['is_sent']) return false;
 
         if (isset($this->params["test_mode"])) {
             $this->params['atol_group'] = 'v4-online-atol-ru_4179';
