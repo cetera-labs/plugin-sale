@@ -59,7 +59,9 @@ class Filter {
 	
 	public function getQueryString()
 	{
-		return http_build_query(array($this->name => $_REQUEST[ $this->name ]));
+		return http_build_query([
+		    $this->name => $_REQUEST[$this->name] ?? ""
+		]);
 	}
 	
 	public function isActive()
