@@ -107,10 +107,8 @@ class Product extends Buyable
 				
 				if ($discount['last_discount']) break;			
 			}
-			$this->discount = round($this->discount, $this->getPriceDecimals());
-			
 		}
-		return $this->discount;
+		return $this->roundPrice($this->discount);
 	}
 		
 	private function checkCondition($conditions, $is_in_cart, $offer)

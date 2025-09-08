@@ -3,8 +3,8 @@ namespace Sale;
 
 abstract class Buyable extends \Cetera\Material
 {
-	protected static $priceDecimals = null;
-    
+    use PriceDecimals;
+
     public $options = null;
 	
 	public static function fetch($data, $type = 0, $table = NULL)
@@ -40,17 +40,6 @@ abstract class Buyable extends \Cetera\Material
 		return Currency::getByCode( $c );
 	}	
 	
-	public function getPriceDecimals()	
-	{
-		if (self::$priceDecimals === null) {
-			self::$priceDecimals = \Sale\Setup::configGet( 'price_decimals' );
-			if (self::$priceDecimals === null) {
-				self::$priceDecimals = 2;
-			}
-		}
-		return self::$priceDecimals;
-	}
-
 	public function canBuy($quantity = 1)
 	{
 		if ( !\Sale\Setup::configGet( 'use_quantity' ) ) return true;
@@ -85,7 +74,7 @@ abstract class Buyable extends \Cetera\Material
 
 	public function getFullPrice($field = 'price')
 	{
-		return round($this->getDynamicField($field), $this->getPriceDecimals());
+		return $this->roundPrice($this->getDynamicField($field));
 	}	
 	
 	public function getDiscountPrice($field = 'price')

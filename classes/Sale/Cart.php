@@ -3,7 +3,7 @@ namespace Sale;
 
 class Cart extends \Cetera\Base {
 	
-	use \Cetera\DbConnection, \Cetera\Traits\Extendable;
+	use \Cetera\DbConnection, \Cetera\Traits\Extendable, PriceDecimals;
 	
 	protected $id = 0;
 	protected static $current = null;
@@ -351,14 +351,9 @@ class Cart extends \Cetera\Base {
                 
                 $buyable->options = $value['options']?unserialize($value['options']):null;
 			
-				if ($discountPrice) {
-					$price = $buyable->discountPrice;
-				}
-				else {
-					$price = $buyable->fullPrice;
-				}
-				
+                $price = $discountPrice ? $buyable->discountPrice : $buyable->fullPrice;
 				$price = $this->getCurrency()->convert($price, $buyable->getCurrency());
+                $fullPrice = $this->getCurrency()->convert($buyable->fullPrice, $buyable->getCurrency());
 				$name = $prod->name;
                 if ($offer) {
                     $name .= ' > '.$offer->name;
@@ -368,6 +363,7 @@ class Cart extends \Cetera\Base {
 				$prod = null;
 				$offer = null;
 				$price = isset($value['price'])?$value['price']:0;
+                $fullPrice = $price;
 				$name = isset($value['name'])?$value['name']:'-';
 			}
 			
@@ -375,6 +371,7 @@ class Cart extends \Cetera\Base {
 				'product'    => $prod,
 				'offer'      => $offer,
 				'price'      => $price,
+                'priceFull'  => $fullPrice,
 				'displayPrice' => $this->getCurrency()->format($price),
 				'quantity'   => $q,
                 'unit'       => $prod?$prod->unit:'',
@@ -392,7 +389,7 @@ class Cart extends \Cetera\Base {
 		if ($discountPrice) {
 			$this->_totalSum = $totalSum;
 		}
-		
+
 		return $products;
 	}
 	
@@ -407,9 +404,9 @@ class Cart extends \Cetera\Base {
 		if ($this->_totalSum === null) {
 			$this->getProducts();
 		}
-		
-		if ($display) return $this->getCurrency()->format( $this->_totalSum );
-		return $this->_totalSum;
+        $res = $this->roundPrice($this->_totalSum);
+		if ($display) return $this->getCurrency()->format( $res );
+		return $res;
 	}
 
 	public function getTotalFull($display = false)
@@ -429,8 +426,9 @@ class Cart extends \Cetera\Base {
 				$this->_totalDiscountSum += $this->getCurrency()->convert( $b->getDiscount() * $p['quantity'], $b->getCurrency() );
 			}
 		}
-		if ($display) return $this->getCurrency()->format( $this->_totalDiscountSum );
-		return $this->_totalDiscountSum;
+        $res = $this->roundPrice($this->_totalDiscountSum);
+        if ($display) return $this->getCurrency()->format( $res );
+        return $res;
 	}	
 
 	public function getDisplayTotal()
