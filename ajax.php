@@ -110,19 +110,15 @@ try {
             $total_cost = null;
         }
         
-        // параметры шлюзов и калькуляторов содержат ключи и пароли — в браузер их не отдаём
+        // параметры шлюзов содержат ключи и пароли — в браузер их не отдаём
         $payment = array_map(function($p) {
             unset($p['gateway_params']);
             return $p;
         }, $order->getPaymentMethods() ?: []);
-        $delivery = array_map(function($d) {
-            unset($d['calculator_params']);
-            return $d;
-        }, $order->getDeliveryMethods() ?: []);
 
         $data = array(
             'payment'       => $payment,
-            'delivery'      => $delivery,
+            'delivery'      => $order->getDeliveryMethods(),
             'total'         => $total_cost,
             'delivery_cost' => $delivery_cost,
             'delivery_id'   => $order->getDeliveryId(),
